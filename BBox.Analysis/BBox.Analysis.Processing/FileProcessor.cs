@@ -1,0 +1,136 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using BBox.Analysis.Core.Logger;
+using BBox.Analysis.Domain;
+using BBox.Analysis.Interface;
+using ILogger = BBox.Analysis.Interface.ILogger;
+
+namespace BBox.Analysis.Processing
+{
+    public class FileProcessor
+    {
+        private readonly ILogger _logger;
+        private FuelStation _fuelStation;
+        private IRegistrar _registrar;
+
+        private void WriteLog(String text)
+        {
+            _logger?.Write(text);
+        }
+
+
+
+        public FileProcessor(ILogger logger, IRegistrar registrar)
+        {
+            _logger = logger;
+            _registrar = registrar;
+        }
+
+        public Record ProcessRecord(String record)
+        {
+            var __spl = record.Split(';');
+            for (var __i = 0; __i < __spl.Length; __i++)
+            {
+                __spl[__i] = __spl[__i].Trim();
+            }
+            if (__spl.Count(x => !String.IsNullOrWhiteSpace(x)) < 3) return null;
+            var __record = new Record
+            {
+                FuelStationName = __spl[0],
+                TimeRecord = DateTime.Parse(__spl[1]),
+                ID = Int64.Parse(__spl[2]),
+                Entry = new string[__spl.Length - 3]
+            };
+            Array.Copy(__spl, 3, __record.Entry, 0, __record.Entry.Length);
+            return __record;
+        }
+
+
+        private DateTime TranslateDate(String date)
+        {
+            var __year = Int16.Parse(date.Substring(1, 4));
+            var __month = Int16.Parse(date.Substring(6, 2));
+            var __day = Int16.Parse(date.Substring(9, 2));
+            var __hour = Int16.Parse(date.Substring(12, 2));
+            var __min = Int16.Parse(date.Substring(15, 2));
+            var __sec = Int16.Parse(date.Substring(18, 2));
+
+            return new DateTime(__year, __month, __day, __hour, __min, __sec);
+                //DateTime.ParseExact(date.Trim(), "yyyy_MM_dd HH_mm_ss", new CultureInfo("ru-RU"));
+        }
+
+        public void ProcessFile(String fileName)
+        {
+            var __filePattern =
+                "BBOX_\\d+\\s\\d{4}\\D\\d{2}\\D\\d{2}\\s\\d{2}\\D\\d{2}\\D\\d{2}\\s\\D\\s\\d{4}\\D\\d{2}\\D\\d{2}\\s\\d{2}\\D\\d{2}\\D\\d{2}";
+            var __isMatch = new Regex(__filePattern).IsMatch(fileName);
+            if (!__isMatch)
+            {
+                WriteLog($"Файл {fileName} не обработан. Причина: не верный формат заголовка");
+            }
+            var __fileName = new Regex(__filePattern).Match(fileName).Value;
+            var __fuelStationReg = new Regex("BBOX_\\d+\\s");
+            var __fuelStationName = Int16.Parse(__fuelStationReg.Match(fileName).Value.Substring(5));
+            var __shiftDatePattern = "\\s\\d{4}\\D\\d{2}\\D\\d{2}\\s\\d{2}\\D\\d{2}\\D\\d{2}";
+            var __shiftPeriodMatches = new Regex(__shiftDatePattern).Matches(__fileName);
+            var __startDate = TranslateDate(__shiftPeriodMatches[0].Value);
+            var __endDate = TranslateDate(__shiftPeriodMatches[1].Value);
+            var __fuelStation = GetFuelStation($"АЗС № {__fuelStationName}");
+            using (var __reader = new StreamReader(fileName, Encoding.GetEncoding(1251)))
+            {
+
+                if (__reader.EndOfStream) return;
+                string __line;
+                // Read and display lines from the file until the end of 
+                // the file is reached.
+                while ((__line = __reader.ReadLine()) != null)
+                {
+                    try
+                    {
+                        var __record = ProcessRecord(__line);
+                        if (__record == null || IsProcessedRecord(__fuelStation, __record)) continue;
+                        if (!BlackBoxObject.ProcessRecord(__fuelStation, __record))
+                            WriteLog($"{DateTime.Now}: Обработка: {__line} : Не обработанно");
+                    }
+                    catch (Exception __ex)
+                    {
+                        LogManager.GetInstance().GetLogger("BBox.Analysis").Error($"Ошибка обработки файла: {fileName}. \r\n Не обработана строка: {__line}. \r\n Данные отчета не корректны. \r\n",__ex);
+                        WriteLog($"Ошибка обработки файла: {fileName}.");
+                        WriteLog($"Не обработана строка: { __line}.");
+                        WriteLog("Данные отчета не корректны.");
+                        WriteLog($"{__ex}");
+                        break;
+                    }
+                }
+
+                if (!BlackBoxObject.ProcessRecord(__fuelStation, new Record
+                {
+                    Entry = new string[] {"Смена закрыта"},
+                    TimeRecord = __endDate,
+                    ID = Int64.MaxValue,
+                    FuelStationName = __fuelStation.Name
+                }))
+                    WriteLog($"{DateTime.Now}: Обработка: {__line} : Не обработанно");
+
+
+            }
+            //var __task = _registrar.RegisterShift(__fuelStation.CurrentShift);
+            // __task.Wait();
+        }
+
+        private bool IsProcessedRecord(FuelStation station, Record record)
+        {
+            return _registrar.IsProcessedRecord(station, record);
+        }
+        private FuelStation GetFuelStation(string s)
+        {
+            return _registrar.GetFuelStation(s);
+        }
+    }
+}
