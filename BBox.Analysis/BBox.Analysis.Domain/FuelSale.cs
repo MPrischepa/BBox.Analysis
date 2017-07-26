@@ -91,7 +91,11 @@ namespace BBox.Analysis.Domain
                     {
                         var __order = new Order(Payment);
                         var __cloneOrder = PreOrder;
-                        if (__cloneOrder == null) return null;
+                        if (__cloneOrder == null)
+                        {
+                            PreOrder = __order;
+                            return __order;
+                        }
                         __order.Amount = __cloneOrder.Amount;
                         __order.SetFuelColumn(__cloneOrder.FuelColumn);
                         __order.Price = __cloneOrder.Price;

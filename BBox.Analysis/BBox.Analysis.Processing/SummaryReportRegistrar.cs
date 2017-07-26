@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using BBox.Analysis.Core.Logger;
 using BBox.Analysis.Domain;
 using BBox.Analysis.Domain.PaymentTypes;
 using NPOI.SS.UserModel;
@@ -18,39 +19,41 @@ namespace BBox.Analysis.Processing
         {
             _outputPath = outputFile;
         }
+
         public void RegisterSummaryReport(FuelStation station)
         {
-            var __path = Path.Combine(".\\Resources", "Сводный Шаблон.xlsx");
-            IWorkbook __book;
-            using (var __templateStream = File.OpenRead(__path))
-            {
-                __book = new XSSFWorkbook(__templateStream);
-                
-                FillFuelSummaryTable(__book.GetSheetAt(0), station);
-                FillCashSummaryTable(__book.GetSheetAt(1), station);
-                AdditionalPrintedCheck(__book.GetSheetAt(2), station);
-                FillCanceledOrder(__book.GetSheetAt(3), station);
-                FillPaymentCange(__book.GetSheetAt(4), station);
-                FillVisaPayment(__book.GetSheetAt(5), station);
-                FillChargeBonuses(__book.GetSheetAt(6), station);
-                FillCancellationBonuses(__book.GetSheetAt(7), station);
-                FillTopDiscountCard(__book.GetSheetAt(8), station);
-                FillTopBonusCard(__book.GetSheetAt(9), station);
-                FillTopAccountCard(__book.GetSheetAt(10), station);
-                FillDivergenceCounter(__book.GetSheetAt(11), station);
-                FillGapCounter(__book.GetSheetAt(12), station);
-            }
+            
+                var __path = Path.Combine(".\\Resources", "Сводный Шаблон.xlsx");
+                IWorkbook __book;
+                using (var __templateStream = File.OpenRead(__path))
+                {
+                    __book = new XSSFWorkbook(__templateStream);
 
-            using (
-                var __resultStream =
-                    File.OpenWrite(Path.Combine(_outputPath, 
-                        $"Сводный отчет {station.Name}.xlsx"))
-            )
-            {
-                __book.Write(__resultStream);
-                __book.Close();
-            }
-            Thread.Sleep(1);
+                    FillFuelSummaryTable(__book.GetSheetAt(0), station);
+                    FillCashSummaryTable(__book.GetSheetAt(1), station);
+                    AdditionalPrintedCheck(__book.GetSheetAt(2), station);
+                    FillCanceledOrder(__book.GetSheetAt(3), station);
+                    FillPaymentCange(__book.GetSheetAt(4), station);
+                    FillVisaPayment(__book.GetSheetAt(5), station);
+                    FillChargeBonuses(__book.GetSheetAt(6), station);
+                    FillCancellationBonuses(__book.GetSheetAt(7), station);
+                    FillTopDiscountCard(__book.GetSheetAt(8), station);
+                    FillTopBonusCard(__book.GetSheetAt(9), station);
+                    FillTopAccountCard(__book.GetSheetAt(10), station);
+                    FillDivergenceCounter(__book.GetSheetAt(11), station);
+                    FillGapCounter(__book.GetSheetAt(12), station);
+                }
+
+                using (
+                    var __resultStream =
+                        File.OpenWrite(Path.Combine(_outputPath,
+                            $"Сводный отчет {station.Name}.xlsx"))
+                )
+                {
+                    __book.Write(__resultStream);
+                    __book.Close();
+                }
+                Thread.Sleep(1);
         }
 
         private void FillCashSummaryTable(ISheet sheet, FuelStation station)

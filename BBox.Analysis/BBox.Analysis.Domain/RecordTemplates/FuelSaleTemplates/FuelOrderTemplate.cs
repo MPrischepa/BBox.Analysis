@@ -114,6 +114,12 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             var __order = entity.GetCurrentOrder();
             var __trkNo = Int16.Parse(GetValueStr(record.Entry[1]));
             var __column = entity.FuelStation.GetFuelColumn(__trkNo);
+            if (__order == null && entity.PourState == FuelPourState.NewOrder)
+            {
+                __column.AddFuelOrder(entity);
+                __column.Finished();
+                __order = entity.GetCurrentOrder();
+            }
             //if (entity.FuelColumn == null)
             entity.SetFuelColumn(__column);
             //else if (!entity.FuelColumn.Equals(__column))
