@@ -15,3 +15,7 @@ BBox.Analysis/.vs/BBox.Analysis/v14/.suo
 /InDirectory
 /OutDirectory
 /OutDirectory.rar
+/BBox.Analysis/BBox.Analysis/bin/Release
+/BBox.Analysis/BBox.Analysis/obj/Release
+/BBox.Analysis/BBox.Analysis.Configuration/bin/Release
+/BBox.Analysis/BBox.Analysis.Core/bin/Release
