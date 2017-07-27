@@ -176,6 +176,16 @@ namespace BBox.Analysis.Processing
             return __result;
         }
 
+        public void UnProcessedRecord(FuelStation station, Record record)
+        {
+            var __result =
+                _processedRecord.Contains(new Tuple<FuelStation, DateTime, long>(station, record.TimeRecord, record.ID));
+            if (__result)
+            {
+                _processedRecord.Remove(new Tuple<FuelStation, DateTime, long>(station, record.TimeRecord, record.ID));
+            }
+        }
+
         public void RegisterBonusReport()
         {
 

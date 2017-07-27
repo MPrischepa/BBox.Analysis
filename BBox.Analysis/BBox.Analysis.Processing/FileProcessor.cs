@@ -89,20 +89,32 @@ namespace BBox.Analysis.Processing
                 string __line;
                 // Read and display lines from the file until the end of 
                 // the file is reached.
+                var __processedLine = String.Empty;
                 while ((__line = __reader.ReadLine()) != null)
                 {
+                    var __unProcessed = false;
+                    if (!__line.StartsWith("AZS"))
+                    {
+                        __processedLine = $"{__processedLine}{__line}";
+                        __unProcessed = true;
+                    }
+                    else
+                    {
+                        __processedLine = __line;
+                    }
                     try
                     {
-                        var __record = ProcessRecord(__line);
+                        var __record = ProcessRecord(__processedLine);
+                        if (__unProcessed && __record != null) UnProcessedRecord(__fuelStation,__record);
                         if (__record == null || IsProcessedRecord(__fuelStation, __record)) continue;
                         if (!BlackBoxObject.ProcessRecord(__fuelStation, __record))
-                            WriteLog($"{DateTime.Now}: Обработка: {__line} : Не обработанно");
+                            WriteLog($"{DateTime.Now}: Обработка: {__processedLine} : Не обработанно");
                     }
                     catch (Exception __ex)
                     {
-                        LogManager.GetInstance().GetLogger("BBox.Analysis").Error($"Ошибка обработки файла: {fileName}. \r\n Не обработана строка: {__line}. \r\n Данные отчета не корректны. \r\n",__ex);
+                        LogManager.GetInstance().GetLogger("BBox.Analysis").Error($"Ошибка обработки файла: {fileName}. \r\n Не обработана строка: {__processedLine}. \r\n Данные отчета не корректны. \r\n",__ex);
                         WriteLog($"Ошибка обработки файла: {fileName}.");
-                        WriteLog($"Не обработана строка: { __line}.");
+                        WriteLog($"Не обработана строка: { __processedLine}.");
                         WriteLog("Данные отчета не корректны.");
                         WriteLog($"{__ex}");
                         break;
@@ -124,6 +136,10 @@ namespace BBox.Analysis.Processing
             // __task.Wait();
         }
 
+        private void UnProcessedRecord(FuelStation station, Record record)
+        {
+            _registrar.UnProcessedRecord(station,record);
+        }
         private bool IsProcessedRecord(FuelStation station, Record record)
         {
             return _registrar.IsProcessedRecord(station, record);

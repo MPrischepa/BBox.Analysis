@@ -20,5 +20,7 @@ namespace BBox.Analysis.Interface
         void RegisterSummaryBonusReport();
 
         bool IsProcessedRecord(FuelStation station, Record record);
+
+        void UnProcessedRecord(FuelStation station, Record record);
     }
 }
