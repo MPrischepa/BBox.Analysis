@@ -42,7 +42,8 @@ namespace BBox.Analysis.Processing
                     FillTopAccountCard(__book.GetSheetAt(10), station);
                     FillDivergenceCounter(__book.GetSheetAt(11), station);
                     FillGapCounter(__book.GetSheetAt(12), station);
-                }
+                    FillCanceledOrderSummary(__book.GetSheetAt(13), station);
+            }
 
                 using (
                     var __resultStream =
@@ -524,6 +525,31 @@ namespace BBox.Analysis.Processing
                     __cell = RegistrarHelper.GetCell(__row, 14);
                     __cell.SetCellValue(Convert.ToDouble(__stationFuelsSale.FinishedCounterValue - __stationFuelsSale.StartCounterValue));
                 }
+                __rowNum++;
+            }
+        }
+
+        private void FillCanceledOrderSummary(ISheet sheet, FuelStation station)
+        {
+            var __rowNum = 4;
+            var __data =
+                station.Shifts.SelectMany(x => x.FuelsSales).Where(x => x.SaleState == FuelSaleState.Canceled)
+                    .Where(x => x.FactPour != null)
+                    .Where(x => x.FactSale == null)
+                    .GroupBy(x => x.Shift,(shift, sales) => new {Shift = shift,Count = sales.Count(),Amount = sales.Sum(x => x.FactPour.Amount)})
+                    .OrderBy(x => x.Shift.BeginDate)
+                    .ThenBy(x => x.Shift.EndDate);
+            foreach (var __stationFuelsSale in __data)
+            {
+                var __row = RegistrarHelper.GetRow(sheet, __rowNum);
+                var __cell = RegistrarHelper.GetCell(__row, 0);
+                __cell.SetCellValue($"{__stationFuelsSale.Shift.BeginDate:dd.MM.yyyy HH:mm} - {__stationFuelsSale.Shift.EndDate:dd.MM.yyyy HH:mm}");
+
+                __cell = RegistrarHelper.GetCell(__row, 1);
+                __cell.SetCellValue(__stationFuelsSale.Count);
+
+                    __cell = RegistrarHelper.GetCell(__row,2);
+                    __cell.SetCellValue(Convert.ToDouble(__stationFuelsSale.Amount));
                 __rowNum++;
             }
         }

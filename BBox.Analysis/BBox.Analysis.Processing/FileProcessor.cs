@@ -93,7 +93,7 @@ namespace BBox.Analysis.Processing
                 while ((__line = __reader.ReadLine()) != null)
                 {
                     var __unProcessed = false;
-                    if (!new Regex(".+;\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2};\\d+;").IsMatch(__line))
+                    if (!new Regex(".+;\\d{4}-\\d{2}-\\d{2}.+;").IsMatch(__line))
                     {
                         __processedLine = $"{__processedLine}{__line}";
                         __unProcessed = true;
