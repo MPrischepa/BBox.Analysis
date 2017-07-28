@@ -7,6 +7,7 @@ using BBox.Analysis.Core.Logger;
 using BBox.Analysis.Domain;
 using BBox.Analysis.Domain.PaymentTypes;
 using NPOI.SS.UserModel;
+using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
 
 namespace BBox.Analysis.Processing
@@ -488,44 +489,65 @@ namespace BBox.Analysis.Processing
                 station.Shifts.SelectMany(x => x.FuelsSales).Where(x => x.SaleState == FuelSaleState.Canceled)
                     .Where(x => x.FactPour != null)
                     .Where(x => x.FactSale == null)
-                    .OrderBy(x => x.Shift.BeginDate)
-                    .ThenBy(x => x.Shift.EndDate)
-                    .ThenBy(x => x.Date);
-            foreach (var __stationFuelsSale in __data)
+                    .GroupBy(x => x.Shift)
+                    .OrderBy(x => x.Key.BeginDate)
+                    .ThenBy(x => x.Key.EndDate);
+                    //.ThenBy(x => x.Date);
+            foreach (var __shift in __data)
             {
-                var __row = RegistrarHelper.GetRow(sheet, __rowNum);
-                var __cell = RegistrarHelper.GetCell(__row, 0);
-                __cell.SetCellValue($"{__stationFuelsSale.Shift.BeginDate:dd.MM.yyyy HH:mm} - {__stationFuelsSale.Shift.EndDate:dd.MM.yyyy HH:mm}");
-
-                __cell = RegistrarHelper.GetCell(__row, 1);
-                __cell.SetCellValue(RegistrarHelper.GetSaleState(__stationFuelsSale.SaleState));
-                __cell = RegistrarHelper.GetCell(__row, 2);
-                __cell.SetCellValue($"{ __stationFuelsSale.Date:dd.MM.yy HH:mm:ss}");
-                __cell = RegistrarHelper.GetCell(__row, 3);
-                __cell.SetCellValue(__stationFuelsSale.ID);
-
-                var __order = __stationFuelsSale.FactPour;
-                if (__order != null)
-                    RegistrarHelper.FillOrderData(__row, 4, __order, false);
-
-                if (__stationFuelsSale.FuelHouse != null)
+                IRow __row;
+                ICell __cell;
+                foreach (var __stationFuelsSale in __shift)
                 {
-                    __cell = RegistrarHelper.GetCell(__row, 10);
-                    __cell.SetCellValue(__stationFuelsSale.FactPour.FuelColumn.ID);
+                    __row = RegistrarHelper.GetRow(sheet, __rowNum);
+                    __cell = RegistrarHelper.GetCell(__row, 0);
+                    __cell.SetCellValue($"{__stationFuelsSale.Shift.BeginDate:dd.MM.yyyy HH:mm} - {__stationFuelsSale.Shift.EndDate:dd.MM.yyyy HH:mm}");
 
-                    __cell = RegistrarHelper.GetCell(__row, 11);
-                    __cell.SetCellValue(__stationFuelsSale.FuelHouse.Name);
+                    __cell = RegistrarHelper.GetCell(__row, 1);
+                    __cell.SetCellValue(RegistrarHelper.GetSaleState(__stationFuelsSale.SaleState));
+                    __cell = RegistrarHelper.GetCell(__row, 2);
+                    __cell.SetCellValue($"{ __stationFuelsSale.Date:dd.MM.yy HH:mm:ss}");
+                    __cell = RegistrarHelper.GetCell(__row, 3);
+                    __cell.SetCellValue(__stationFuelsSale.ID);
 
-                    __cell = RegistrarHelper.GetCell(__row, 12);
-                    __cell.SetCellValue(Convert.ToDouble(__stationFuelsSale.StartCounterValue));
+                    var __order = __stationFuelsSale.FactPour;
+                    if (__order != null)
+                        RegistrarHelper.FillOrderData(__row, 4, __order, false);
 
-                    __cell = RegistrarHelper.GetCell(__row, 13);
-                    __cell.SetCellValue(Convert.ToDouble(__stationFuelsSale.FinishedCounterValue));
+                    if (__stationFuelsSale.FuelHouse != null)
+                    {
+                        __cell = RegistrarHelper.GetCell(__row, 10);
+                        __cell.SetCellValue(__stationFuelsSale.FactPour.FuelColumn.ID);
 
-                    __cell = RegistrarHelper.GetCell(__row, 14);
-                    __cell.SetCellValue(Convert.ToDouble(__stationFuelsSale.FinishedCounterValue - __stationFuelsSale.StartCounterValue));
+                        __cell = RegistrarHelper.GetCell(__row, 11);
+                        __cell.SetCellValue(__stationFuelsSale.FuelHouse.Name);
+
+                        __cell = RegistrarHelper.GetCell(__row, 12);
+                        __cell.SetCellValue(Convert.ToDouble(__stationFuelsSale.StartCounterValue));
+
+                        __cell = RegistrarHelper.GetCell(__row, 13);
+                        __cell.SetCellValue(Convert.ToDouble(__stationFuelsSale.FinishedCounterValue));
+
+                        __cell = RegistrarHelper.GetCell(__row, 14);
+                        __cell.SetCellValue(Convert.ToDouble(__stationFuelsSale.FinishedCounterValue - __stationFuelsSale.StartCounterValue));
+                    }
+                    __rowNum++;
                 }
-                __rowNum++;
+                var __region = new CellRangeAddress(__rowNum, __rowNum + 1, 0, 7);
+                sheet.AddMergedRegion(__region);
+                __region = new CellRangeAddress(__rowNum, __rowNum + 1, 8, 8);
+                sheet.AddMergedRegion(__region);
+                __region = new CellRangeAddress(__rowNum, __rowNum + 1, 9, 9);
+                sheet.AddMergedRegion(__region);
+                __row = RegistrarHelper.GetRow(sheet, __rowNum);
+                __cell = RegistrarHelper.GetCell(__row, 0);
+                __cell.SetCellValue($"Итого по смене: {__shift.Key.BeginDate:dd.MM.yyyy HH:mm} - {__shift.Key.EndDate:dd.MM.yyyy HH:mm}");
+                __cell = RegistrarHelper.GetCell(__row,8);
+                __cell.SetCellValue(__shift.Count());
+                __cell = RegistrarHelper.GetCell(__row, 9);
+                __cell.SetCellValue(Convert.ToDouble(__shift.Sum(x => x.FactPour.Amount)));
+                __rowNum = __rowNum+2;
+
             }
         }
 
