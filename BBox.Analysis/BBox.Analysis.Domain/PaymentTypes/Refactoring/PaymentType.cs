@@ -20,6 +20,10 @@ namespace BBox.Analysis.Domain.PaymentTypes
         /// <summary>
         /// безоплаты
         /// </summary>
-        WithoutPayment = 8
+        WithoutPayment = 8,
+        /// <summary>
+        /// Не определено
+        /// </summary>
+        NotDefined = 16
     }
 }

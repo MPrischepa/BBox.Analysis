@@ -239,13 +239,21 @@ namespace BBox.Analysis.Processing
         private void FillCashSummaryTable(ISheet sheet, Shift shift)
         {
             var __rowNum = 3;
-           
+
             var __dataFact = shift.FuelsSales.Where(x => x.FactSale != null)
-                .GroupBy(x => new {
-                    x.FactSale.ProductName,x.FactSale.Payment.PaymentTypeName}, (product, sales) => new
+                .GroupBy(x => new
                 {
-                        Sale = product,
-                        Amount = sales.Sum(y => y.FactSale.Amount),
+                    x.FactSale.ProductName,
+                    (x.FactSale.Payment ?? new Payment(new PaymentTypeDescription
+                     {
+                         Name = "Не определено",
+                         PaymentType = PaymentType.NotDefined,
+                         ClientType = ClientType.Other
+                     })).PaymentTypeName
+                }, (product, sales) => new
+                {
+                    Sale = product,
+                    Amount = sales.Sum(y => y.FactSale.Amount),
                     CheckAmount = sales.Sum(y => y.IsCheckPrinted ? y.CheckAmount : 0)
                 });
 

@@ -71,7 +71,12 @@ namespace BBox.Analysis.Processing
             var __dataFact = station.Shifts.SelectMany(x => x.FuelsSales).Where(x => x.FactSale != null)
                 .GroupBy(x => new {
                     x.FactSale.ProductName,
-                    x.FactSale.Payment.PaymentTypeName,
+                    (x.FactSale.Payment ?? new Payment(new PaymentTypeDescription
+                    {
+                        Name = "Не определено",
+                        PaymentType = PaymentType.NotDefined,
+                        ClientType = ClientType.Other
+                    })).PaymentTypeName,
                     x.Shift
                 }, (product, sales) =>
                 {
@@ -318,7 +323,12 @@ namespace BBox.Analysis.Processing
                     .Where(x => x.FactSale != null)
                     .Where(
                         x =>
-                            x.FactSale.Payment.ClientCardType == ClientCardType.DiscountCard)
+                            (x.FactSale.Payment ?? new Payment(new PaymentTypeDescription
+                            {
+                                Name = "Не определено",
+                                PaymentType = PaymentType.NotDefined,
+                                ClientType = ClientType.Other
+                            })).ClientCardType == ClientCardType.DiscountCard)
                     .Select(x => new {Payment = x.FactSale.Payment, Amount = x.FactSale.Amount})
                     .GroupBy(x => x.Payment.CardNo,
                         (s, sales) => new {CardNo = s, Count = sales.Count(), Amount = sales.Sum(x => x.Amount)})
@@ -347,7 +357,12 @@ namespace BBox.Analysis.Processing
                     .Where(x => x.FactSale != null)
                     .Where(
                         x =>
-                            x.FactSale.Payment.ClientCardType == ClientCardType.AccountCard)
+                            (x.FactSale.Payment ?? new Payment(new PaymentTypeDescription
+                            {
+                                Name = "Не определено",
+                                PaymentType = PaymentType.NotDefined,
+                                ClientType = ClientType.Other
+                            })).ClientCardType == ClientCardType.AccountCard)
                     .Select(x => new { Payment = x.FactSale.Payment, Amount = x.FactSale.Amount })
                     .GroupBy(x => x.Payment.CardNo,
                         (s, sales) => new { CardNo = s, Count = sales.Count(), Amount = sales.Sum(x => x.Amount) })
@@ -459,8 +474,18 @@ namespace BBox.Analysis.Processing
             var __dataFact = station.Shifts.SelectMany(x => x.FuelsSales).Where(x => x.FactSale != null)
                 .Where(
                     x =>
-                        x.FactSale.Payment.ClientType == ClientType.PhysicalPerson &&
-                        x.FactSale.Payment.PaymentType.HasFlag(PaymentType.CashlessSettlement))
+                        (x.FactSale.Payment ?? new Payment(new PaymentTypeDescription
+                        {
+                            Name = "Не определено",
+                            PaymentType = PaymentType.NotDefined,
+                            ClientType = ClientType.Other
+                        })).ClientType == ClientType.PhysicalPerson &&
+                        (x.FactSale.Payment ?? new Payment(new PaymentTypeDescription
+                        {
+                            Name = "Не определено",
+                            PaymentType = PaymentType.NotDefined,
+                            ClientType = ClientType.Other
+                        })).PaymentType.HasFlag(PaymentType.CashlessSettlement))
                 .GroupBy(x => x.Shift, (group, sales) =>
                 {
                     var __enumerable = sales as IList<FuelSale> ?? sales.ToList();

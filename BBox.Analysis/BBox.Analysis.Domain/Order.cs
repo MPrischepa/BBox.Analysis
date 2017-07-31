@@ -7,6 +7,7 @@ namespace BBox.Analysis.Domain
     public class Order
     {
         public FuelColumn FuelColumn { get; private set; }
+
         public Payment Payment { get; private set; }
 
         public string ProductName { get; set; }
