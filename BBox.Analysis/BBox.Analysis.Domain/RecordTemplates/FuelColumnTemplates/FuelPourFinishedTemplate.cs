@@ -22,7 +22,8 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
 
         public override bool Process(FuelColumn entity, Record record)
         {
-            entity.Finished();
+            var __hoseName = Int16.Parse(new Regex("\\d+").Match(record.Entry[2]).Value);
+            entity.Finished(__hoseName);
             return true;
         }
 
@@ -40,6 +41,29 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
         public override bool IsMatch(FuelColumn entity, Record record)
         {
             return record.Entry[1].Equals("На ТРК идет отпуск топлива");
+        }
+
+        public override bool Process(FuelColumn entity, Record record)
+        {
+            var __hoseName = Int16.Parse(new Regex("\\d+").Match(record.Entry[2]).Value);
+            entity.Start(__hoseName);
+            return true;
+        }
+
+        #endregion
+    }
+
+    internal class FuelPourStopedTemplate : RecordTemplate<FuelColumn>
+    {
+        public static FuelPourStopedTemplate Instance { get; } = new FuelPourStopedTemplate();
+        private FuelPourStopedTemplate()
+        {
+        }
+        #region Overrides of RecordTemplate<FuelColumn>
+
+        public override bool IsMatch(FuelColumn entity, Record record)
+        {
+            return record.Entry[1].Equals("ТРК остановлена");
         }
 
         public override bool Process(FuelColumn entity, Record record)

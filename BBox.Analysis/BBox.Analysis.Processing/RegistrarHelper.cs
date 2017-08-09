@@ -44,6 +44,11 @@ namespace BBox.Analysis.Processing
                 __cell = RegistrarHelper.GetCell(row, __ind);
                 __cell.SetCellValue(order.Payment.PaymentTypeName);
             }
+            else
+            {
+                __cell = RegistrarHelper.GetCell(row, __ind);
+                __cell.SetCellValue("Не определено");
+            }
             __ind++;
             if (order.FuelColumn != null)
             {

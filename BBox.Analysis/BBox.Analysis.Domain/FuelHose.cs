@@ -24,6 +24,12 @@ namespace BBox.Analysis.Domain
             OnValueChanged(Value);
         }
 
+        public void SetValue(Decimal value)
+        {
+            Value = value;
+            OnValueChanged(Value);
+        }
+
         public event EventHandler<Decimal> ValueChanged;
 
         protected virtual void OnValueChanged(decimal e)

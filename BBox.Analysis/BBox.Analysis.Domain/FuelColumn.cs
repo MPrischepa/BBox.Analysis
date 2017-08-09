@@ -55,6 +55,16 @@ namespace BBox.Analysis.Domain
             __sale.PourState = FuelPourState.PourFinished;
             __sale.GetCurrentOrder();
         }
+        public void Finished(Int16 hoseName)
+        {
+            Finished();
+            var __sale = _sales.Last.Value;
+            var __hose = GetFuelHouse(hoseName);
+            if (__sale.FuelHouse != __hose)
+            {
+                __sale.FuelHouse = __hose;
+            }
+        }
 
         public void RemoveSale(FuelSale sale)
         {

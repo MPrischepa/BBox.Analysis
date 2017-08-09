@@ -26,7 +26,11 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
         {
             var __hoseName = Int16.Parse(new Regex("\\d+").Match(record.Entry[1]).Value);
             var __hose = entity.GetFuelHouse(__hoseName);
-            if (new Regex("Счетчик: NAN").IsMatch(record.Entry[3])) return true;
+            if (new Regex("Счетчик: NAN").IsMatch(record.Entry[3]))
+            {
+                __hose.SetValue(__hose.Value);
+                return true;
+            }
             var __value = Double.Parse(new Regex("\\d+,\\d{2}").Match(record.Entry[3]).Value);
             __hose.SetValue(__value);
             return true;
