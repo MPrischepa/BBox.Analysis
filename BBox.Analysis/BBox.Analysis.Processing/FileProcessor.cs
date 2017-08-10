@@ -90,6 +90,7 @@ namespace BBox.Analysis.Processing
                 // Read and display lines from the file until the end of 
                 // the file is reached.
                 var __processedLine = String.Empty;
+                Int64? __positionNo = null;
                 while ((__line = __reader.ReadLine()) != null)
                 {
                     var __unProcessed = false;
@@ -107,6 +108,12 @@ namespace BBox.Analysis.Processing
                         var __record = ProcessRecord(__processedLine);
                         if (__unProcessed && __record != null) UnProcessedRecord(__fuelStation,__record);
                         if (__record == null || IsProcessedRecord(__fuelStation, __record)) continue;
+                        if (__positionNo.HasValue && __positionNo.Value != __record.ID - 1)
+                        {
+                            SetInvalidRecord(__fileName, __record.ID,
+                                $"Нарушение порядка следования записей: Предыдущая запись: {__positionNo}, текущая запись {__record.ID}");
+                        }
+                        __positionNo = __record.ID;
                         if (!BlackBoxObject.ProcessRecord(__fuelStation, __record))
                             WriteLog($"{DateTime.Now}: Обработка: {__processedLine} : Не обработанно");
                     }
@@ -147,6 +154,11 @@ namespace BBox.Analysis.Processing
         private FuelStation GetFuelStation(string s)
         {
             return _registrar.GetFuelStation(s);
+        }
+
+        private void SetInvalidRecord(String fileName, Int64 positionNo, String reason)
+        {
+            _registrar.SetInvalidInfo(fileName,positionNo,reason);
         }
     }
 }

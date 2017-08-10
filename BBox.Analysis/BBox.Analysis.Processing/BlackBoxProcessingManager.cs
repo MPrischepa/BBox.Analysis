@@ -59,6 +59,7 @@ namespace BBox.Analysis.Processing
             _registrar.RegisterSummaryReport();
             _registrar.RegisterSummaryBonusReport();
             _registrar.RegisterBonusReport();
+            _registrar.RegisterInvalidRecordReport();
         }
     }
 }

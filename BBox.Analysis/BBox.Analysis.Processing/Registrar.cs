@@ -20,6 +20,7 @@ namespace BBox.Analysis.Processing
         private IDictionary<String, FuelStation> _stations;
         private IDictionary<String, BonusCard> _bonusCards;
         private ISet<Tuple<FuelStation, DateTime, Int64>> _processedRecord;
+        private IList<Tuple<String, Int64, String>> _invalidRecords;
         private ILogger _logger;
 
         public Registrar(String outputPath, ILogger logger)
@@ -29,6 +30,7 @@ namespace BBox.Analysis.Processing
             _bonusCards = new Dictionary<string, BonusCard>();
             _logger = logger;
             _processedRecord = new HashSet<Tuple<FuelStation, DateTime, long>>();
+            _invalidRecords = new List<Tuple<string, long, string>>();
         }
 
         #region Implementation of IRegistrar
@@ -183,6 +185,63 @@ namespace BBox.Analysis.Processing
             if (__result)
             {
                 _processedRecord.Remove(new Tuple<FuelStation, DateTime, long>(station, record.TimeRecord, record.ID));
+            }
+        }
+
+        public void SetInvalidInfo(string fileName, long position, string reason)
+        {
+            _invalidRecords.Add(new Tuple<string, long, string>(fileName,position,reason));
+        }
+
+        public void RegisterInvalidRecordReport()
+        {
+            _logger.Write("Формирование отчета по валидности данных");
+            try
+            {
+                var __path = Path.Combine(".\\Resources", "Шаблон валидности.xlsx");
+                IWorkbook __book;
+                using (var __templateStream = File.OpenRead(__path))
+                {
+                    __book = new XSSFWorkbook(__templateStream);
+
+                    FillInvalidRecordReport(__book.GetSheetAt(0));
+                }
+
+                using (
+                    var __resultStream =
+                        File.OpenWrite(Path.Combine(_outputPath,
+                            $"Отчет по валидности данных.xlsx"))
+                )
+                {
+                    __book.Write(__resultStream);
+                    __book.Close();
+                }
+            }
+            catch (Exception __ex)
+            {
+                var __fileName = $"Отчет по валидности данных.xlsx";
+                LogManager.GetInstance()
+                    .GetLogger("BBox.Analysis")
+                    .Error($"Ошибка формирования файла: {__fileName}. \r\n Данные отчета не корректны. \r\n", __ex);
+                _logger.Write($"Ошибка обработки файла: {__fileName}.");
+                _logger.Write("Данные отчета не корректны.");
+                _logger.Write($"{__ex}");
+            }
+        }
+
+        private void FillInvalidRecordReport(ISheet sheet)
+        {
+            var __rowNum = 2;
+            foreach (var __record in _invalidRecords)
+            {
+                var __row = RegistrarHelper.GetRow(sheet, __rowNum);
+                var __cell = RegistrarHelper.GetCell(__row, 0);
+                __cell.SetCellValue(__record.Item1);
+                __cell = RegistrarHelper.GetCell(__row, 1);
+                __cell.SetCellValue(__record.Item2);
+                __cell = RegistrarHelper.GetCell(__row, 2);
+                __cell.SetCellValue(__record.Item3);
+                __rowNum++;
             }
         }
 

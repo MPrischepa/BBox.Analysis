@@ -22,5 +22,9 @@ namespace BBox.Analysis.Interface
         bool IsProcessedRecord(FuelStation station, Record record);
 
         void UnProcessedRecord(FuelStation station, Record record);
+
+        void SetInvalidInfo(String fileName, Int64 position, String reason);
+
+        void RegisterInvalidRecordReport();
     }
 }
