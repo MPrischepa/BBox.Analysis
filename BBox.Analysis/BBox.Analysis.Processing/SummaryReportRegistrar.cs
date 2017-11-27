@@ -23,39 +23,42 @@ namespace BBox.Analysis.Processing
 
         public void RegisterSummaryReport(FuelStation station)
         {
-            
-                var __path = Path.Combine(".\\Resources", "Сводный Шаблон.xlsx");
-                IWorkbook __book;
-                using (var __templateStream = File.OpenRead(__path))
-                {
-                    __book = new XSSFWorkbook(__templateStream);
 
-                    FillFuelSummaryTable(__book.GetSheetAt(0), station);
-                    FillCashSummaryTable(__book.GetSheetAt(1), station);
-                    AdditionalPrintedCheck(__book.GetSheetAt(2), station);
-                    FillCanceledOrder(__book.GetSheetAt(3), station);
-                    FillPaymentCange(__book.GetSheetAt(4), station);
-                    FillVisaPayment(__book.GetSheetAt(5), station);
-                    FillChargeBonuses(__book.GetSheetAt(6), station);
-                    FillCancellationBonuses(__book.GetSheetAt(7), station);
-                    FillTopDiscountCard(__book.GetSheetAt(8), station);
-                    FillTopBonusCard(__book.GetSheetAt(9), station);
-                    FillTopAccountCard(__book.GetSheetAt(10), station);
-                    FillDivergenceCounter(__book.GetSheetAt(11), station);
-                    FillGapCounter(__book.GetSheetAt(12), station);
-                    FillCanceledOrderSummary(__book.GetSheetAt(13), station);
+            var __path = Path.Combine(".\\Resources", "Сводный Шаблон.xlsx");
+            IWorkbook __book;
+            using (var __templateStream = File.OpenRead(__path))
+            {
+                __book = new XSSFWorkbook(__templateStream);
+
+                FillFuelSummaryTable(__book.GetSheetAt(0), station);
+                FillCashSummaryTable(__book.GetSheetAt(1), station);
+                AdditionalPrintedCheck(__book.GetSheetAt(2), station);
+                FillCanceledOrder(__book.GetSheetAt(3), station);
+                FillPaymentCange(__book.GetSheetAt(4), station);
+                FillVisaPayment(__book.GetSheetAt(5), station);
+                FillChargeBonuses(__book.GetSheetAt(6), station);
+                FillCancellationBonuses(__book.GetSheetAt(7), station);
+                FillTopDiscountCard(__book.GetSheetAt(8), station);
+                FillTopBonusCard(__book.GetSheetAt(9), station);
+                FillTopAccountCard(__book.GetSheetAt(10), station);
+                FillDivergenceCounter(__book.GetSheetAt(11), station);
+                FillGapCounter(__book.GetSheetAt(12), station);
+                FillCanceledOrderSummary(__book.GetSheetAt(13), station);
+                FillSummaryIncorrectConclusion(__book.GetSheetAt(14), station);
+                FillIncorrectConclusion(__book.GetSheetAt(15), station);
+
             }
 
-                using (
-                    var __resultStream =
-                        File.OpenWrite(Path.Combine(_outputPath,
-                            $"Сводный отчет {station.Name}.xlsx"))
-                )
-                {
-                    __book.Write(__resultStream);
-                    __book.Close();
-                }
-                Thread.Sleep(1);
+            using (
+                var __resultStream =
+                    File.OpenWrite(Path.Combine(_outputPath,
+                        $"Сводный отчет {station.Name}.xlsx"))
+            )
+            {
+                __book.Write(__resultStream);
+                __book.Close();
+            }
+            Thread.Sleep(1);
         }
 
         private void FillCashSummaryTable(ISheet sheet, FuelStation station)
@@ -762,5 +765,54 @@ namespace BBox.Analysis.Processing
                 __rowNum++;
             }
         }
+
+        private void FillIncorrectConclusion(ISheet sheet, FuelStation station)
+        {
+            var __rowNum = 3;
+            var __data =
+                station.Shifts.Where(x => x.Incorrect.Any())
+                    .OrderBy(x => x.BeginDate)
+                    .ThenBy(x => x.EndDate);
+            foreach (var __shift in __data)
+            {
+                
+                
+                foreach (var __incorrectConclusionse in __shift.Incorrect)
+                {
+                    var __row = RegistrarHelper.GetRow(sheet, __rowNum);
+                    var __cell = RegistrarHelper.GetCell(__row, 0);
+                    __cell.SetCellValue($"{__shift.BeginDate:dd.MM.yyyy HH:mm} - {__shift.EndDate:dd.MM.yyyy HH:mm}");
+
+                    __cell = RegistrarHelper.GetCell(__row, 1);
+                    __cell.SetCellValue($"{__incorrectConclusionse.Date:dd.MM.yyyy HH:mm:ss}");
+
+                    __cell = RegistrarHelper.GetCell(__row, 2);
+                    __cell.SetCellValue(Convert.ToDouble(__incorrectConclusionse.PositionNo));
+                    __rowNum++;
+                }
+                
+                
+            }
+        }
+
+        private void FillSummaryIncorrectConclusion(ISheet sheet, FuelStation station)
+        {
+            var __rowNum = 3;
+            var __data =
+                station.Shifts.Where(x => x.Incorrect.Any())
+                    .OrderBy(x => x.BeginDate)
+                    .ThenBy(x => x.EndDate);
+            foreach (var __shift in __data)
+            {
+                var __row = RegistrarHelper.GetRow(sheet, __rowNum);
+                var __cell = RegistrarHelper.GetCell(__row, 0);
+                __cell.SetCellValue($"{__shift.BeginDate:dd.MM.yyyy HH:mm} - {__shift.EndDate:dd.MM.yyyy HH:mm}");
+
+                __cell = RegistrarHelper.GetCell(__row, 1);
+                __cell.SetCellValue(__shift.Incorrect.Count());
+                __rowNum++;
+            }
+        }
+
     }
 }

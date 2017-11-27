@@ -97,6 +97,7 @@
     <Compile Include="RecordTemplates\FuelStationTemplates\FuelColumnTemplate.cs" />
     <Compile Include="RecordTemplates\FuelStationTemplates\FuelSaleTemplate.cs" />
     <Compile Include="RecordTemplates\FuelStationTemplates\IgnoreRecordTemplate.cs" />
+    <Compile Include="RecordTemplates\FuelStationTemplates\IncorrectConclusionTemplate.cs" />
     <Compile Include="RecordTemplates\FuelStationTemplates\ShiftClosedTemplate.cs" />
     <Compile Include="RecordTemplates\PaymentTemplates\IgnoreRecordTemplate.cs" />
     <Compile Include="RecordTemplates\PaymentTemplates\SetCardTemplate.cs" />

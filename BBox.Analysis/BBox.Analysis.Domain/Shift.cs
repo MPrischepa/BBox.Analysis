@@ -20,6 +20,19 @@ namespace BBox.Analysis.Domain
         public IEnumerable<FuelSale> FuelsSales => _fuelSales.Values;
 
 
+        public IEnumerable<IncorrectConclusions> Incorrect => _incorrect;
+
+        private readonly IList<IncorrectConclusions> _incorrect;
+
+        public void AddIncorrectConclusion(DateTime date, long positionNo)
+        {
+            _incorrect.Add(new IncorrectConclusions
+            {
+                Date = date,
+                PositionNo = positionNo
+            });
+        }
+
         public FuelSale GetFuelSale(Int64 saleID, Record record)
         {
             FuelSale __sale;
@@ -44,6 +57,7 @@ namespace BBox.Analysis.Domain
                 FuelHose = x.Name
             }).ToList();
             _finishedShiftHoses = new List<ShiftHose>();
+            _incorrect = new List<IncorrectConclusions>();
         }
 
         public void StartShift(DateTime beginDate)
@@ -72,5 +86,12 @@ namespace BBox.Analysis.Domain
         public Int16 FuelHose { get; set; }
 
         public Decimal Value { get; set; }
+    }
+
+    public class IncorrectConclusions
+    {
+        public DateTime Date { get; set; }
+
+        public long PositionNo { get; set; }
     }
 }

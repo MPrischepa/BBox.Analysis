@@ -20,6 +20,7 @@ namespace BBox.Analysis.Domain
             BlackBoxObject.AddTemplate(BonusesCancellationTemplate.Instance);
             BlackBoxObject.AddTemplate(CancelBonusesCancellationTemplate.Instance);
             BlackBoxObject.AddTemplate(DbUtilCommitTransactionTemplate.Instance);
+            BlackBoxObject.AddTemplate(IncorrectConclusionTemplate.Instance);
         }
         public String Name { get; set; }
 
