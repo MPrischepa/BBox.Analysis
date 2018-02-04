@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using BBox.Analysis.Domain.PaymentTypes;
 
@@ -31,14 +32,16 @@ namespace BBox.Analysis.Domain
                 if (__volumeReg.IsMatch(_doseString))
                 {
                     var __volumeStr = __volumeReg.Match(_doseString).Value.TrimEnd('л');
-                    Volume = Decimal.Parse(__volumeStr);
+                    var __numberFormatInfo = new NumberFormatInfo {NumberDecimalSeparator = ","};
+                    Volume = Decimal.Parse(__volumeStr,__numberFormatInfo);
                 }
                 var __amountPattern = @"\d*\,\d{2}р";
                 var __amountReg = new Regex(__amountPattern);
                 if (__amountReg.IsMatch(_doseString))
                 {
                     var __amountStr = __amountReg.Match(_doseString).Value.TrimEnd('р');
-                    Amount = Decimal.Parse(__amountStr);
+                    var __numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
+                    Amount = Decimal.Parse(__amountStr,__numberFormatInfo);
                 }
             }
         }

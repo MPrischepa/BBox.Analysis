@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -44,7 +45,8 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             //}
 
             __order.ProductName = GetValueStr(record.Entry[2]);
-            __order.Price = Decimal.Parse(GetValueStr(record.Entry[3]));
+            var __numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
+            __order.Price = Decimal.Parse(GetValueStr(record.Entry[3]),__numberFormatInfo);
             __order.DoseString = GetValueStr(record.Entry[4].Substring(0, record.Entry[4].Length-1));
             AfterProcessed(entity);
             return ProcessingResult.SelfProcessing;
@@ -130,9 +132,10 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             //}
 
             __order.ProductName = GetValueStr(record.Entry[2]);
-            __order.Price = Decimal.Parse(GetValueStr(record.Entry[3]));
-            __order.Volume = Decimal.Parse(new Regex("\\d*,\\d{2}").Match(record.Entry[4]).Value);
-            __order.Amount = Decimal.Parse(new Regex("\\d*,\\d{2}").Match(record.Entry[5]).Value);
+            var __numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
+            __order.Price = Decimal.Parse(GetValueStr(record.Entry[3]),__numberFormatInfo);
+            __order.Volume = Decimal.Parse(new Regex("\\d*,\\d{2}").Match(record.Entry[4]).Value,__numberFormatInfo);
+            __order.Amount = Decimal.Parse(new Regex("\\d*,\\d{2}").Match(record.Entry[5]).Value,__numberFormatInfo);
             entity.PourState = FuelPourState.OrderFinished;
             return ProcessingResult.SelfProcessing;
         }

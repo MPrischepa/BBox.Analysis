@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -36,7 +37,8 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
             if (__payment == null) throw new Exception("Ожидается основание Бонусы");
             __pattern = "Отмена списания бонусов: \\d+,\\d{2}";
             __str = new Regex(__pattern).Match(record.Entry[0]).Value;
-            var __bonuses = Decimal.Parse(new Regex("\\d+,\\d{2}").Match(__str).Value);
+            var __numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
+            var __bonuses = Decimal.Parse(new Regex("\\d+,\\d{2}").Match(__str).Value,__numberFormatInfo);
             __payment.RemoveCancellationBonuses(__sale,__bonuses);
             return ProcessingResult.SelfProcessing;
         }

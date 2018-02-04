@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -38,17 +39,19 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
             if (__sale.PourState == FuelPourState.PourStart)
             {
                 var __order = __sale.GetCurrentOrder();
-                __order.Price = Decimal.Parse(GetValueStr(record.Entry[1]));
-                __order.Volume = Decimal.Parse(GetValueStr(record.Entry[2]));
-                __order.Amount = Decimal.Parse(GetValueStr(record.Entry[3]));
+                var __numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
+                __order.Price = Decimal.Parse(GetValueStr(record.Entry[1]),__numberFormatInfo);
+                __order.Volume = Decimal.Parse(GetValueStr(record.Entry[2]),__numberFormatInfo);
+                __order.Amount = Decimal.Parse(GetValueStr(record.Entry[3]),__numberFormatInfo);
                 __sale.PourState = FuelPourState.OrderFinished;
             }
             if (__sale.PourState == FuelPourState.OrderFinished)
             {
                 var __order = __sale.GetCurrentOrder();
-                __order.Price = Decimal.Parse(GetValueStr(record.Entry[1]));
-                __order.Volume = Decimal.Parse(GetValueStr(record.Entry[2]));
-                __order.Amount = Decimal.Parse(GetValueStr(record.Entry[3]));
+                var __numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
+                __order.Price = Decimal.Parse(GetValueStr(record.Entry[1]),__numberFormatInfo);
+                __order.Volume = Decimal.Parse(GetValueStr(record.Entry[2]),__numberFormatInfo);
+                __order.Amount = Decimal.Parse(GetValueStr(record.Entry[3]),__numberFormatInfo);
                 __sale.SaleState = FuelSaleState.Approved;
                 return ProcessingResult.SelfProcessing;
             }

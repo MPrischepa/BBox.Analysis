@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -28,7 +29,8 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
 
         public override ProcessingResult Process(FuelSale entity, Record record)
         {
-            entity.SalePrintCheck(Decimal.Parse(new Regex("\\d+,\\d{2}").Match(record.Entry[1]).Value));
+            var __numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
+            entity.SalePrintCheck(Decimal.Parse(new Regex("\\d+,\\d{2}").Match(record.Entry[1]).Value,__numberFormatInfo));
             return ProcessingResult.SelfProcessing;
         }
 

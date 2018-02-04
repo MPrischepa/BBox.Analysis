@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -32,7 +33,8 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
                 __hose.SetValue(__hose.Value);
                 return ProcessingResult.SelfProcessing;
             }
-            var __value = Double.Parse(new Regex("\\d+,\\d{2}").Match(record.Entry[3]).Value);
+            var __numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
+            var __value = Double.Parse(new Regex("\\d+,\\d{2}").Match(record.Entry[3]).Value,__numberFormatInfo);
             __hose.SetValue(__value);
             return ProcessingResult.SelfProcessing;
         }

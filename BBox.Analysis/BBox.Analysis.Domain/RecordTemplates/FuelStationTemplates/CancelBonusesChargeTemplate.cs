@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using BBox.Analysis.Core;
 using BBox.Analysis.Domain.PaymentTypes;
@@ -32,11 +33,12 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
             if (__payment == null) throw new Exception("Ожидается основание Бонусы");
             __pattern = "Отмена начисления бонусов: \\d+,\\d{2}";
             __str = new Regex(__pattern).Match(record.Entry[0]).Value;
-            var __bonuses = Decimal.Parse(new Regex("\\d+,\\d{2}").Match(__str).Value);
+            var __numberFormatInfo = new NumberFormatInfo { NumberDecimalSeparator = "," };
+            var __bonuses = Decimal.Parse(new Regex("\\d+,\\d{2}").Match(__str).Value,__numberFormatInfo);
 
             __pattern = "Отмена начисления экстрабонусов: \\d+,\\d{2}";
             __str = new Regex(__pattern).Match(record.Entry[1]).Value;
-            var __ekstra = Decimal.Parse(new Regex("\\d+,\\d{2}").Match(__str).Value);
+            var __ekstra = Decimal.Parse(new Regex("\\d+,\\d{2}").Match(__str).Value,__numberFormatInfo);
 
             __payment.RemoveChargeBonuses(__sale,__bonuses + __ekstra);
             return ProcessingResult.SelfProcessing;

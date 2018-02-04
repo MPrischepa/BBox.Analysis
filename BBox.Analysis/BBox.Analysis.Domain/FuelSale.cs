@@ -171,7 +171,7 @@ namespace BBox.Analysis.Domain
 
         #region Overrides of Entity
 
-        private IList<Record> _records = new List<Record>();
+        private readonly IList<Record> _records = new List<Record>();
         public override IEnumerable<Record> Records => _records;
         public override void AddRecord(Record record)
         {
