@@ -5,7 +5,7 @@ using BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates;
 
 namespace BBox.Analysis.Domain
 {
-    public class FuelStation 
+    public class FuelStation: Entity
     {
         static FuelStation()
         {
@@ -63,6 +63,17 @@ namespace BBox.Analysis.Domain
         {
             _shifts.AddLast(shift);
         }
+
+        #region Overrides of Entity
+
+        private IList<Record> _records = new List<Record>();
+        public override IEnumerable<Record> Records => _records;
+        public override void AddRecord(Record record)
+        {
+            _records.Add(record);
+        }
+
+        #endregion
     }
 
    

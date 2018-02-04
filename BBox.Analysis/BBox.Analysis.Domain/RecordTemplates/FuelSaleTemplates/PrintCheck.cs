@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
 {
@@ -25,10 +26,10 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             return _addedString.Any(x => record.Entry[1].StartsWith(x));
         }
 
-        public override bool Process(FuelSale entity, Record record)
+        public override ProcessingResult Process(FuelSale entity, Record record)
         {
             entity.SalePrintCheck(Decimal.Parse(new Regex("\\d+,\\d{2}").Match(record.Entry[1]).Value));
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

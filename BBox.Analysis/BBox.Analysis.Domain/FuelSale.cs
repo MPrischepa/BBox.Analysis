@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using BBox.Analysis.Domain.PaymentTypes;
 using BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates;
 
 namespace BBox.Analysis.Domain
 {
-    public class FuelSale 
+    public class FuelSale: Entity
     {
         static FuelSale()
         {
@@ -167,6 +168,17 @@ namespace BBox.Analysis.Domain
             IsCheckPrinted = true;
             CheckAmount = amount;
         }
+
+        #region Overrides of Entity
+
+        private IList<Record> _records = new List<Record>();
+        public override IEnumerable<Record> Records => _records;
+        public override void AddRecord(Record record)
+        {
+            _records.Add(record);
+        }
+
+        #endregion
     }
 
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 using BBox.Analysis.Domain.PaymentTypes;
 
 namespace BBox.Analysis.Domain.RecordTemplates.PaymentTemplates
@@ -29,9 +30,9 @@ namespace BBox.Analysis.Domain.RecordTemplates.PaymentTemplates
             return _ignoreString.Any(x => record.Entry[1].StartsWith(x));
         }
 
-        public override bool Process(T entity, Record record)
+        public override ProcessingResult Process(T entity, Record record)
         {
-            return true;
+            return ProcessingResult.DoesntMetter;
         }
 
         #endregion

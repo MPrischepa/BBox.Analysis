@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 using BBox.Analysis.Domain.PaymentTypes;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
@@ -22,12 +23,12 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             return record.Entry[1].StartsWith(SelectedPayment);
         }
 
-        public override bool Process(FuelSale entity, Record record)
+        public override ProcessingResult Process(FuelSale entity, Record record)
         {
             var __paymentType = record.Entry[1].Substring(SelectedPayment.Length).Trim().Trim('\"').Trim();
             var __payment = PaymentFactory.Instance.CreatePayment(__paymentType);
             entity.SetPayment(__payment);
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

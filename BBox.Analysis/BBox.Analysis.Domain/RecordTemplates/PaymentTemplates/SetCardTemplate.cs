@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using BBox.Analysis.Core;
 using BBox.Analysis.Domain.PaymentTypes;
 
 namespace BBox.Analysis.Domain.RecordTemplates.PaymentTemplates
@@ -20,7 +21,7 @@ namespace BBox.Analysis.Domain.RecordTemplates.PaymentTemplates
             return new Regex("Предъявлена карта/идентификатор № \\d{20}").IsMatch(record.Entry[1]);
         }
 
-        public override bool Process(T entity, Record record)
+        public override ProcessingResult Process(T entity, Record record)
         {
             var __payment = entity;
             if (__payment == null)
@@ -28,7 +29,7 @@ namespace BBox.Analysis.Domain.RecordTemplates.PaymentTemplates
 
             var __cardNo = new Regex("\\d{20}").Match(record.Entry[1]).Value;
             __payment.SetCardNo(__cardNo.TrimStart('0'));
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

@@ -5,7 +5,7 @@ using BBox.Analysis.Domain.RecordTemplates.PaymentTemplates;
 namespace BBox.Analysis.Domain.PaymentTypes
 {
    
-    public class Payment
+    public class Payment:Entity
     {
         public string PaymentTypeName => PaymentTypeDescr.Name;
 
@@ -36,5 +36,16 @@ namespace BBox.Analysis.Domain.PaymentTypes
         {
             throw new Exception("Не должно быть карточки");
         }
+
+        #region Overrides of Entity
+
+        private IList<Record> _records = new List<Record>();
+        public override IEnumerable<Record> Records => _records;
+        public override void AddRecord(Record record)
+        {
+            _records.Add(record);
+        }
+
+        #endregion
     }
 }

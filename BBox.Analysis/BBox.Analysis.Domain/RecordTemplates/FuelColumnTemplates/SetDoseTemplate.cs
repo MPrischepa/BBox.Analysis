@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
 {
@@ -22,18 +23,18 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
             return new Regex("Уст. доза: Рукав: \\d+").IsMatch(record.Entry[1]);
         }
 
-        public override bool Process(FuelColumn entity, Record record)
+        public override ProcessingResult Process(FuelColumn entity, Record record)
         {
             var __hoseName = Int16.Parse(new Regex("\\d+").Match(record.Entry[1]).Value);
             var __hose = entity.GetFuelHouse(__hoseName);
             if (new Regex("Счетчик: NAN").IsMatch(record.Entry[3]))
             {
                 __hose.SetValue(__hose.Value);
-                return true;
+                return ProcessingResult.SelfProcessing;
             }
             var __value = Double.Parse(new Regex("\\d+,\\d{2}").Match(record.Entry[3]).Value);
             __hose.SetValue(__value);
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates
 {
@@ -7,7 +8,7 @@ namespace BBox.Analysis.Domain.RecordTemplates
     {
         public abstract Boolean IsMatch(T entity, Record record);
 
-        public abstract Boolean Process(T entity, Record record);
+        public abstract ProcessingResult Process(T entity, Record record);
     }
 
     public static class RecordTemplateExtensions
@@ -19,16 +20,20 @@ namespace BBox.Analysis.Domain.RecordTemplates
         //    _isMatchMethod = typeof(RecordTemplate<>).GetMethod("IsMatch", BindingFlags.Instance | BindingFlags.Public);
         //}
 
-        internal static Boolean IsMatch(object template, Object entity, Record record)
+        internal static Boolean IsMatch(object template, Entity entity, Record record)
         {
             var __method = template.GetType().GetMethod("IsMatch", BindingFlags.Instance | BindingFlags.Public);
-            return (bool)__method.Invoke(template, new[] {entity, record});
+            return (bool)__method.Invoke(template, new object[] {entity, record});
         }
 
-        internal static Boolean Process(object template, Object entity, Record record)
+        internal static ProcessingResult Process(object template, Entity entity, Record record)
         {
+            
             var __method = template.GetType().GetMethod("Process", BindingFlags.Instance | BindingFlags.Public);
-            return (bool)__method.Invoke(template, new[] { entity, record });
+            var __result = (ProcessingResult)__method.Invoke(template, new object[] { entity, record });
+            if (__result == ProcessingResult.SelfProcessing)
+                entity.AddRecord(record);
+            return __result;
         }
     }
 }

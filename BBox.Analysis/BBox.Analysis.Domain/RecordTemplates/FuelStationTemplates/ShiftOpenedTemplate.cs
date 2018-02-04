@@ -1,4 +1,5 @@
 ﻿using System;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
 {
@@ -17,12 +18,12 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
             return record.Entry[0].Equals("Смена открыта");
         }
 
-        public override bool Process(FuelStation entity, Record record)
+        public override ProcessingResult Process(FuelStation entity, Record record)
         {
             var __shift = new Shift(entity);
             __shift.StartShift(record.TimeRecord);
             entity.AddShift(__shift);
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

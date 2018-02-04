@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 using BBox.Analysis.Domain.PaymentTypes;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
@@ -30,7 +31,7 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
             return __spl[1];
         }
 
-        public override bool Process(FuelStation entity, Record record)
+        public override ProcessingResult Process(FuelStation entity, Record record)
         {
             var __saleNo = Int64.Parse(new Regex("\\d+").Match(record.Entry[0]).Value);
             var __sale = entity.CurrentShift.GetFuelSale(__saleNo, record);
@@ -49,10 +50,10 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
                 __order.Volume = Decimal.Parse(GetValueStr(record.Entry[2]));
                 __order.Amount = Decimal.Parse(GetValueStr(record.Entry[3]));
                 __sale.SaleState = FuelSaleState.Approved;
-                return true;
+                return ProcessingResult.SelfProcessing;
             }
 
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

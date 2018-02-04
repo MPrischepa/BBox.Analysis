@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
 {
@@ -21,14 +22,14 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             return record.Entry[1].StartsWith("Заказ расчитан");
         }
 
-        public override bool Process(FuelSale entity, Record record)
+        public override ProcessingResult Process(FuelSale entity, Record record)
         {
             var __order = entity.GetCurrentOrder();
-            if (__order == null) return true;
+            if (__order == null) return ProcessingResult.SelfProcessing;
             var __amountStrPattern = "(Сумма заказа: \\d+,\\d{2}р)";
-            if (!new Regex(__amountStrPattern).IsMatch(record.Entry[1])) return true;
+            if (!new Regex(__amountStrPattern).IsMatch(record.Entry[1])) return ProcessingResult.SelfProcessing;
             __order.Amount = Decimal.Parse(new Regex("\\d+,\\d{2}").Match(record.Entry[1]).Value);
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
     }
 }

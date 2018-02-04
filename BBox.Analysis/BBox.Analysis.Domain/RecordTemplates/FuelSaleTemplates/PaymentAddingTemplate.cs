@@ -1,4 +1,6 @@
-﻿namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
+﻿using BBox.Analysis.Core;
+
+namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
 {
     internal class PaymentAddedTemplate: RecordTemplate<FuelSale>
     {
@@ -14,9 +16,10 @@
             return entity.Payment != null && BlackBoxObject.IsMatch(entity.Payment, record);
         }
 
-        public override bool Process(FuelSale entity, Record record)
+        public override ProcessingResult Process(FuelSale entity, Record record)
         {
-            return BlackBoxObject.ProcessRecord(entity.Payment, record);
+            BlackBoxObject.ProcessRecord(entity.Payment, record);
+            return ProcessingResult.PostProcessing;
         }
 
         #endregion

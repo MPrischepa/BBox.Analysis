@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
 {
@@ -22,10 +24,10 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             return record.Entry[1].Equals("Отмена транзакции");
         }
 
-        public override bool Process(FuelSale entity, Record record)
+        public override ProcessingResult Process(FuelSale entity, Record record)
         {
             entity.SaleState = FuelSaleState.Canceled;
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

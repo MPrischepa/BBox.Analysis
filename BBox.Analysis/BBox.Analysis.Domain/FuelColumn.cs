@@ -5,7 +5,7 @@ using BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates;
 
 namespace BBox.Analysis.Domain
 {
-    public class FuelColumn
+    public class FuelColumn: Entity
     {
         static FuelColumn()
         {
@@ -80,8 +80,19 @@ namespace BBox.Analysis.Domain
             _fuelHoses.Add(name,__hose);
             return __hose;
         }
+
+        #region Overrides of Entity
+
+        private IList<Record> _records = new List<Record>();
+        public override IEnumerable<Record> Records => _records;
+        public override void AddRecord(Record record)
+        {
+            _records.Add(record);
+        }
+
+        #endregion
     }
 
-   
-   
+
+
 }

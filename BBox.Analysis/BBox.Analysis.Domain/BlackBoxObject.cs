@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using BBox.Analysis.Core;
 using BBox.Analysis.Domain.RecordTemplates;
 
 namespace BBox.Analysis.Domain
 {
-  
+
+
+    public abstract class Entity
+    {
+        public abstract IEnumerable<Record> Records { get; }
+
+        public abstract void AddRecord(Record record);
+    }
+
     public static class BlackBoxObject
     {
         private static readonly IDictionary<Type,IList<object>> _templates = new Dictionary<Type, IList<object>>();
@@ -23,7 +32,7 @@ namespace BBox.Analysis.Domain
 
         //internal IEnumerable<RecordTemplate<T>> Templates => _templates;
 
-        public static void AddTemplate<T>(RecordTemplate<T> template) where T:class
+        public static void AddTemplate<T>(RecordTemplate<T> template) where T: Entity
         {
             IList<object> __templates;
             if (!_templates.TryGetValue(typeof(T), out __templates))
@@ -35,13 +44,13 @@ namespace BBox.Analysis.Domain
         }
 
        
-        public static bool ProcessRecord(object entity, Record record) 
+        public static ProcessingResult ProcessRecord(Entity entity, Record record) 
         {
             var __templates = GetTemplates(entity);
             if (!__templates.Any())
             {
                 UnRecognizedRecords.Add(record);
-                return true;
+                return ProcessingResult.DoesntMetter;
             }
             using (var __enum = __templates.GetEnumerator())
             {
@@ -52,7 +61,7 @@ namespace BBox.Analysis.Domain
                         return RecordTemplateExtensions.Process(__template, entity, record);
                 }
                 UnRecognizedRecords.Add(record);
-                return true;
+                return ProcessingResult.DoesntMetter;
             }
         }
 
@@ -70,7 +79,7 @@ namespace BBox.Analysis.Domain
             }
             return __result;
         }
-        public static bool IsMatch(Object entity, Record record)
+        public static bool IsMatch(Entity entity, Record record)
         {
             var __templates = GetTemplates(entity);
             return __templates.Any() && __templates.Any(x => RecordTemplateExtensions.IsMatch(x, entity, record));

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
 {
@@ -28,7 +29,7 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
         {
             
         } 
-        public sealed override bool Process(FuelSale entity, Record record)
+        public sealed override ProcessingResult Process(FuelSale entity, Record record)
         {
             BeforeProcessing(entity);
             var __order = entity.GetCurrentOrder();
@@ -46,7 +47,7 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             __order.Price = Decimal.Parse(GetValueStr(record.Entry[3]));
             __order.DoseString = GetValueStr(record.Entry[4].Substring(0, record.Entry[4].Length-1));
             AfterProcessed(entity);
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
     }
 
@@ -109,7 +110,7 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             return _addedString.Any(x => record.Entry[1].StartsWith(x));
         }
 
-        public sealed override bool Process(FuelSale entity, Record record)
+        public sealed override ProcessingResult Process(FuelSale entity, Record record)
         {
             var __order = entity.GetCurrentOrder();
             var __trkNo = Int16.Parse(GetValueStr(record.Entry[1]));
@@ -133,7 +134,7 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             __order.Volume = Decimal.Parse(new Regex("\\d*,\\d{2}").Match(record.Entry[4]).Value);
             __order.Amount = Decimal.Parse(new Regex("\\d*,\\d{2}").Match(record.Entry[5]).Value);
             entity.PourState = FuelPourState.OrderFinished;
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
     }
 }

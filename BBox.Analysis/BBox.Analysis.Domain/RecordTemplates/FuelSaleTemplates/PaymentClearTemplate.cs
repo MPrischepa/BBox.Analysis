@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
 {
@@ -24,10 +25,10 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             return __reg.IsMatch(record.Entry[1]);
         }
 
-        public override bool Process(FuelSale entity, Record record)
+        public override ProcessingResult Process(FuelSale entity, Record record)
         {
             entity.ClearPayment();
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
 {
@@ -20,11 +21,11 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
             return record.Entry[1].Equals("На ТРК закончен отпуск топлива");
         }
 
-        public override bool Process(FuelColumn entity, Record record)
+        public override ProcessingResult Process(FuelColumn entity, Record record)
         {
             var __hoseName = Int16.Parse(new Regex("\\d+").Match(record.Entry[2]).Value);
             entity.Finished(__hoseName);
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion
@@ -43,11 +44,11 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
             return record.Entry[1].Equals("На ТРК идет отпуск топлива");
         }
 
-        public override bool Process(FuelColumn entity, Record record)
+        public override ProcessingResult Process(FuelColumn entity, Record record)
         {
             var __hoseName = Int16.Parse(new Regex("\\d+").Match(record.Entry[2]).Value);
             entity.Start(__hoseName);
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion
@@ -66,11 +67,11 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
             return record.Entry[1].Equals("ТРК остановлена");
         }
 
-        public override bool Process(FuelColumn entity, Record record)
+        public override ProcessingResult Process(FuelColumn entity, Record record)
         {
             var __hoseName = Int16.Parse(new Regex("\\d+").Match(record.Entry[2]).Value);
             entity.Start(__hoseName);
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

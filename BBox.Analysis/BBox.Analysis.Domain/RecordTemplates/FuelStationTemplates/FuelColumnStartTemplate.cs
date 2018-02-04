@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
 {
@@ -22,13 +23,13 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
             return record.Entry[0].StartsWith("Ручной пуск");
         }
 
-        public override bool Process(FuelStation entity, Record record)
+        public override ProcessingResult Process(FuelStation entity, Record record)
         {
             //var __trkPattern = @"ТРК\s\d*";
             //var __trkNo = Int16.Parse(new Regex(__trkPattern).Match(record.Entry[0]).Value.Replace("ТРК",String.Empty));
             //var __column = entity.GetFuelColumn(__trkNo);
             //__column.Start();
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
 {
@@ -36,9 +37,9 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
             return _ignoreString.Any(x => record.Entry[1].TrimStart().StartsWith(x));
         }
 
-        public override bool Process(FuelColumn entity, Record record)
+        public override ProcessingResult Process(FuelColumn entity, Record record)
         {
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

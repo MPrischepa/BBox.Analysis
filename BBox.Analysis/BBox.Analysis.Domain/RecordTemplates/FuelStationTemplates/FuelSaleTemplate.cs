@@ -1,4 +1,5 @@
 ﻿using System;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
 {
@@ -23,11 +24,12 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
             return Int64.Parse(__spl[1]);
         }
 
-        public override bool Process(FuelStation entity, Record record)
+        public override ProcessingResult Process(FuelStation entity, Record record)
         {
             var __saleNo = GetSaleNo(record.Entry[0]);
             var __sale = entity.CurrentShift.GetFuelSale(__saleNo, record);
-            return BlackBoxObject.ProcessRecord(__sale,record);
+            BlackBoxObject.ProcessRecord(__sale,record);
+            return ProcessingResult.PostProcessing;
         }
 
         #endregion

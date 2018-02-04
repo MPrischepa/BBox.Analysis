@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
 {
@@ -23,7 +24,7 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             return record.Entry[1].StartsWith("Топливный заказ перемещен");
         }
 
-        public override bool Process(FuelSale entity, Record record)
+        public override ProcessingResult Process(FuelSale entity, Record record)
         {
             var __pattern = "ТРК:\\s*\\d+";
             var __reg = new Regex(__pattern);
@@ -35,7 +36,7 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
            //     throw new ArgumentException(
            //         $"Что то пошло не так при перемещении заказа запись: {record.Entry[1]} по факту c ТРК:{entity.FuelColumn.ID} на {__trkMove.ID}");
             entity.MoveFuelOrder(__trkMove);
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

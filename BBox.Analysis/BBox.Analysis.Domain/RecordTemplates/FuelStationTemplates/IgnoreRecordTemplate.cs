@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
 {
@@ -36,9 +37,9 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
             return _ignoreString.Any(x => record.Entry[0].StartsWith(x));
         }
 
-        public override bool Process(FuelStation entity, Record record)
+        public override ProcessingResult Process(FuelStation entity, Record record)
         {
-            return true;
+            return ProcessingResult.DoesntMetter;
         }
 
         #endregion

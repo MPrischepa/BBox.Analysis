@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
 {
@@ -22,14 +23,14 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             return record.Entry[1].Equals("Запись результатов транзакции");
         }
 
-        public override bool Process(FuelSale entity, Record record)
+        public override ProcessingResult Process(FuelSale entity, Record record)
         {
             if (entity.SaleState != FuelSaleState.Canceled)
             {
                 entity.SaleState = FuelSaleState.Approved;
                 var __order = entity.GetCurrentOrder();
             }
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

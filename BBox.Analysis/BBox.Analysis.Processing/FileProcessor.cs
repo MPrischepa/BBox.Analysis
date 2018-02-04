@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 using BBox.Analysis.Core.Logger;
 using BBox.Analysis.Domain;
 using BBox.Analysis.Interface;
@@ -114,7 +115,7 @@ namespace BBox.Analysis.Processing
                                 $"Нарушение порядка следования записей: Предыдущая запись: {__positionNo}, текущая запись {__record.ID}");
                         }
                         __positionNo = __record.ID;
-                        if (!BlackBoxObject.ProcessRecord(__fuelStation, __record))
+                        if (BlackBoxObject.ProcessRecord(__fuelStation, __record) == ProcessingResult.DontProcessing)
                             WriteLog($"{DateTime.Now}: Обработка: {__processedLine} : Не обработанно");
                     }
                     catch (Exception __ex)
@@ -128,13 +129,13 @@ namespace BBox.Analysis.Processing
                     }
                 }
 
-                if (!BlackBoxObject.ProcessRecord(__fuelStation, new Record
+                if (BlackBoxObject.ProcessRecord(__fuelStation, new Record
                 {
                     Entry = new string[] {"Смена закрыта"},
                     TimeRecord = __endDate,
                     ID = Int64.MaxValue,
                     FuelStationName = __fuelStation.Name
-                }))
+                }) == ProcessingResult.DontProcessing)
                     WriteLog($"{DateTime.Now}: Обработка: {__line} : Не обработанно");
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 
 namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
 {
@@ -22,10 +23,10 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
             return record.Entry[0].Equals("ЗАПУСК ПРОГРАММЫ ПОСЛЕ НЕКОРРЕКТНОГО ЗАВЕРШЕНИЯ");
         }
 
-        public override bool Process(FuelStation entity, Record record)
+        public override ProcessingResult Process(FuelStation entity, Record record)
         {
             entity.CurrentShift.AddIncorrectConclusion(record.TimeRecord,record.ID);
-            return true;
+            return ProcessingResult.SelfProcessing;
         }
 
         #endregion

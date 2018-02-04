@@ -142,71 +142,169 @@ namespace BBox.Analysis.Processing
             }
         }
 
+        private void FillGapCounterRow(ISheet sheet, int rowNum, FuelHose house, FuelSale priorSale, FuelSale fuelSale)
+        {
+            var __row = RegistrarHelper.GetRow(sheet, rowNum);
+            var __cell = RegistrarHelper.GetCell(__row, 0);
+            __cell.SetCellValue(house.FuelColumn.ID);
+
+            __cell = RegistrarHelper.GetCell(__row, 1);
+            __cell.SetCellValue(house.Name);
+
+            __cell = RegistrarHelper.GetCell(__row, 2);
+            __cell.SetCellValue(priorSale.FactSale != null
+                ? priorSale.FactSale.ProductName
+                : (priorSale.FactPour != null
+                    ? priorSale.FactPour.ProductName
+                    : priorSale.PreOrder.ProductName));
+
+            __cell = RegistrarHelper.GetCell(__row, 3);
+            __cell.SetCellValue(
+                $"{priorSale.Shift.BeginDate:dd.MM.yyyy HH:mm} - {priorSale.Shift.EndDate:dd.MM.yyyy HH:mm}");
+
+            __cell = RegistrarHelper.GetCell(__row, 4);
+            __cell.SetCellValue(RegistrarHelper.GetSaleState(priorSale.SaleState));
+            __cell = RegistrarHelper.GetCell(__row, 5);
+            __cell.SetCellValue($"{priorSale.Date:dd.MM.yy HH:mm:ss}");
+            __cell = RegistrarHelper.GetCell(__row, 6);
+            __cell.SetCellValue(priorSale.ID);
+
+            __cell = RegistrarHelper.GetCell(__row, 7);
+            __cell.SetCellValue(Convert.ToDouble(priorSale.FinishedCounterValue));
+
+            __cell = RegistrarHelper.GetCell(__row, 8);
+            __cell.SetCellValue(
+                $"{fuelSale.Shift.BeginDate:dd.MM.yyyy HH:mm} - {fuelSale.Shift.EndDate:dd.MM.yyyy HH:mm}");
+
+            __cell = RegistrarHelper.GetCell(__row, 9);
+            __cell.SetCellValue(RegistrarHelper.GetSaleState(fuelSale.SaleState));
+            __cell = RegistrarHelper.GetCell(__row, 10);
+            __cell.SetCellValue($"{fuelSale.Date:dd.MM.yy HH:mm:ss}");
+            __cell = RegistrarHelper.GetCell(__row, 11);
+            __cell.SetCellValue(fuelSale.ID);
+
+            __cell = RegistrarHelper.GetCell(__row, 12);
+            __cell.SetCellValue(Convert.ToDouble(fuelSale.StartCounterValue));
+
+            __cell = RegistrarHelper.GetCell(__row, 13);
+            __cell.SetCellValue(
+                Convert.ToDouble(fuelSale.StartCounterValue - priorSale.FinishedCounterValue));
+        }
+
+        class RecordEqualityComparer : IEqualityComparer<Record>
+        {
+            #region Implementation of IEqualityComparer<in Record>
+
+            /// <summary>Determines whether the specified objects are equal.</summary>
+            /// <returns>true if the specified objects are equal; otherwise, false.</returns>
+            /// <param name="x">The first object of type <paramref name="T" /> to compare.</param>
+            /// <param name="y">The second object of type <paramref name="T" /> to compare.</param>
+            public bool Equals(Record x, Record y)
+            {
+                return x.ID == y.ID && x.TimeRecord == y.TimeRecord;
+            }
+
+            /// <summary>Returns a hash code for the specified object.</summary>
+            /// <returns>A hash code for the specified object.</returns>
+            /// <param name="obj">The <see cref="T:System.Object" /> for which a hash code is to be returned.</param>
+            /// <exception cref="T:System.ArgumentNullException">The type of <paramref name="obj" /> is a reference type and <paramref name="obj" /> is null.</exception>
+            public int GetHashCode(Record obj)
+            {
+                return obj.ID.GetHashCode();
+            }
+
+            #endregion
+        }
+        private void PrintBBoxRows(ISheet sheet,FuelSale priorSale, FuelSale fuelsSale)
+        {
+            var __rownum = 5;
+            var __minRecord = priorSale.Records.Min(x => x.ID);
+            var __maxRecord = fuelsSale.Records.Max(x => x.ID);
+            var __fuelColumnMin =
+                fuelsSale.FuelHouse.FuelColumn.Records.Where(x => x.ID <= __minRecord)
+                    .OrderByDescending(x => x.ID)
+                    .FirstOrDefault()?.ID ?? 0;
+            var __fuelColumnMax = fuelsSale.FuelHouse.FuelColumn.Records.Where(x => x.ID >= __maxRecord)
+                    .OrderBy(x => x.ID)
+                    .FirstOrDefault()?.ID ?? 0;
+            var __fuelStationMin =
+               fuelsSale.FuelStation.Records.Where(x => x.ID <= __minRecord)
+                   .OrderByDescending(x => x.ID)
+                   .FirstOrDefault()?.ID ?? 0;
+            var __fuelStationMax = fuelsSale.FuelStation.Records.Where(x => x.ID >= __maxRecord)
+                    .OrderBy(x => x.ID)
+                    .FirstOrDefault()?.ID ?? 0;
+            var __records = priorSale.Records
+                .Union(priorSale.Payment?.Records ?? new List<Record>(), new RecordEqualityComparer())
+                .Union(priorSale.FactPour?.Payment?.Records ?? new List<Record>(), new RecordEqualityComparer())
+                .Union(priorSale.FactSale?.Payment?.Records ?? new List<Record>())
+                .Union(priorSale.PreOrder?.Payment?.Records ?? new List<Record>())
+                .Union(fuelsSale.Records, new RecordEqualityComparer())
+                .Union(fuelsSale.FactPour?.Payment?.Records ?? new List<Record>(), new RecordEqualityComparer())
+                .Union(fuelsSale.FactSale?.Payment?.Records ?? new List<Record>())
+                .Union(fuelsSale.PreOrder?.Payment?.Records ?? new List<Record>())
+                .Union(
+                    fuelsSale.FuelHouse.FuelColumn.Records.Where(x => x.ID >= __fuelColumnMin && x.ID <= __fuelColumnMax))
+                .Union(fuelsSale.FuelStation.Records.Where(x => x.ID >= __fuelStationMin && x.ID <= __fuelStationMax));
+           
+            foreach (var __source in __records.OrderBy(x => x.TimeRecord))
+            {
+                var __row = RegistrarHelper.GetRow(sheet, __rownum);
+                var __cell = RegistrarHelper.GetCell(__row, 0);
+                
+                __cell.SetCellValue(
+                    $"{__source.FuelStationName};{__source.TimeRecord:yyyy-MM-dd HH:mm:ss};{__source.ID};{__source.Entry.Aggregate((x, y) => x + ";" + y)}");
+                __rownum++;
+            }
+            
+        }
         private void FillGapCounter(ISheet sheet, FuelStation station)
         {
             var __rowNum = 4;
             var __data =
                 station.Shifts.SelectMany(x => x.FuelsSales).Where(x => x.FuelHouse != null).GroupBy(x => x.FuelHouse);
-            foreach (var __grouping in __data)
+            var __path = Path.Combine(".\\Resources", "Расхождения по счетчикам.xlsx");
+            IWorkbook __book;
+            using (var __templateStream = File.OpenRead(__path))
             {
-                FuelSale __priorSale = null;
-                var __sales = __grouping.OrderBy(x => x.Date);
-                foreach (var __fuelSale in __sales)
+                __book = new XSSFWorkbook(__templateStream);
+                
+                var __sheetInd = 0;
+                foreach (var __grouping in __data)
                 {
-                    if (__priorSale == null)
+                    FuelSale __priorSale = null;
+                    var __sales = __grouping.OrderBy(x => x.Date);
+                    foreach (var __fuelSale in __sales)
                     {
+                        if (__priorSale == null)
+                        {
+                            __priorSale = __fuelSale;
+                            continue;
+                        }
+                        if (__priorSale.FinishedCounterValue != __fuelSale.StartCounterValue)
+                        {
+                            
+                           
+                            FillGapCounterRow(sheet, __rowNum, __grouping.Key, __priorSale, __fuelSale);
+                            __book.CloneSheet(__sheetInd);
+                            var __sheet = __book.GetSheetAt(__sheetInd);
+                            __book.SetSheetName(__sheetInd, $"Расхождение {__sheetInd + 1} в {__fuelSale.StartCounterValue - __priorSale.FinishedCounterValue}");
+                            FillGapCounterRow(__sheet,4, __grouping.Key, __priorSale, __fuelSale);
+                            PrintBBoxRows(__sheet, __priorSale, __fuelSale);
+                            __sheetInd++;
+                            __rowNum++;
+                        }
+
                         __priorSale = __fuelSale;
-                        continue;
                     }
-                    if (__priorSale.FinishedCounterValue != __fuelSale.StartCounterValue)
-                    {
-                        var __row = RegistrarHelper.GetRow(sheet, __rowNum);
-                        var __cell = RegistrarHelper.GetCell(__row, 0);
-                        __cell.SetCellValue(__grouping.Key.FuelColumn.ID);
-
-                        __cell = RegistrarHelper.GetCell(__row, 1);
-                        __cell.SetCellValue(__grouping.Key.Name);
-
-                        __cell = RegistrarHelper.GetCell(__row, 2);
-                        __cell.SetCellValue(__priorSale.FactSale != null
-                            ? __priorSale.FactSale.ProductName
-                            : (__priorSale.FactPour != null
-                                ? __priorSale.FactPour.ProductName
-                                : __priorSale.PreOrder.ProductName));
-
-                        __cell = RegistrarHelper.GetCell(__row, 3);
-                        __cell.SetCellValue($"{__priorSale.Shift.BeginDate:dd.MM.yyyy HH:mm} - {__priorSale.Shift.EndDate:dd.MM.yyyy HH:mm}");
-
-                        __cell = RegistrarHelper.GetCell(__row, 4);
-                        __cell.SetCellValue(RegistrarHelper.GetSaleState(__priorSale.SaleState));
-                        __cell = RegistrarHelper.GetCell(__row, 5);
-                        __cell.SetCellValue($"{__priorSale.Date:dd.MM.yy HH:mm:ss}");
-                        __cell = RegistrarHelper.GetCell(__row, 6);
-                        __cell.SetCellValue(__priorSale.ID);
-
-                        __cell = RegistrarHelper.GetCell(__row, 7);
-                        __cell.SetCellValue(Convert.ToDouble(__priorSale.FinishedCounterValue));
-
-                        __cell = RegistrarHelper.GetCell(__row, 8);
-                        __cell.SetCellValue($"{__fuelSale.Shift.BeginDate:dd.MM.yyyy HH:mm} - {__fuelSale.Shift.EndDate:dd.MM.yyyy HH:mm}");
-
-                        __cell = RegistrarHelper.GetCell(__row, 9);
-                        __cell.SetCellValue(RegistrarHelper.GetSaleState(__fuelSale.SaleState));
-                        __cell = RegistrarHelper.GetCell(__row, 10);
-                        __cell.SetCellValue($"{__fuelSale.Date:dd.MM.yy HH:mm:ss}");
-                        __cell = RegistrarHelper.GetCell(__row, 11);
-                        __cell.SetCellValue(__fuelSale.ID);
-
-                        __cell = RegistrarHelper.GetCell(__row, 12);
-                        __cell.SetCellValue(Convert.ToDouble(__fuelSale.StartCounterValue));
-
-                        __cell = RegistrarHelper.GetCell(__row, 13);
-                        __cell.SetCellValue(Convert.ToDouble(__fuelSale.StartCounterValue - __priorSale.FinishedCounterValue));
-                        __rowNum++;
-                    }
-
-                    __priorSale = __fuelSale;
                 }
+            }
+
+            using (var __resultStream = File.OpenWrite(Path.Combine(_outputPath, $"Расхождения по счетчикам {station.Name}.xlsx"))
+            )
+            {
+                __book.Write(__resultStream);
+                __book.Close();
             }
         }
         private void FillDivergenceCounter(ISheet sheet, FuelStation station)
