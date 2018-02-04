@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 using BBox.Analysis.Core.Logger;
 using BBox.Analysis.Domain;
 using BBox.Analysis.Interface;
@@ -54,11 +55,35 @@ namespace BBox.Analysis.Processing
             return __fuelStation;
         }
 
-        public void RegisterSummaryReport()
-        {
 
+        private void BuildSummaryReports()
+        {
             _logger.Write("Формирование сводных ведомостей");
             var __report = new SummaryReportRegistrar(_outputPath);
+            var __stations = _stations.Values.ToArray();
+            foreach (var __fuelStation in __stations)
+            {
+                _logger.Write(__fuelStation.Name);
+                try
+                {
+                    __report.RegisterSummaryReport(__fuelStation);
+                    Thread.Sleep(1);
+                }
+                catch (Exception __ex)
+                {
+                    var __fileName = $"Сводный отчет {__fuelStation.Name}.xlsx";
+                    LogManager.GetInstance()
+                        .GetLogger("BBox.Analysis")
+                        .Error($"Ошибка формирования файла: {__fileName}. \r\n Данные отчета не корректны. \r\n", __ex);
+                    _logger.Write($"Ошибка обработки файла: {__fileName}.");
+                    _logger.Write("Данные отчета не корректны.");
+                    _logger.Write($"{__ex}");
+                }
+            }
+        }
+
+        private void BuildShiftReports()
+        {
             var __stations = _stations.Values.ToArray();
             foreach (var __fuelStation in __stations)
             {
@@ -84,24 +109,15 @@ namespace BBox.Analysis.Processing
                         _logger.Write($"{__ex}");
                     }
                 }
-                _logger.Write(__fuelStation.Name);
-                try
-                {
-                    __report.RegisterSummaryReport(__fuelStation);
-                    Thread.Sleep(1);
-                }
-                catch (Exception __ex)
-                {
-                    var __fileName = $"Сводный отчет {__fuelStation.Name}.xlsx";
-                    LogManager.GetInstance()
-                        .GetLogger("BBox.Analysis")
-                        .Error($"Ошибка формирования файла: {__fileName}. \r\n Данные отчета не корректны. \r\n", __ex);
-                    _logger.Write($"Ошибка обработки файла: {__fileName}.");
-                    _logger.Write("Данные отчета не корректны.");
-                    _logger.Write($"{__ex}");
-                }
-
             }
+        }
+
+        public void RegisterSummaryReport()
+        {
+            if (ProcessingSettings.Instatnce.BuildShiftReports)
+                BuildShiftReports();
+            if (ProcessingSettings.Instatnce.BuildSummaryReports)
+               BuildSummaryReports();
         }
 
         private void FillBonusesSummaryReport(ISheet sheet)
@@ -226,6 +242,32 @@ namespace BBox.Analysis.Processing
                 _logger.Write($"Ошибка обработки файла: {__fileName}.");
                 _logger.Write("Данные отчета не корректны.");
                 _logger.Write($"{__ex}");
+            }
+        }
+
+        public void RegisterGapCounterReport()
+        {
+            _logger.Write("Формирование ведомостей расхождения по счетчикам");
+            var __report = new SummaryReportRegistrar(_outputPath);
+            var __stations = _stations.Values.ToArray();
+            foreach (var __fuelStation in __stations)
+            {
+                _logger.Write(__fuelStation.Name);
+                try
+                {
+                    __report.RegisterGapCounter(__fuelStation);
+                    Thread.Sleep(1);
+                }
+                catch (Exception __ex)
+                {
+                    var __fileName = $"Расхождения по счетчика {__fuelStation.Name}.xlsx";
+                    LogManager.GetInstance()
+                        .GetLogger("BBox.Analysis")
+                        .Error($"Ошибка формирования файла: {__fileName}. \r\n Данные отчета не корректны. \r\n", __ex);
+                    _logger.Write($"Ошибка обработки файла: {__fileName}.");
+                    _logger.Write("Данные отчета не корректны.");
+                    _logger.Write($"{__ex}");
+                }
             }
         }
 

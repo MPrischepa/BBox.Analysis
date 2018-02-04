@@ -258,7 +258,35 @@ namespace BBox.Analysis.Processing
             }
             
         }
+
         private void FillGapCounter(ISheet sheet, FuelStation station)
+        {
+            var __rowNum = 4;
+            var __data =
+                station.Shifts.SelectMany(x => x.FuelsSales).Where(x => x.FuelHouse != null).GroupBy(x => x.FuelHouse);
+            foreach (var __grouping in __data)
+            {
+                FuelSale __priorSale = null;
+                var __sales = __grouping.OrderBy(x => x.Date);
+                foreach (var __fuelSale in __sales)
+                {
+                    if (__priorSale == null)
+                    {
+                        __priorSale = __fuelSale;
+                        continue;
+                    }
+                    if (__priorSale.FinishedCounterValue != __fuelSale.StartCounterValue)
+                    {
+                        FillGapCounterRow(sheet, __rowNum, __grouping.Key, __priorSale, __fuelSale);
+                        __rowNum++;
+                    }
+
+                    __priorSale = __fuelSale;
+                }
+            }
+        }
+
+        public void RegisterGapCounter(FuelStation station)
         {
             var __rowNum = 4;
             var __data =
@@ -268,7 +296,7 @@ namespace BBox.Analysis.Processing
             using (var __templateStream = File.OpenRead(__path))
             {
                 __book = new XSSFWorkbook(__templateStream);
-                
+
                 var __sheetInd = 0;
                 foreach (var __grouping in __data)
                 {
@@ -283,13 +311,11 @@ namespace BBox.Analysis.Processing
                         }
                         if (__priorSale.FinishedCounterValue != __fuelSale.StartCounterValue)
                         {
-                            
-                           
-                            FillGapCounterRow(sheet, __rowNum, __grouping.Key, __priorSale, __fuelSale);
+
                             __book.CloneSheet(__sheetInd);
                             var __sheet = __book.GetSheetAt(__sheetInd);
                             __book.SetSheetName(__sheetInd, $"Расхождение {__sheetInd + 1} в {__fuelSale.StartCounterValue - __priorSale.FinishedCounterValue}");
-                            FillGapCounterRow(__sheet,4, __grouping.Key, __priorSale, __fuelSale);
+                            FillGapCounterRow(__sheet, 4, __grouping.Key, __priorSale, __fuelSale);
                             PrintBBoxRows(__sheet, __priorSale, __fuelSale);
                             __sheetInd++;
                             __rowNum++;

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BBox.Analysis.Core;
 using BBox.Analysis.Domain.PaymentTypes;
 using BBox.Analysis.Interface;
 
@@ -57,8 +58,13 @@ namespace BBox.Analysis.Processing
                 WriteLog($"{DateTime.Now}: Обработка завершена: {__t}");
             }
             _registrar.RegisterSummaryReport();
-            _registrar.RegisterSummaryBonusReport();
-            _registrar.RegisterBonusReport();
+            if (ProcessingSettings.Instatnce.BuildBonusesReports)
+            {
+                _registrar.RegisterSummaryBonusReport();
+                _registrar.RegisterBonusReport();
+            }
+            if (ProcessingSettings.Instatnce.BuildGapCounterReports)
+                _registrar.RegisterGapCounterReport();
             _registrar.RegisterInvalidRecordReport();
         }
     }

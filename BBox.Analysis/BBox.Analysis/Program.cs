@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+using BBox.Analysis.Core;
 using BBox.Analysis.Core.Logger;
 using BBox.Analysis.Processing;
 using ILogger = BBox.Analysis.Interface.ILogger;
@@ -14,10 +11,38 @@ namespace BBox.Analysis
 {
     class Program
     {
+
+        static bool GetSettingValue(String sentence)
+        {
+            while (true)
+            {
+                Console.WriteLine($"{sentence} Y(Да)|N(нет)");
+                var __result = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(__result))
+                    continue;
+                if (__result.ToUpper().Equals("Y"))
+                    return true;
+                if (__result.ToUpper().Equals("N"))
+                    return false;
+            }
+        }
+
+        static void Configure()
+        {
+            var __settings = ProcessingSettings.Instatnce;
+            Console.WriteLine("Настройка формирование отчетных форм");
+            __settings.BuildShiftReports = GetSettingValue("Формировать отчеты по сменам?");
+            __settings.BuildSummaryReports = GetSettingValue("Формировать сводные отчеты?");
+            __settings.BuildBonusesReports = GetSettingValue("Формировать отчеты по бонусным картам?");
+            __settings.BuildGapCounterReports = GetSettingValue("Формировать отчеты по расхождениям счетчиков?");
+            __settings.Build1SCompareReports =
+                GetSettingValue("Формировать ведомости по сравнению черных ящиков и 1С?");
+        }
         static void Main(string[] args)
         {
             try
             {
+                Configure();
                 var __inDirectory = ReadSetting("InFileDirectory");
                 if (String.IsNullOrWhiteSpace(__inDirectory))
                 {

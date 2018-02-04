@@ -26,5 +26,7 @@ namespace BBox.Analysis.Interface
         void SetInvalidInfo(String fileName, Int64 position, String reason);
 
         void RegisterInvalidRecordReport();
+
+        void RegisterGapCounterReport();
     }
 }
