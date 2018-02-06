@@ -64,6 +64,11 @@
     <Compile Include="BlackBoxProcessingManager.cs" />
     <Compile Include="BonusReportRegistrar.cs" />
     <Compile Include="FileProcessor.cs" />
+    <Compile Include="OneSComparer\FileReportDataReader.cs" />
+    <Compile Include="OneSComparer\IDataReader.cs" />
+    <Compile Include="OneSComparer\DataRecord.cs" />
+    <Compile Include="OneSComparer\OneSComparerRegistrar.cs" />
+    <Compile Include="OneSComparer\RepositoryKeeper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registrar.cs" />
     <Compile Include="RegistrarHelper.cs" />

@@ -51,11 +51,13 @@ namespace BBox.Analysis.Domain
         {
             FuelStation = station;
             _fuelSales = new Dictionary<long, FuelSale>();
-            _startShiftHoses = station.FuelColumns.SelectMany(x => x.FuelHouses).Select(x => new ShiftHose
+            _startShiftHoses = station.FuelColumns.SelectMany(x => x.FuelHouses.Select(y => new ShiftHose
             {
-                Value = x.Value,
-                FuelHose = x.Name
-            }).ToList();
+                FuelColumn = x.ID,
+                FuelHose = y.Name,
+                Value = y.Value
+
+            })).ToList();
             _finishedShiftHoses = new List<ShiftHose>();
             _incorrect = new List<IncorrectConclusions>();
         }
@@ -63,26 +65,31 @@ namespace BBox.Analysis.Domain
         public void StartShift(DateTime beginDate)
         {
             BeginDate = beginDate;
-            _startShiftHoses = FuelStation.FuelColumns.SelectMany(x => x.FuelHouses).Select(x => new ShiftHose
+            _startShiftHoses = FuelStation.FuelColumns.SelectMany(x => x.FuelHouses.Select(y => new ShiftHose
             {
-                Value = x.Value,
-                FuelHose = x.Name
-            }).ToList();
+                FuelColumn = x.ID,
+                FuelHose = y.Name,
+                Value = y.Value
+
+            })).ToList();
         }
 
         public void FinishedShift(DateTime endDate)
         {
-            _finishedShiftHoses = FuelStation.FuelColumns.SelectMany(x => x.FuelHouses).Select(x => new ShiftHose
+            _finishedShiftHoses = FuelStation.FuelColumns.SelectMany(x => x.FuelHouses.Select(y => new ShiftHose
             {
-                Value = x.Value,
-                FuelHose = x.Name
-            }).ToList();
+                FuelColumn = x.ID,
+                FuelHose = y.Name,
+                Value = y.Value
+
+            })).ToList();
             EndDate = endDate;
         }
     }
 
     public class ShiftHose
     {
+        public Int16 FuelColumn { get; set; }
         public Int16 FuelHose { get; set; }
 
         public Decimal Value { get; set; }

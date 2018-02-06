@@ -28,5 +28,7 @@ namespace BBox.Analysis.Interface
         void RegisterInvalidRecordReport();
 
         void RegisterGapCounterReport();
+
+        void RegisterOneSCompareReport();
     }
 }

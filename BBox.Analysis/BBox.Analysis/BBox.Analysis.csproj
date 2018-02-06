@@ -67,6 +67,9 @@
     <None Include="Resources\Сводный Шаблон.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\Сравнение 1С.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Шаблон валидности.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

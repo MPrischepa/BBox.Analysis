@@ -65,7 +65,10 @@ namespace BBox.Analysis.Processing
             }
             if (ProcessingSettings.Instatnce.BuildGapCounterReports)
                 _registrar.RegisterGapCounterReport();
+            if (ProcessingSettings.Instatnce.Build1SCompareReports)
+                _registrar.RegisterOneSCompareReport();
             _registrar.RegisterInvalidRecordReport();
+
         }
     }
 }

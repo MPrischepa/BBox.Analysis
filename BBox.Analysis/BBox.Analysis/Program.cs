@@ -5,6 +5,7 @@ using System.Threading;
 using BBox.Analysis.Core;
 using BBox.Analysis.Core.Logger;
 using BBox.Analysis.Processing;
+using BBox.Analysis.Processing.OneSComparer;
 using ILogger = BBox.Analysis.Interface.ILogger;
 
 namespace BBox.Analysis
@@ -69,7 +70,8 @@ namespace BBox.Analysis
                 var __processing =
                     new BlackBoxProcessingManager(__inDirectory).WithSearchTemplate(__searchPattern)
                         .WithLogger(__logger)
-                        .WithRegistrar(new Registrar(__outDirectory, __logger));
+                        .WithRegistrar(new Registrar(__outDirectory, __logger,
+                            new FileReportDataReader(Path.Combine(__inDirectory, "Данные_1C_2015_01_01_2018_04_02.TXT"))));
                 __processing.Process();
                 Thread.Sleep(5000);
             }

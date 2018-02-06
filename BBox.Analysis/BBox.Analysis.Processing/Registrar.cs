@@ -9,6 +9,7 @@ using BBox.Analysis.Core;
 using BBox.Analysis.Core.Logger;
 using BBox.Analysis.Domain;
 using BBox.Analysis.Interface;
+using BBox.Analysis.Processing.OneSComparer;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using ILogger = BBox.Analysis.Interface.ILogger;
@@ -23,8 +24,9 @@ namespace BBox.Analysis.Processing
         private ISet<Tuple<FuelStation, DateTime, Int64>> _processedRecord;
         private IList<Tuple<String, Int64, String>> _invalidRecords;
         private ILogger _logger;
+        private IDataReader _dataReader;
 
-        public Registrar(String outputPath, ILogger logger)
+        public Registrar(String outputPath, ILogger logger, IDataReader oneSDataReader)
         {
             _outputPath = outputPath;
             _stations = new Dictionary<string, FuelStation>();
@@ -32,6 +34,7 @@ namespace BBox.Analysis.Processing
             _logger = logger;
             _processedRecord = new HashSet<Tuple<FuelStation, DateTime, long>>();
             _invalidRecords = new List<Tuple<string, long, string>>();
+            _dataReader = oneSDataReader;
         }
 
         #region Implementation of IRegistrar
@@ -268,6 +271,27 @@ namespace BBox.Analysis.Processing
                     _logger.Write("Данные отчета не корректны.");
                     _logger.Write($"{__ex}");
                 }
+            }
+        }
+
+        public void RegisterOneSCompareReport()
+        {
+            _logger.Write("Формирование ведомостей сравнение 1С и BBOX");
+            var __report = new OneSComparerRegistrar(_dataReader,_outputPath);
+            try
+            {
+                __report.FillCompareReports(_stations);
+                Thread.Sleep(1);
+            }
+            catch (Exception __ex)
+            {
+                var __fileName = "Сравнение с 1С.xlsx";
+                LogManager.GetInstance()
+                   .GetLogger("BBox.Analysis")
+                    .Error($"Ошибка формирования файла: {__fileName}. \r\n Данные отчета не корректны. \r\n", __ex);
+                _logger.Write($"Ошибка обработки файла: {__fileName}.");
+                _logger.Write("Данные отчета не корректны.");
+                _logger.Write($"{__ex}");
             }
         }
 
