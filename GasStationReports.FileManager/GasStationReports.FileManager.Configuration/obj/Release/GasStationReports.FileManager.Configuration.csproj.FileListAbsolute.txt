@@ -1,0 +1,4 @@
+C:\MPrischepa\Home\Prise\GasStationReports.FileManager\GasStationReports.FileManager.Configuration\bin\Release\GasStationReports.FileManager.Configuration.dll
+C:\MPrischepa\Home\Prise\GasStationReports.FileManager\GasStationReports.FileManager.Configuration\bin\Release\GasStationReports.FileManager.Configuration.pdb
+C:\MPrischepa\Home\Prise\GasStationReports.FileManager\GasStationReports.FileManager.Configuration\obj\Release\GasStationReports.FileManager.Configuration.dll
+C:\MPrischepa\Home\Prise\GasStationReports.FileManager\GasStationReports.FileManager.Configuration\obj\Release\GasStationReports.FileManager.Configuration.pdb
