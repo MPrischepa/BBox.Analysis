@@ -44,6 +44,7 @@ namespace BBox.Analysis.Domain
             if (__sale.PourState > FuelPourState.PourStart) return;
             __sale.PourState = FuelPourState.PourStart;
             var __hose = GetFuelHouse(hoseName);
+            __hose.IsActive = true;
            // __sale.StartCounterValue = __hose.Value;
             __sale.FuelHouse = __hose;
         }
@@ -72,6 +73,16 @@ namespace BBox.Analysis.Domain
                 _sales.Remove(sale);
         }
 
+
+        public FuelHose GetActiveFuelHose(Int16 name)
+        {
+            if (name > 0)
+                return GetFuelHouse(name);
+            var __fuleHose = _fuelHoses.Values.Where(x => x.IsActive).ToList();
+            if (__fuleHose.Count() > 1)
+                throw new Exception("Больше одного активного рукава");
+            return _sales.Last.Value.FuelHouse;
+        }
         public FuelHose GetFuelHouse(Int16 name)
         {
             FuelHose __hose;

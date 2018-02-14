@@ -10,6 +10,8 @@ namespace BBox.Analysis.Domain
 
         public Int16 Name { get; private set; }
 
+        public bool IsActive { get; set; }
+
         public FuelHose(FuelColumn column, Int16 name)
         {
             FuelColumn = column;

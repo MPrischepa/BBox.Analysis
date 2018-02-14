@@ -95,7 +95,7 @@ namespace BBox.Analysis.Processing.OneSComparer
 
                     var __startCounter = __startCounters.Any() ? __startCounters.Min(x => x.Value) : 0;
                     var __finishedCounter = __finishCounters.Any() ? __finishCounters.Max(x => x.Value) : 0;
-                    if (__dataRecord.Volume == __finishedCounter - __startCounter) continue;
+                    //if (__dataRecord.Volume == __finishedCounter - __startCounter) continue;
                     
                     if (!__dataRecord.FuelStationName.Equals(__fuelStationName))
                     {
