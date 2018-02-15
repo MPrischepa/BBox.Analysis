@@ -61,6 +61,9 @@
     <None Include="Resources\Бонусы Шаблон.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\Объем пролива Ведомостям.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Расхождения по счетчикам.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

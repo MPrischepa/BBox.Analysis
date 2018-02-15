@@ -24,6 +24,10 @@ namespace BBox.Analysis.Domain.PaymentTypes
         /// <summary>
         /// Не определено
         /// </summary>
-        NotDefined = 16
+        NotDefined = 16,
+        /// <summary>
+        /// Ведамость
+        /// </summary>
+        Statement = 32,
     }
 }

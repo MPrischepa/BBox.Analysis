@@ -295,6 +295,27 @@ namespace BBox.Analysis.Processing
             }
         }
 
+        public void RegisterStatementReport()
+        {
+            _logger.Write("Формирование отчета по объему пролива по Ведомостям");
+            var __report = new StatementRegistrar(_outputPath);
+            try
+            {
+                __report.FillStatementReports(_stations.Values);
+                Thread.Sleep(1);
+            }
+            catch (Exception __ex)
+            {
+                var __fileName = "Сравнение с 1С.xlsx";
+                LogManager.GetInstance()
+                   .GetLogger("BBox.Analysis")
+                    .Error($"Ошибка формирования файла: {__fileName}. \r\n Данные отчета не корректны. \r\n", __ex);
+                _logger.Write($"Ошибка обработки файла: {__fileName}.");
+                _logger.Write("Данные отчета не корректны.");
+                _logger.Write($"{__ex}");
+            }
+        }
+
         private void FillInvalidRecordReport(ISheet sheet)
         {
             var __rowNum = 2;

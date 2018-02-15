@@ -62,6 +62,12 @@ namespace BBox.Analysis.Domain.PaymentTypes
                     },ClientCardType.None);
                 case "Ведомость":
                 case "ведомость":
+                    return CreatePayment(new PaymentTypeDescription
+                    {
+                        PaymentType = PaymentType.CashlessSettlement|PaymentType.Statement,
+                        Name = paymentType,
+                        ClientType = ClientType.LegalEntity
+                    }, ClientCardType.None);
                 case "Регион":
                 case "Ликард безнал":
                     return CreatePayment(new PaymentTypeDescription

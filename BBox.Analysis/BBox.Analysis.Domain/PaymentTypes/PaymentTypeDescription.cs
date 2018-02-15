@@ -11,5 +11,7 @@ namespace BBox.Analysis.Domain.PaymentTypes
         public PaymentType PaymentType { get; set; }
 
         //public ClientCardType ClientCardType { get; set; }
+
+       
     }
 }

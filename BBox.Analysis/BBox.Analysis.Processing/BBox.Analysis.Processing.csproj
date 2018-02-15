@@ -73,6 +73,7 @@
     <Compile Include="Registrar.cs" />
     <Compile Include="RegistrarHelper.cs" />
     <Compile Include="ShiftRegistrar.cs" />
+    <Compile Include="StatementRegistrar.cs" />
     <Compile Include="SummaryReportRegistrar.cs" />
   </ItemGroup>
   <ItemGroup>

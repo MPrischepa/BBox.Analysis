@@ -38,6 +38,8 @@ namespace BBox.Analysis
             __settings.BuildGapCounterReports = GetSettingValue("Формировать отчеты по расхождениям счетчиков?");
             __settings.Build1SCompareReports =
                 GetSettingValue("Формировать ведомости по сравнению черных ящиков и 1С?");
+            __settings.BuildStatementReports =
+                GetSettingValue("Формировать отчеты по проливу по Ведомостям ?");
         }
         static void Main(string[] args)
         {

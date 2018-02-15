@@ -22,5 +22,7 @@ namespace BBox.Analysis.Core
         public Boolean BuildGapCounterReports { get; set; }
 
         public Boolean Build1SCompareReports { get; set; }
+
+        public Boolean BuildStatementReports { get; set; }
     }
 }
