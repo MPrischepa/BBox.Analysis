@@ -36,6 +36,11 @@
 					<xs:documentation>The ReplacementTextTemplates.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element minOccurs="0" name="afterExecuteApplications" type="tns:GasStationReports.FileManager.Configuration.ApplicationCollectionsCT">
+				<xs:annotation>
+					<xs:documentation>The AfterExecuteApplications.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:choice>
 	</xs:complexType>
 	<xs:complexType name="GasStationReports.FileManager.Configuration.InputDirectoryCollectionCT">
@@ -121,5 +126,37 @@
 				<xs:documentation>The Ind.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="GasStationReports.FileManager.Configuration.ApplicationElementCT">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element minOccurs="0" name="fileName" type="tns:GasStationReports.FileManager.Configuration.StringElementCT">
+				<xs:annotation>
+					<xs:documentation>The FileName.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="arguments" type="tns:GasStationReports.FileManager.Configuration.ArgumentCollectionCT">
+				<xs:annotation>
+					<xs:documentation>The Arguments.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="GasStationReports.FileManager.Configuration.ArgumentCollectionCT">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="argument" type="tns:GasStationReports.FileManager.Configuration.StringElementCT">
+				<xs:annotation>
+					<xs:documentation>The StringElement Configuration Element.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="GasStationReports.FileManager.Configuration.ApplicationCollectionsCT">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="application" type="tns:GasStationReports.FileManager.Configuration.ApplicationElementCT">
+				<xs:annotation>
+					<xs:documentation>The ApplicationElement Configuration Element.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
 	</xs:complexType>
 </xs:schema>

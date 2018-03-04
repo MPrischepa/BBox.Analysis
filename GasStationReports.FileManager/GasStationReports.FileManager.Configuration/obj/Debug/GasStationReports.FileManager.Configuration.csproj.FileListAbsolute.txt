@@ -2,3 +2,4 @@ C:\MPrischepa\Home\Prise\GasStationReports.FileManager\GasStationReports.FileMan
 C:\MPrischepa\Home\Prise\GasStationReports.FileManager\GasStationReports.FileManager.Configuration\bin\Debug\GasStationReports.FileManager.Configuration.pdb
 C:\MPrischepa\Home\Prise\GasStationReports.FileManager\GasStationReports.FileManager.Configuration\obj\Debug\GasStationReports.FileManager.Configuration.dll
 C:\MPrischepa\Home\Prise\GasStationReports.FileManager\GasStationReports.FileManager.Configuration\obj\Debug\GasStationReports.FileManager.Configuration.pdb
+C:\MPrischepa\Home\Prise\GasStationReports.FileManager\GasStationReports.FileManager.Configuration\obj\Debug\GasStationReports.FileManager.Configuration.csprojResolveAssemblyReference.cache

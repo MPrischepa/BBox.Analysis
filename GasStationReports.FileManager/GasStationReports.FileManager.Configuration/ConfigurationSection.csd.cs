@@ -209,6 +209,32 @@ namespace GasStationReports.FileManager.Configuration
             }
         }
         #endregion
+        
+        #region AfterExecuteApplications Property
+        /// <summary>
+        /// The XML name of the <see cref="AfterExecuteApplications"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string AfterExecuteApplicationsPropertyName = "afterExecuteApplications";
+        
+        /// <summary>
+        /// Gets or sets the AfterExecuteApplications.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        [global::System.ComponentModel.DescriptionAttribute("The AfterExecuteApplications.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::GasStationReports.FileManager.Configuration.FileManagerConfiguration.AfterExecuteApplicationsPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::GasStationReports.FileManager.Configuration.ApplicationCollections AfterExecuteApplications
+        {
+            get
+            {
+                return ((global::GasStationReports.FileManager.Configuration.ApplicationCollections)(base[global::GasStationReports.FileManager.Configuration.FileManagerConfiguration.AfterExecuteApplicationsPropertyName]));
+            }
+            set
+            {
+                base[global::GasStationReports.FileManager.Configuration.FileManagerConfiguration.AfterExecuteApplicationsPropertyName] = value;
+            }
+        }
+        #endregion
     }
 }
 namespace GasStationReports.FileManager.Configuration
@@ -1061,6 +1087,374 @@ namespace GasStationReports.FileManager.Configuration
             {
                 base[global::GasStationReports.FileManager.Configuration.Index.IndPropertyName] = value;
             }
+        }
+        #endregion
+    }
+}
+namespace GasStationReports.FileManager.Configuration
+{
+    
+    
+    /// <summary>
+    /// The ApplicationElement Configuration Element.
+    /// </summary>
+    public partial class ApplicationElement : global::System.Configuration.ConfigurationElement
+    {
+        
+        #region IsReadOnly override
+        /// <summary>
+        /// Gets a value indicating whether the element is read-only.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
+        #endregion
+        
+        #region FileName Property
+        /// <summary>
+        /// The XML name of the <see cref="FileName"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string FileNamePropertyName = "fileName";
+        
+        /// <summary>
+        /// Gets or sets the FileName.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        [global::System.ComponentModel.DescriptionAttribute("The FileName.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::GasStationReports.FileManager.Configuration.ApplicationElement.FileNamePropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::GasStationReports.FileManager.Configuration.StringElement FileName
+        {
+            get
+            {
+                return ((global::GasStationReports.FileManager.Configuration.StringElement)(base[global::GasStationReports.FileManager.Configuration.ApplicationElement.FileNamePropertyName]));
+            }
+            set
+            {
+                base[global::GasStationReports.FileManager.Configuration.ApplicationElement.FileNamePropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region Arguments Property
+        /// <summary>
+        /// The XML name of the <see cref="Arguments"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string ArgumentsPropertyName = "arguments";
+        
+        /// <summary>
+        /// Gets or sets the Arguments.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        [global::System.ComponentModel.DescriptionAttribute("The Arguments.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::GasStationReports.FileManager.Configuration.ApplicationElement.ArgumentsPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::GasStationReports.FileManager.Configuration.ArgumentCollection Arguments
+        {
+            get
+            {
+                return ((global::GasStationReports.FileManager.Configuration.ArgumentCollection)(base[global::GasStationReports.FileManager.Configuration.ApplicationElement.ArgumentsPropertyName]));
+            }
+            set
+            {
+                base[global::GasStationReports.FileManager.Configuration.ApplicationElement.ArgumentsPropertyName] = value;
+            }
+        }
+        #endregion
+    }
+}
+namespace GasStationReports.FileManager.Configuration
+{
+    
+    
+    /// <summary>
+    /// A collection of StringElement instances.
+    /// </summary>
+    [global::System.Configuration.ConfigurationCollectionAttribute(typeof(global::GasStationReports.FileManager.Configuration.StringElement), CollectionType=global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate, AddItemName=global::GasStationReports.FileManager.Configuration.ArgumentCollection.StringElementPropertyName)]
+    public partial class ArgumentCollection : global::System.Configuration.ConfigurationElementCollection
+    {
+        
+        #region Constants
+        /// <summary>
+        /// The XML name of the individual <see cref="global::GasStationReports.FileManager.Configuration.StringElement"/> instances in this collection.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string StringElementPropertyName = "argument";
+        #endregion
+        
+        #region Overrides
+        /// <summary>
+        /// Gets the type of the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <returns>The <see cref="global::System.Configuration.ConfigurationElementCollectionType"/> of this collection.</returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public override global::System.Configuration.ConfigurationElementCollectionType CollectionType
+        {
+            get
+            {
+                return global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate;
+            }
+        }
+        
+        /// <summary>
+        /// Gets the name used to identify this collection of elements
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override string ElementName
+        {
+            get
+            {
+                return global::GasStationReports.FileManager.Configuration.ArgumentCollection.StringElementPropertyName;
+            }
+        }
+        
+        /// <summary>
+        /// Indicates whether the specified <see cref="global::System.Configuration.ConfigurationElement"/> exists in the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="elementName">The name of the element to verify.</param>
+        /// <returns>
+        /// <see langword="true"/> if the element exists in the collection; otherwise, <see langword="false"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override bool IsElementName(string elementName)
+        {
+            return (elementName == global::GasStationReports.FileManager.Configuration.ArgumentCollection.StringElementPropertyName);
+        }
+        
+        /// <summary>
+        /// Gets the element key for the specified configuration element.
+        /// </summary>
+        /// <param name="element">The <see cref="global::System.Configuration.ConfigurationElement"/> to return the key for.</param>
+        /// <returns>
+        /// An <see cref="object"/> that acts as the key for the specified <see cref="global::System.Configuration.ConfigurationElement"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override object GetElementKey(global::System.Configuration.ConfigurationElement element)
+        {
+            return element.GetHashCode();
+        }
+        
+        /// <summary>
+        /// Creates a new <see cref="global::GasStationReports.FileManager.Configuration.StringElement"/>.
+        /// </summary>
+        /// <returns>
+        /// A new <see cref="global::GasStationReports.FileManager.Configuration.StringElement"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override global::System.Configuration.ConfigurationElement CreateNewElement()
+        {
+            return new global::GasStationReports.FileManager.Configuration.StringElement();
+        }
+        #endregion
+        
+        #region Indexer
+        /// <summary>
+        /// Gets the <see cref="global::GasStationReports.FileManager.Configuration.StringElement"/> at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="global::GasStationReports.FileManager.Configuration.StringElement"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public global::GasStationReports.FileManager.Configuration.StringElement this[int index]
+        {
+            get
+            {
+                return ((global::GasStationReports.FileManager.Configuration.StringElement)(base.BaseGet(index)));
+            }
+        }
+        #endregion
+        
+        #region Add
+        /// <summary>
+        /// Adds the specified <see cref="global::GasStationReports.FileManager.Configuration.StringElement"/> to the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="argument">The <see cref="global::GasStationReports.FileManager.Configuration.StringElement"/> to add.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public void Add(global::GasStationReports.FileManager.Configuration.StringElement argument)
+        {
+            base.BaseAdd(argument);
+        }
+        #endregion
+        
+        #region Remove
+        /// <summary>
+        /// Removes the specified <see cref="global::GasStationReports.FileManager.Configuration.StringElement"/> from the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="argument">The <see cref="global::GasStationReports.FileManager.Configuration.StringElement"/> to remove.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public void Remove(global::GasStationReports.FileManager.Configuration.StringElement argument)
+        {
+            base.BaseRemove(this.GetElementKey(argument));
+        }
+        #endregion
+        
+        #region GetItem
+        /// <summary>
+        /// Gets the <see cref="global::GasStationReports.FileManager.Configuration.StringElement"/> at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="global::GasStationReports.FileManager.Configuration.StringElement"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public global::GasStationReports.FileManager.Configuration.StringElement GetItemAt(int index)
+        {
+            return ((global::GasStationReports.FileManager.Configuration.StringElement)(base.BaseGet(index)));
+        }
+        #endregion
+        
+        #region IsReadOnly override
+        /// <summary>
+        /// Gets a value indicating whether the element is read-only.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
+        #endregion
+    }
+}
+namespace GasStationReports.FileManager.Configuration
+{
+    
+    
+    /// <summary>
+    /// A collection of ApplicationElement instances.
+    /// </summary>
+    [global::System.Configuration.ConfigurationCollectionAttribute(typeof(global::GasStationReports.FileManager.Configuration.ApplicationElement), CollectionType=global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate, AddItemName=global::GasStationReports.FileManager.Configuration.ApplicationCollections.ApplicationElementPropertyName)]
+    public partial class ApplicationCollections : global::System.Configuration.ConfigurationElementCollection
+    {
+        
+        #region Constants
+        /// <summary>
+        /// The XML name of the individual <see cref="global::GasStationReports.FileManager.Configuration.ApplicationElement"/> instances in this collection.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string ApplicationElementPropertyName = "application";
+        #endregion
+        
+        #region Overrides
+        /// <summary>
+        /// Gets the type of the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <returns>The <see cref="global::System.Configuration.ConfigurationElementCollectionType"/> of this collection.</returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public override global::System.Configuration.ConfigurationElementCollectionType CollectionType
+        {
+            get
+            {
+                return global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate;
+            }
+        }
+        
+        /// <summary>
+        /// Gets the name used to identify this collection of elements
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override string ElementName
+        {
+            get
+            {
+                return global::GasStationReports.FileManager.Configuration.ApplicationCollections.ApplicationElementPropertyName;
+            }
+        }
+        
+        /// <summary>
+        /// Indicates whether the specified <see cref="global::System.Configuration.ConfigurationElement"/> exists in the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="elementName">The name of the element to verify.</param>
+        /// <returns>
+        /// <see langword="true"/> if the element exists in the collection; otherwise, <see langword="false"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override bool IsElementName(string elementName)
+        {
+            return (elementName == global::GasStationReports.FileManager.Configuration.ApplicationCollections.ApplicationElementPropertyName);
+        }
+        
+        /// <summary>
+        /// Gets the element key for the specified configuration element.
+        /// </summary>
+        /// <param name="element">The <see cref="global::System.Configuration.ConfigurationElement"/> to return the key for.</param>
+        /// <returns>
+        /// An <see cref="object"/> that acts as the key for the specified <see cref="global::System.Configuration.ConfigurationElement"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override object GetElementKey(global::System.Configuration.ConfigurationElement element)
+        {
+            return element.GetHashCode();
+        }
+        
+        /// <summary>
+        /// Creates a new <see cref="global::GasStationReports.FileManager.Configuration.ApplicationElement"/>.
+        /// </summary>
+        /// <returns>
+        /// A new <see cref="global::GasStationReports.FileManager.Configuration.ApplicationElement"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override global::System.Configuration.ConfigurationElement CreateNewElement()
+        {
+            return new global::GasStationReports.FileManager.Configuration.ApplicationElement();
+        }
+        #endregion
+        
+        #region Indexer
+        /// <summary>
+        /// Gets the <see cref="global::GasStationReports.FileManager.Configuration.ApplicationElement"/> at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="global::GasStationReports.FileManager.Configuration.ApplicationElement"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public global::GasStationReports.FileManager.Configuration.ApplicationElement this[int index]
+        {
+            get
+            {
+                return ((global::GasStationReports.FileManager.Configuration.ApplicationElement)(base.BaseGet(index)));
+            }
+        }
+        #endregion
+        
+        #region Add
+        /// <summary>
+        /// Adds the specified <see cref="global::GasStationReports.FileManager.Configuration.ApplicationElement"/> to the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="application">The <see cref="global::GasStationReports.FileManager.Configuration.ApplicationElement"/> to add.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public void Add(global::GasStationReports.FileManager.Configuration.ApplicationElement application)
+        {
+            base.BaseAdd(application);
+        }
+        #endregion
+        
+        #region Remove
+        /// <summary>
+        /// Removes the specified <see cref="global::GasStationReports.FileManager.Configuration.ApplicationElement"/> from the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="application">The <see cref="global::GasStationReports.FileManager.Configuration.ApplicationElement"/> to remove.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public void Remove(global::GasStationReports.FileManager.Configuration.ApplicationElement application)
+        {
+            base.BaseRemove(this.GetElementKey(application));
+        }
+        #endregion
+        
+        #region GetItem
+        /// <summary>
+        /// Gets the <see cref="global::GasStationReports.FileManager.Configuration.ApplicationElement"/> at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="global::GasStationReports.FileManager.Configuration.ApplicationElement"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public global::GasStationReports.FileManager.Configuration.ApplicationElement GetItemAt(int index)
+        {
+            return ((global::GasStationReports.FileManager.Configuration.ApplicationElement)(base.BaseGet(index)));
+        }
+        #endregion
+        
+        #region IsReadOnly override
+        /// <summary>
+        /// Gets a value indicating whether the element is read-only.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public override bool IsReadOnly()
+        {
+            return false;
         }
         #endregion
     }

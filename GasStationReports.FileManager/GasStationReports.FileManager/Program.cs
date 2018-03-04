@@ -60,6 +60,12 @@ namespace GasStationReports.FileManager
                     File.Delete(__removeFile);
                 }
             }
+
+            foreach (ApplicationElement __application in __config.AfterExecuteApplications)
+            {
+                
+                ProcessExecuter.Instance.Execute(__application);
+            }
             
         }
     }

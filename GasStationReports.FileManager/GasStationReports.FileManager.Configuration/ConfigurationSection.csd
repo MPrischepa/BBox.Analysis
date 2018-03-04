@@ -38,6 +38,11 @@
             <configurationElementCollectionMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/ReplacementTemplateCollection" />
           </type>
         </elementProperty>
+        <elementProperty name="AfterExecuteApplications" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="afterExecuteApplications" isReadOnly="false">
+          <type>
+            <configurationElementCollectionMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/ApplicationCollections" />
+          </type>
+        </elementProperty>
       </elementProperties>
     </configurationSection>
     <configurationElementCollection name="InputDirectoryCollection" xmlItemName="inputDirectory" codeGenOptions="Indexer, AddMethod, RemoveMethod, GetItemMethods">
@@ -122,6 +127,30 @@
         </attributeProperty>
       </attributeProperties>
     </configurationElement>
+    <configurationElement name="ApplicationElement">
+      <elementProperties>
+        <elementProperty name="FileName" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="fileName" isReadOnly="false">
+          <type>
+            <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/StringElement" />
+          </type>
+        </elementProperty>
+        <elementProperty name="Arguments" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="arguments" isReadOnly="false">
+          <type>
+            <configurationElementCollectionMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/ArgumentCollection" />
+          </type>
+        </elementProperty>
+      </elementProperties>
+    </configurationElement>
+    <configurationElementCollection name="ArgumentCollection" xmlItemName="argument" codeGenOptions="Indexer, AddMethod, RemoveMethod, GetItemMethods">
+      <itemType>
+        <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/StringElement" />
+      </itemType>
+    </configurationElementCollection>
+    <configurationElementCollection name="ApplicationCollections" xmlItemName="application" codeGenOptions="Indexer, AddMethod, RemoveMethod, GetItemMethods">
+      <itemType>
+        <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/ApplicationElement" />
+      </itemType>
+    </configurationElementCollection>
   </configurationElements>
   <propertyValidators>
     <validators />
