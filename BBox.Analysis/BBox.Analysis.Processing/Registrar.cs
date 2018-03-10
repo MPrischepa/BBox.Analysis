@@ -9,6 +9,7 @@ using BBox.Analysis.Core;
 using BBox.Analysis.Core.Logger;
 using BBox.Analysis.Domain;
 using BBox.Analysis.Interface;
+using BBox.Analysis.Processing.AccountCardComparer;
 using BBox.Analysis.Processing.OneSComparer;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -24,9 +25,10 @@ namespace BBox.Analysis.Processing
         private ISet<Tuple<FuelStation, DateTime, Int64>> _processedRecord;
         private IList<Tuple<String, Int64, String>> _invalidRecords;
         private ILogger _logger;
-        private IDataReader _dataReader;
+        private OneSComparer.IDataReader _oneCDataReader;
+        private AccountCardComparer.IDataReader _accountCardReader;
 
-        public Registrar(String outputPath, ILogger logger, IDataReader oneSDataReader)
+        public Registrar(String outputPath, ILogger logger, OneSComparer.IDataReader oneSDataReader, AccountCardComparer.IDataReader accountCardReader)
         {
             _outputPath = outputPath;
             _stations = new Dictionary<string, FuelStation>();
@@ -34,7 +36,8 @@ namespace BBox.Analysis.Processing
             _logger = logger;
             _processedRecord = new HashSet<Tuple<FuelStation, DateTime, long>>();
             _invalidRecords = new List<Tuple<string, long, string>>();
-            _dataReader = oneSDataReader;
+            _oneCDataReader = oneSDataReader;
+            _accountCardReader = accountCardReader;
         }
 
         #region Implementation of IRegistrar
@@ -277,7 +280,7 @@ namespace BBox.Analysis.Processing
         public void RegisterOneSCompareReport()
         {
             _logger.Write("Формирование ведомостей сравнение 1С и BBOX");
-            var __report = new OneSComparerRegistrar(_dataReader,_outputPath);
+            var __report = new OneSComparerRegistrar(_oneCDataReader, _outputPath);
             try
             {
                 __report.FillCompareReports(_stations);
@@ -306,13 +309,35 @@ namespace BBox.Analysis.Processing
             }
             catch (Exception __ex)
             {
-                var __fileName = "Сравнение с 1С.xlsx";
+                var __fileName = "Объем пролива Ведомостям.xlsx";
                 LogManager.GetInstance()
                    .GetLogger("BBox.Analysis")
                     .Error($"Ошибка формирования файла: {__fileName}. \r\n Данные отчета не корректны. \r\n", __ex);
                 _logger.Write($"Ошибка обработки файла: {__fileName}.");
                 _logger.Write("Данные отчета не корректны.");
                 _logger.Write($"{__ex}");
+            }
+        }
+
+        public void RegisterAccountCardReport()
+        {
+            _logger.Write("Формирование отчета по объему пролива по Диалогу");
+            var __report = new AccountCardRegistrar(_accountCardReader,_outputPath);
+            try
+            {
+                __report.FillAccountCardReport(_stations.Values);
+                Thread.Sleep(1);
+            }
+            catch (Exception __ex)
+            {
+                var __fileName = "Диалог сводная ведомость.xlsx";
+                LogManager.GetInstance()
+                   .GetLogger("BBox.Analysis")
+                    .Error($"Ошибка формирования файла: {__fileName}. \r\n Данные отчета не корректны. \r\n", __ex);
+                _logger.Write($"Ошибка обработки файла: {__fileName}.");
+                _logger.Write("Данные отчета не корректны.");
+                _logger.Write($"{__ex}");
+                throw;
             }
         }
 

@@ -61,6 +61,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountCardComparer\AccountCardRegistrar.cs" />
+    <Compile Include="AccountCardComparer\DataRecord.cs" />
+    <Compile Include="AccountCardComparer\FileReportDataReader.cs" />
+    <Compile Include="AccountCardComparer\IDataReader.cs" />
     <Compile Include="BlackBoxProcessingManager.cs" />
     <Compile Include="BonusReportRegistrar.cs" />
     <Compile Include="FileProcessor.cs" />

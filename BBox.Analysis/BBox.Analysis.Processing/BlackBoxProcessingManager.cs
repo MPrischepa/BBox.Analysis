@@ -69,6 +69,9 @@ namespace BBox.Analysis.Processing
                 _registrar.RegisterOneSCompareReport();
             if (ProcessingSettings.Instatnce.BuildStatementReports)
                 _registrar.RegisterStatementReport();
+
+            if (ProcessingSettings.Instatnce.BuildAccountCardReport)
+                _registrar.RegisterAccountCardReport();
             _registrar.RegisterInvalidRecordReport();
 
         }

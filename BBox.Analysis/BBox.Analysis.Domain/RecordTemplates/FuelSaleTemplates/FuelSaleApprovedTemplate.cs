@@ -28,6 +28,7 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
             if (entity.SaleState != FuelSaleState.Canceled)
             {
                 entity.SaleState = FuelSaleState.Approved;
+                entity.Date = record.TimeRecord;
                 var __order = entity.GetCurrentOrder();
             }
             return ProcessingResult.SelfProcessing;

@@ -24,5 +24,7 @@ namespace BBox.Analysis.Core
         public Boolean Build1SCompareReports { get; set; }
 
         public Boolean BuildStatementReports { get; set; }
+
+        public Boolean BuildAccountCardReport { get; set; }
     }
 }

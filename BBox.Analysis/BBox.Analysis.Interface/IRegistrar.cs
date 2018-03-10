@@ -32,5 +32,7 @@ namespace BBox.Analysis.Interface
         void RegisterOneSCompareReport();
 
         void RegisterStatementReport();
+
+        void RegisterAccountCardReport();
     }
 }

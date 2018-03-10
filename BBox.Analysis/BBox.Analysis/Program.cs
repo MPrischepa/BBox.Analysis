@@ -40,6 +40,7 @@ namespace BBox.Analysis
                 GetSettingValue("Формировать ведомости по сравнению черных ящиков и 1С?");
             __settings.BuildStatementReports =
                 GetSettingValue("Формировать отчеты по проливу по Ведомостям ?");
+            __settings.BuildAccountCardReport = GetSettingValue("Формировать отчеты по проливу по Диалогу ?");
         }
         static void Main(string[] args)
         {
@@ -73,7 +74,9 @@ namespace BBox.Analysis
                     new BlackBoxProcessingManager(__inDirectory).WithSearchTemplate(__searchPattern)
                         .WithLogger(__logger)
                         .WithRegistrar(new Registrar(__outDirectory, __logger,
-                            new FileReportDataReader(Path.Combine(__inDirectory, "Данные_1C_2015_01_01_2018_04_02.TXT"))));
+                            new FileReportDataReader(Path.Combine(__inDirectory, "Данные_1C_2015_01_01_2018_04_02.TXT")),
+                            new Processing.AccountCardComparer.FileReportDataReader(Path.Combine(__inDirectory,
+                                "Данные диалог 2015_01_01_2018_04_02.TXT"))));
                 __processing.Process();
                 Thread.Sleep(5000);
             }
