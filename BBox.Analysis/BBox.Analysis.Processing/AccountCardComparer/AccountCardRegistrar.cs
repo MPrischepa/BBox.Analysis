@@ -64,7 +64,7 @@ namespace BBox.Analysis.Processing.AccountCardComparer
                 __cell = RegistrarHelper.GetCell(__row, 5);
                 __cell.SetCellValue(record.Sale.FactSale.FuelColumn.ID);
                 __cell = RegistrarHelper.GetCell(__row, 6);
-                __cell.SetCellValue(record.Sale.FuelHouse.Name);
+                __cell.SetCellValue($"{record.Sale.FuelHouse?.Name}");
                 __cell = RegistrarHelper.GetCell(__row, 7);
                 __cell.SetCellValue(record.Sale.FactSale.ProductName);
 
@@ -86,10 +86,10 @@ namespace BBox.Analysis.Processing.AccountCardComparer
                 __cell.SetCellValue(Convert.ToDouble(record.Sale.FinishedCounterValue - record.Sale.StartCounterValue - record.Sale.FactSale.Volume));
             }
 
-            if (record.OneC != null && record.Sale != null)
+            //if (record.OneC != null && record.Sale != null)
             {
                 __cell = RegistrarHelper.GetCell(__row, 16);
-                __cell.SetCellValue(Convert.ToDouble(record.Sale.FactSale.Volume - record.OneC.Volume));
+                __cell.SetCellValue(Convert.ToDouble((record.Sale?.FactSale.Volume ??0) - (record.OneC?.Volume??0)));
             }
 
             
@@ -139,12 +139,21 @@ namespace BBox.Analysis.Processing.AccountCardComparer
                             (bBox, oneC) => new {ReportGroup = bBox.Key, bBox = bBox.ToList(), OneC = oneC.ToList()},
                             new ReportGroupComparer())
                         .OrderBy(x => x.ReportGroup.StationName).ThenBy(x => x.ReportGroup.ShiftBeginDate).ToList();
+                var __summaryData = new List<ResultRecord>();
+                //var __cards =
+                //    __summaryData.SelectMany(x => x.OneC)
+                //        .Select(x => new Tuple<String, String>(x.CardNo, x.Customer))
+                //        .Distinct()
+                //        .ToDictionary(x => x.Item1,x => x.Item2);
                 var __output = String.Empty;
                 var __stationName = String.Empty;
                 ISheet __sheet = null;
                 var __rowNum = 0;
+                IRow __row;
+                ICell __cell;
                 foreach (var __shiftInfo in __resultData)
                 {
+                    
                     if (
                        !__output.Equals(
                            $"Анализируем {__shiftInfo.ReportGroup.StationName}"))
@@ -154,7 +163,62 @@ namespace BBox.Analysis.Processing.AccountCardComparer
                     }
                     if (!__shiftInfo.ReportGroup.StationName.Equals(__stationName))
                     {
+                        if (__sheet != null)
+                        {
+                            __rowNum = __rowNum + 4;
+                            __row = RegistrarHelper.GetRow(__sheet, __rowNum);
+                            __cell = RegistrarHelper.GetCell(__row, 0);
 
+                            __cell.SetCellValue("Итого");
+                            __rowNum++;
+
+                            __row = RegistrarHelper.GetRow(__sheet, __rowNum);
+                            __cell = RegistrarHelper.GetCell(__row, 0);
+                            __cell.SetCellValue("Контрагент");
+                            __cell = RegistrarHelper.GetCell(__row, 1);
+                            __cell.SetCellValue("Продукт");
+                            __cell = RegistrarHelper.GetCell(__row, 2);
+                            __cell.SetCellValue("Объем АЗС+");
+                            __cell = RegistrarHelper.GetCell(__row, 3);
+                            __cell.SetCellValue("Объем 1C");
+                            __cell = RegistrarHelper.GetCell(__row, 4);
+                            __cell.SetCellValue("Разница");
+
+                            __rowNum++;
+
+                            var __data =
+                                __summaryData.GroupBy(
+                                    x =>
+                                        new Tuple<String, String>(x.OneC?.Customer ?? "Не определен",
+                                            x.Sale?.FactSale.ProductName ?? x.OneC?.Product),
+                                    (key, records) =>
+                                        new
+                                        {
+                                            Customer = key.Item1,
+                                            Product = key.Item2,
+                                            BBoxVolume = records.Sum(x => x.Sale?.FactSale.Volume ?? 0),
+                                            OneCVolume = records.Sum(x => x.OneC?.Volume ?? 0)
+                                        }).OrderBy(x => x.Customer).ThenBy(x => x.Product);
+
+                            foreach (var __sum in __data)
+                            {
+                                __row = RegistrarHelper.GetRow(__sheet, __rowNum);
+                                __cell = RegistrarHelper.GetCell(__row, 0);
+                                __cell.SetCellValue(__sum.Customer);
+                                __cell = RegistrarHelper.GetCell(__row, 1);
+                                __cell.SetCellValue(__sum.Product);
+                                __cell = RegistrarHelper.GetCell(__row, 2);
+                                __cell.SetCellValue(Convert.ToDouble(__sum.BBoxVolume));
+                                __cell = RegistrarHelper.GetCell(__row, 3);
+                                __cell.SetCellValue(Convert.ToDouble(__sum.OneCVolume));
+                                __cell = RegistrarHelper.GetCell(__row, 4);
+                                __cell.SetCellValue(Convert.ToDouble(__sum.BBoxVolume - __sum.OneCVolume));
+
+                                __rowNum++;
+                            }
+
+                            __summaryData = new List<ResultRecord>();
+                        }
                         __book.CloneSheet(__sheetInd);
                         __sheet = __book.GetSheetAt(__sheetInd);
                         __stationName = __shiftInfo.ReportGroup.StationName;
@@ -163,8 +227,8 @@ namespace BBox.Analysis.Processing.AccountCardComparer
                         __sheetInd++;
                     }
 
-                    var __row = RegistrarHelper.GetRow(__sheet, __rowNum);
-                    var __cell = RegistrarHelper.GetCell(__row, 0);
+                    __row = RegistrarHelper.GetRow(__sheet, __rowNum);
+                    __cell = RegistrarHelper.GetCell(__row, 0);
                     __cell.SetCellValue(
                         $"Смена: {__shiftInfo.ReportGroup.ShiftBeginDate:dd.MM.yyyy HH:mm} - {__shiftInfo.ReportGroup.ShiftEndDate:dd.MM.yyyy HH:mm}");
                     __rowNum++;
@@ -173,7 +237,7 @@ namespace BBox.Analysis.Processing.AccountCardComparer
                     var __leftOneC = from __bData in __shiftInfo.bBox
                         join __oData in __shiftInfo.OneC on __bData.Sale.Payment.CardNo equals __oData.CardNo into __o
                         from __oD in __o.DefaultIfEmpty()
-                        where __bData.Sale.Date == (__oD?.SaleDate ?? __bData.Sale.Date)
+                        where Where(__bData.Sale, __oD)
                         select new ResultRecord
                         {
                             Shift = new ShiftReport
@@ -189,6 +253,8 @@ namespace BBox.Analysis.Processing.AccountCardComparer
                         join __bData in __shiftInfo.bBox on __oData.CardNo equals __bData.Sale.Payment.CardNo into __b
                         from __bD in __b.DefaultIfEmpty()
                         where __oData.SaleDate == (__bD?.Sale.Date ?? __oData.SaleDate)
+                        && __oData.FuelColumnID == (__bD?.Sale.FactSale.FuelColumn.ID ?? __oData.FuelColumnID)
+                        && __oData.FuelHoseID == (__bD?.Sale.FuelHouse?.Name ?? __oData.FuelHoseID)
                         select
                         new ResultRecord
                         {
@@ -196,7 +262,8 @@ namespace BBox.Analysis.Processing.AccountCardComparer
                             Sale = __bD?.Sale,
                             OneC = __oData
                         };
-                    var __sales = __leftOneC.Union(__leftBBox, new ResultRecordComparer()).ToList();
+                    var __sales = __leftOneC.Union(__leftBBox, new ResultRecordComparer()).OrderBy(x => x.Sale?.Date ?? x.OneC.SaleDate).ToList();
+                    __summaryData.AddRange(__sales);
                     foreach (var __sale in __sales)
                     {
                         FillRow(__sheet, __rowNum, __sale);
@@ -204,6 +271,58 @@ namespace BBox.Analysis.Processing.AccountCardComparer
                     }
                     __rowNum++;
                    
+                }
+
+                __rowNum = __rowNum + 4;
+                __row = RegistrarHelper.GetRow(__sheet, __rowNum);
+                __cell = RegistrarHelper.GetCell(__row, 0);
+
+                __cell.SetCellValue("Итого");
+                __rowNum++;
+
+                __row = RegistrarHelper.GetRow(__sheet, __rowNum);
+                __cell = RegistrarHelper.GetCell(__row, 0);
+                __cell.SetCellValue("Контрагент");
+                __cell = RegistrarHelper.GetCell(__row, 1);
+                __cell.SetCellValue("Продукт");
+                __cell = RegistrarHelper.GetCell(__row, 2);
+                __cell.SetCellValue("Объем АЗС+");
+                __cell = RegistrarHelper.GetCell(__row, 3);
+                __cell.SetCellValue("Объем 1C");
+                __cell = RegistrarHelper.GetCell(__row, 4);
+                __cell.SetCellValue("Разница");
+
+                __rowNum++;
+
+                var __data1 =
+                    __summaryData.GroupBy(
+                        x =>
+                            new Tuple<String, String>(x.OneC?.Customer ?? "Не определен",
+                                x.Sale?.FactSale.ProductName ?? x.OneC?.Product),
+                        (key, records) =>
+                            new
+                            {
+                                Customer = key.Item1,
+                                Product = key.Item2,
+                                BBoxVolume = records.Sum(x => x.Sale?.FactSale.Volume ?? 0),
+                                OneCVolume = records.Sum(x => x.OneC?.Volume ?? 0)
+                            }).OrderBy(x => x.Customer).ThenBy(x => x.Product);
+
+                foreach (var __sum in __data1)
+                {
+                    __row = RegistrarHelper.GetRow(__sheet, __rowNum);
+                    __cell = RegistrarHelper.GetCell(__row, 0);
+                    __cell.SetCellValue(__sum.Customer);
+                    __cell = RegistrarHelper.GetCell(__row, 1);
+                    __cell.SetCellValue(__sum.Product);
+                    __cell = RegistrarHelper.GetCell(__row, 2);
+                    __cell.SetCellValue(Convert.ToDouble(__sum.BBoxVolume));
+                    __cell = RegistrarHelper.GetCell(__row, 3);
+                    __cell.SetCellValue(Convert.ToDouble(__sum.OneCVolume));
+                    __cell = RegistrarHelper.GetCell(__row, 4);
+                    __cell.SetCellValue(Convert.ToDouble(__sum.BBoxVolume - __sum.OneCVolume));
+
+                    __rowNum++;
                 }
             }
 
@@ -216,6 +335,16 @@ namespace BBox.Analysis.Processing.AccountCardComparer
                 __book.Close();
             }
 
+        }
+
+        private bool Where(FuelSale sale, DataRecord oD)
+        {
+            
+                return sale.Date == (oD?.SaleDate ?? sale.Date)
+                       && sale.FactSale.FuelColumn.ID ==
+                       (oD?.FuelColumnID ?? sale.FactSale.FuelColumn.ID)
+                       && (sale.FuelHouse?.Name ?? 0) == (oD?.FuelHoseID ?? (sale.FuelHouse?.Name ?? 0));
+    
         }
 
 
