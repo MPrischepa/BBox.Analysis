@@ -79,6 +79,7 @@ namespace BBox.Analysis.Domain.PaymentTypes
                         
                 case "VISA":
                 case "VISA (ИП Муравьева)":
+                case "Халва":
                     return CreatePayment(new PaymentTypeDescription
                     {
                         PaymentType = PaymentType.CashlessSettlement,
