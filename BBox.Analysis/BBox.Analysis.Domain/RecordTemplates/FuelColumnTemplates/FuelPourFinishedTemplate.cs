@@ -23,7 +23,7 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
 
         public override ProcessingResult Process(FuelColumn entity, Record record)
         {
-            var __hoseName = Int16.Parse(new Regex("\\d+").Match(record.Entry[2]).Value);
+            var __hoseName = record.Entry.Length > 2 ? Int16.Parse(new Regex("\\d+").Match(record.Entry[2]).Value) : (short)1;
             entity.Finished(__hoseName);
             return ProcessingResult.SelfProcessing;
         }
@@ -46,7 +46,9 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelColumnTemplates
 
         public override ProcessingResult Process(FuelColumn entity, Record record)
         {
-            var __hoseName = Int16.Parse(new Regex("\\d+").Match(record.Entry[2]).Value);
+            var __hoseName = record.Entry.Length > 2
+                ? Int16.Parse(new Regex("\\d+").Match(record.Entry[2]).Value)
+                : (short) 1;
             entity.Start(__hoseName);
             return ProcessingResult.SelfProcessing;
         }

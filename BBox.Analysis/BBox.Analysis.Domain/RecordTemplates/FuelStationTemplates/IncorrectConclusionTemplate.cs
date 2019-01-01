@@ -25,7 +25,7 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
 
         public override ProcessingResult Process(FuelStation entity, Record record)
         {
-            entity.CurrentShift.AddIncorrectConclusion(record.TimeRecord,record.ID);
+            entity.CurrentShift?.AddIncorrectConclusion(record.TimeRecord,record.ID);
             return ProcessingResult.SelfProcessing;
         }
 

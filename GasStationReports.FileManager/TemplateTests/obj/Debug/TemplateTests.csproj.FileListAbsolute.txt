@@ -1,6 +1,0 @@
-C:\MPrischepa\Home\Prise\GasStationReports.FileManager\TemplateTests\bin\Debug\TemplateTests.dll
-C:\MPrischepa\Home\Prise\GasStationReports.FileManager\TemplateTests\bin\Debug\TemplateTests.pdb
-C:\MPrischepa\Home\Prise\GasStationReports.FileManager\TemplateTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
-C:\MPrischepa\Home\Prise\GasStationReports.FileManager\TemplateTests\obj\Debug\TemplateTests.csprojResolveAssemblyReference.cache
-C:\MPrischepa\Home\Prise\GasStationReports.FileManager\TemplateTests\obj\Debug\TemplateTests.dll
-C:\MPrischepa\Home\Prise\GasStationReports.FileManager\TemplateTests\obj\Debug\TemplateTests.pdb

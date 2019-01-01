@@ -138,6 +138,7 @@ namespace BBox.Analysis.Domain.PaymentTypes
                 case "Мерник газ":
                 case "Мерник":
                 case "мерник":
+                case "Скидка для сотрудников":
                     return CreatePayment(new PaymentTypeDescription
                     {
                         PaymentType = PaymentType.WithoutPayment,

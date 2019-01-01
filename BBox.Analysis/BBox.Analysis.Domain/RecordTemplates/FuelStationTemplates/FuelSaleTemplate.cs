@@ -26,6 +26,7 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
 
         public override ProcessingResult Process(FuelStation entity, Record record)
         {
+            if (entity.CurrentShift == null) return ProcessingResult.DontProcessing;
             var __saleNo = GetSaleNo(record.Entry[0]);
             var __sale = entity.CurrentShift.GetFuelSale(__saleNo, record);
             BlackBoxObject.ProcessRecord(__sale,record);

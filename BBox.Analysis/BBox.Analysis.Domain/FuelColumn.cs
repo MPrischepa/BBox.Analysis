@@ -79,8 +79,8 @@ namespace BBox.Analysis.Domain
             if (name > 0)
                 return GetFuelHouse(name);
             var __fuleHose = _fuelHoses.Values.Where(x => x.IsActive).ToList();
-            if (__fuleHose.Count() > 1)
-                throw new Exception("Больше одного активного рукава");
+            //if (__fuleHose.Count() > 1)
+            //    throw new Exception("Больше одного активного рукава");
             return _sales.Last.Value.FuelHouse;
         }
         public FuelHose GetFuelHouse(Int16 name)
