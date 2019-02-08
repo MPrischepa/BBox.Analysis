@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BBox.Analysis.Core;
 using BBox.Analysis.Domain.PaymentTypes;
 using BBox.Analysis.Interface;
 
@@ -43,7 +38,7 @@ namespace BBox.Analysis.Processing
         public BlackBoxProcessingManager WithRegistrar(IRegistrar registrar)
         {
             _registrar = registrar;
-            PaymentFactory.CreateInstance(_registrar);
+            PaymentFactory.CreateInstance(_registrar,_registrar);
             return this;
         }
 
@@ -57,23 +52,8 @@ namespace BBox.Analysis.Processing
                 __fileProcessor.ProcessFile(__t);
                 WriteLog($"{DateTime.Now}: Обработка завершена: {__t}");
             }
-            _registrar.RegisterSummaryReport();
-            if (ProcessingSettings.Instatnce.BuildBonusesReports)
-            {
-                _registrar.RegisterSummaryBonusReport();
-                _registrar.RegisterBonusReport();
-            }
-            if (ProcessingSettings.Instatnce.BuildGapCounterReports)
-                _registrar.RegisterGapCounterReport();
-            if (ProcessingSettings.Instatnce.Build1SCompareReports)
-                _registrar.RegisterOneSCompareReport();
-            if (ProcessingSettings.Instatnce.BuildStatementReports)
-                _registrar.RegisterStatementReport();
 
-            if (ProcessingSettings.Instatnce.BuildAccountCardReport)
-                _registrar.RegisterAccountCardReport();
-            _registrar.RegisterInvalidRecordReport();
-
+            _registrar.AfterProcessDataFinished();
         }
     }
 }

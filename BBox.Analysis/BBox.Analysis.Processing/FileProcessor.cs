@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using BBox.Analysis.Core;
 using BBox.Analysis.Core.Logger;
 using BBox.Analysis.Domain;
@@ -17,8 +14,7 @@ namespace BBox.Analysis.Processing
     public class FileProcessor
     {
         private readonly ILogger _logger;
-        private FuelStation _fuelStation;
-        private IRegistrar _registrar;
+        private readonly IRegistrar _registrar;
 
         private void WriteLog(String text)
         {
@@ -80,7 +76,7 @@ namespace BBox.Analysis.Processing
             var __fuelStationName = Int16.Parse(__fuelStationReg.Match(fileName).Value.Substring(5));
             var __shiftDatePattern = "\\s\\d{4}\\D\\d{2}\\D\\d{2}\\s\\d{2}\\D\\d{2}\\D\\d{2}";
             var __shiftPeriodMatches = new Regex(__shiftDatePattern).Matches(__fileName);
-            var __startDate = TranslateDate(__shiftPeriodMatches[0].Value);
+            //var __startDate = TranslateDate(__shiftPeriodMatches[0].Value);
             var __endDate = TranslateDate(__shiftPeriodMatches[1].Value);
             var __fuelStation = GetFuelStation($"АЗС № {__fuelStationName}");
             using (var __reader = new StreamReader(fileName, Encoding.GetEncoding(1251)))
@@ -131,7 +127,7 @@ namespace BBox.Analysis.Processing
 
                 if (BlackBoxObject.ProcessRecord(__fuelStation, new Record
                 {
-                    Entry = new string[] {"Смена закрыта"},
+                    Entry = new[] {"Смена закрыта"},
                     TimeRecord = __endDate,
                     ID = Int64.MaxValue,
                     FuelStationName = __fuelStation.Name

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BBox.Analysis.Processing</RootNamespace>
     <AssemblyName>BBox.Analysis.Processing</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -31,25 +31,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.1.0.145, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpZipLib.1.1.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI">
-      <HintPath>..\..\packages\NPOI.2.3.0\lib\net40\NPOI.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NPOI, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NPOI.2.4.1\lib\net45\NPOI.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OOXML">
-      <HintPath>..\..\packages\NPOI.2.3.0\lib\net40\NPOI.OOXML.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NPOI.OOXML, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NPOI.2.4.1\lib\net45\NPOI.OOXML.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OpenXml4Net">
-      <HintPath>..\..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NPOI.2.4.1\lib\net45\NPOI.OpenXml4Net.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OpenXmlFormats">
-      <HintPath>..\..\packages\NPOI.2.3.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NPOI.2.4.1\lib\net45\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,24 +56,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountCardComparer\AccountCardRegistrar.cs" />
-    <Compile Include="AccountCardComparer\DataRecord.cs" />
-    <Compile Include="AccountCardComparer\FileReportDataReader.cs" />
-    <Compile Include="AccountCardComparer\IDataReader.cs" />
+    <Compile Include="ReportBuilders\AccountCardComparer\AccountCardRegistrar.cs" />
+    <Compile Include="ReportBuilders\AccountCardComparer\DataRecord.cs" />
+    <Compile Include="ReportBuilders\AccountCardComparer\FileReportDataReader.cs" />
+    <Compile Include="ReportBuilders\AccountCardComparer\IDataReader.cs" />
     <Compile Include="BlackBoxProcessingManager.cs" />
     <Compile Include="BonusReportRegistrar.cs" />
     <Compile Include="FileProcessor.cs" />
-    <Compile Include="OneSComparer\FileReportDataReader.cs" />
-    <Compile Include="OneSComparer\IDataReader.cs" />
-    <Compile Include="OneSComparer\DataRecord.cs" />
-    <Compile Include="OneSComparer\OneSComparerRegistrar.cs" />
-    <Compile Include="OneSComparer\RepositoryKeeper.cs" />
+    <Compile Include="ReportBuilders\OneSComparer\FileReportDataReader.cs" />
+    <Compile Include="ReportBuilders\OneSComparer\IDataReader.cs" />
+    <Compile Include="ReportBuilders\OneSComparer\DataRecord.cs" />
+    <Compile Include="ReportBuilders\OneSComparer\OneSComparerRegistrar.cs" />
+    <Compile Include="ReportBuilders\OneSComparer\RepositoryKeeper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registrar.cs" />
-    <Compile Include="RegistrarHelper.cs" />
-    <Compile Include="ShiftRegistrar.cs" />
-    <Compile Include="StatementRegistrar.cs" />
-    <Compile Include="SummaryReportRegistrar.cs" />
+    <Compile Include="ReportBuilders\RegistrarHelper.cs" />
+    <Compile Include="ReportBuilders\ReportExecutor.cs" />
+    <Compile Include="ReportBuilders\ShiftRegistrar.cs" />
+    <Compile Include="ReportBuilders\StatementRegistrar.cs" />
+    <Compile Include="ReportBuilders\SummaryReportRegistrar.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BBox.Analysis.Core\BBox.Analysis.Core.csproj">
@@ -93,8 +89,13 @@
       <Project>{f8dc12c1-ad44-481f-8463-d2708ff81841}</Project>
       <Name>BBox.Analysis.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BBox.Analysis.WebApi.Client\BBox.Analysis.WebApi.Client.csproj">
+      <Project>{b8c091d6-3bd4-4f21-bb30-2b6161380253}</Project>
+      <Name>BBox.Analysis.WebApi.Client</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

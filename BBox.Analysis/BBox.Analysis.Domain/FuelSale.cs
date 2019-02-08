@@ -19,6 +19,7 @@ namespace BBox.Analysis.Domain
             BlackBoxObject.AddTemplate(FuelSaleCanceledTemplate.Instance);
             BlackBoxObject.AddTemplate(FuelOrderMoveTemplate.Instance);
             BlackBoxObject.AddTemplate(FuelOrderCalculatedTemplate.Instance);
+            BlackBoxObject.AddTemplate(FuelOrderPaymentTemplate.Instance);
             BlackBoxObject.AddTemplate(PrintCheck.Instance);
         }
         public Int64 ID { get; set; }
@@ -77,53 +78,49 @@ namespace BBox.Analysis.Domain
 
         public Decimal CheckAmount { get; private set; }
 
+        private static Order CloneOrder(Payment payment, Order clonableOrder)
+        {
+            var __order = new Order(payment);
+            if (clonableOrder == null) return __order;
+            __order.Amount = clonableOrder.Amount;
+            __order.SetFuelColumn(clonableOrder.FuelColumn);
+            __order.Price = clonableOrder.Price;
+            __order.ProductName = clonableOrder.ProductName;
+            __order.Volume = clonableOrder.Volume;
+            return __order;
+        }
+
         internal Order GetCurrentOrder()
         {
             switch (PourState)
             {
-                case FuelPourState.NewOrder:
+                case FuelPourState.NewOrder: 
                     return null;
                 case FuelPourState.PreOrder:
                     return PreOrder ?? (PreOrder = new Order(Payment));
-                
                 case FuelPourState.PourStart:
                 case FuelPourState.PourFinished:
-                    if (FactPour == null)
-                    {
-                        var __order = new Order(Payment);
-                        var __cloneOrder = PreOrder;
-                        if (__cloneOrder == null)
-                        {
-                            PreOrder = __order;
-                            return __order;
-                        }
-                        __order.Amount = __cloneOrder.Amount;
-                        __order.SetFuelColumn(__cloneOrder.FuelColumn);
-                        __order.Price = __cloneOrder.Price;
-                        __order.ProductName = __cloneOrder.ProductName;
-                        __order.Volume = __cloneOrder.Volume;
-                        FactPour = __order;
-                    }
-                    return FactPour;
+                    if (FactPour != null) return FactPour;
+                    if (PreOrder != null) return FactPour = CloneOrder(Payment, PreOrder);
+                    return PreOrder = CloneOrder(Payment, null);
                 case FuelPourState.OrderFinished:
-                    if (FactSale == null)
-                    {
-                        var __order = new Order(Payment);
-                        var __cloneOrder = FactPour ?? PreOrder;
-                        if (__cloneOrder == null) return null;
-                        __order.Amount = __cloneOrder.Amount;
-                        __order.SetFuelColumn(__cloneOrder.FuelColumn);
-                        __order.Price = __cloneOrder.Price;
-                        __order.ProductName = __cloneOrder.ProductName;
-                        __order.Volume = __cloneOrder.Volume;
-                        FactSale = __order;
-                    }
-                    return FactSale;
+                    if (FactSale != null) return FactSale;
+                    var __clonableOrder = FactPour ?? PreOrder;
+                    if (__clonableOrder == null) return null;
+                    return FactSale = CloneOrder(Payment, __clonableOrder);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
+        internal Order SaleApproved(DateTime approveDate)
+        {
+            SaleState = FuelSaleState.Approved;
+            Date = approveDate;
+            return GetCurrentOrder();
+        }
+
+      
         internal void ClearPayment()
         {
             Payment = null;

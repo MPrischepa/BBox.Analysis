@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2011
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBox.Analysis", "BBox.Analysis\BBox.Analysis.csproj", "{8A573A68-355C-414E-9C04-E7C8D05F3E28}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBox.Analysis.Configuration", "BBox.Analysis.Configuration\BBox.Analysis.Configuration.csproj", "{58A100CE-CC7E-43BF-A054-D28648F092AC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBox.Analysis.Core", "BBox.Analysis.Core\BBox.Analysis.Core.csproj", "{4DBD7D03-7593-463A-A131-3E59E78F3DF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BBox.Analysis.WebApi.Client", "BBox.Analysis.WebApi.Client\BBox.Analysis.WebApi.Client.csproj", "{B8C091D6-3BD4-4F21-BB30-2B6161380253}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,8 +47,15 @@ Global
 		{4DBD7D03-7593-463A-A131-3E59E78F3DF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DBD7D03-7593-463A-A131-3E59E78F3DF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DBD7D03-7593-463A-A131-3E59E78F3DF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8C091D6-3BD4-4F21-BB30-2B6161380253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8C091D6-3BD4-4F21-BB30-2B6161380253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8C091D6-3BD4-4F21-BB30-2B6161380253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8C091D6-3BD4-4F21-BB30-2B6161380253}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C4EBAF4-1B20-4E0A-B367-9A6FA97D917C}
 	EndGlobalSection
 EndGlobal

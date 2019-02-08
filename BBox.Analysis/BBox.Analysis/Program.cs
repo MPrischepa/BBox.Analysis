@@ -6,6 +6,8 @@ using BBox.Analysis.Core;
 using BBox.Analysis.Core.Logger;
 using BBox.Analysis.Processing;
 using BBox.Analysis.Processing.OneSComparer;
+using BBox.Analysis.Processing.ReportBuilders;
+using BBox.Analysis.WebApi.Client;
 using ILogger = BBox.Analysis.Interface.ILogger;
 
 namespace BBox.Analysis
@@ -30,7 +32,7 @@ namespace BBox.Analysis
 
         static void Configure()
         {
-            var __settings = ProcessingSettings.Instatnce;
+            var __settings = ProcessingSettings.Instance;
             Console.WriteLine("Настройка формирование отчетных форм");
             __settings.BuildShiftReports = GetSettingValue("Формировать отчеты по сменам?");
             __settings.BuildSummaryReports = GetSettingValue("Формировать сводные отчеты?");
@@ -73,10 +75,12 @@ namespace BBox.Analysis
                 var __processing =
                     new BlackBoxProcessingManager(__inDirectory).WithSearchTemplate(__searchPattern)
                         .WithLogger(__logger)
-                        .WithRegistrar(new Registrar(__outDirectory, __logger,
+                        /*.WithRegistrar(new Registrar(new ReportExecutor(__logger, __outDirectory, 
                             new FileReportDataReader(Path.Combine(__inDirectory, "Данные_1C_2015_01_01_2018_04_02.TXT")),
                             new Processing.AccountCardComparer.FileReportDataReader(Path.Combine(__inDirectory,
-                                "Данные диалог 2015_01_01_2018_04_02.TXT"))));
+                                "Данные диалог 2015_01_01_2018_04_02.TXT")))))*/
+                        .WithRegistrar(
+                            new Registrar(new ApiClient(ConfigurationManager.AppSettings["ApiBaseAddress"])));
                 __processing.Process();
                 Thread.Sleep(5000);
             }

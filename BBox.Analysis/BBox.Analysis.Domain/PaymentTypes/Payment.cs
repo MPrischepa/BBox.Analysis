@@ -20,6 +20,8 @@ namespace BBox.Analysis.Domain.PaymentTypes
         public ClientCardType ClientCardType => ClientCard?.ClientCardType ?? ClientCardType.None;
  
         internal PaymentTypeDescription PaymentTypeDescr { get; }
+
+        internal virtual void PaymentAccepted(FuelSale sale){}
         
         public Payment(PaymentTypeDescription descr)
         {

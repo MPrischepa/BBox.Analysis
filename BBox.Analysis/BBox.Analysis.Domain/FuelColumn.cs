@@ -17,7 +17,7 @@ namespace BBox.Analysis.Domain
         }
         public Int16 ID { get; set; }
 
-        public IEnumerable<FuelHose> FuelHouses => _fuelHoses.Values;
+        public IEnumerable<FuelHose> FuelHoses => _fuelHoses.Values;
 
         public FuelStation FuelStation { get; private set; }
 

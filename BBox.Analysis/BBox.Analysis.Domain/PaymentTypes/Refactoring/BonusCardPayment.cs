@@ -21,14 +21,13 @@ namespace BBox.Analysis.Domain.PaymentTypes
 
         
 
-        #region Overrides of Payment
+       
 
         #region Overrides of Payment
 
         public override PaymentType PaymentType { get; }
 
-        #endregion
-
+       
         #endregion
 
         #region Implementation of IContainsClientCard

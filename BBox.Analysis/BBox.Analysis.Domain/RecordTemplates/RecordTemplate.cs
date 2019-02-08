@@ -31,7 +31,7 @@ namespace BBox.Analysis.Domain.RecordTemplates
             
             var __method = template.GetType().GetMethod("Process", BindingFlags.Instance | BindingFlags.Public);
             var __result = (ProcessingResult)__method.Invoke(template, new object[] { entity, record });
-            if (__result == ProcessingResult.SelfProcessing && ProcessingSettings.Instatnce.BuildGapCounterReports)
+            if (__result == ProcessingResult.SelfProcessing && ProcessingSettings.Instance.BuildGapCounterReports)
                 entity.AddRecord(record);
             return __result;
         }

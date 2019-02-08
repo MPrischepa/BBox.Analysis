@@ -8,21 +8,21 @@ namespace BBox.Analysis.Domain.PaymentTypes
 {
     public enum ClientCardType
     {
-        None,
+        None = 0,
         /// <summary>
         /// счет (юрлица)
         /// </summary>
-        AccountCard,
+        AccountCard = 1,
 
         /// <summary>
         /// скидачная карта
         /// </summary>
-        DiscountCard,
+        DiscountCard = 2,
 
         /// <summary>
         /// Бонусная карта
         /// </summary>
-        BonusCard
+        BonusCard = 3
 
     }
 }

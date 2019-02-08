@@ -10,4 +10,9 @@ namespace BBox.Analysis.Domain
     {
         BonusCard GetBonusCard(String cardNo);
     }
+
+    public interface IAccountCardFactory
+    {
+        AccountCard GetAccountCard(String cardNo);
+    }
 }

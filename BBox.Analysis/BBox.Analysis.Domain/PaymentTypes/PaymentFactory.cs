@@ -17,15 +17,17 @@ namespace BBox.Analysis.Domain.PaymentTypes
         {
             _logger = LogManager.GetInstance().GetLogger("BBox.Analysis");
         }
-        public static void CreateInstance(IBonusCardFactory factory)
+        public static void CreateInstance(IBonusCardFactory factory, IAccountCardFactory accountCardfactory)
         {
-            _instance = new PaymentFactory(factory);
+            _instance = new PaymentFactory(factory, accountCardfactory);
         }
 
-        private IBonusCardFactory _factory;
-        private PaymentFactory(IBonusCardFactory factory)
+        private readonly IBonusCardFactory _bonusCardfactory;
+        private readonly IAccountCardFactory _accountCardfactory;
+        private PaymentFactory(IBonusCardFactory factory, IAccountCardFactory accountCardfactory)
         {
-            _factory = factory;
+            _bonusCardfactory = factory;
+            _accountCardfactory = accountCardfactory;
         }
 
         public Payment CreatePayment(PaymentTypeDescription paymentDescr,ClientCardType clientCardType)
@@ -36,9 +38,9 @@ namespace BBox.Analysis.Domain.PaymentTypes
             switch (clientCardType)
             {
                     case ClientCardType.None:return new Payment(paymentDescr);
-                    case ClientCardType.AccountCard: return new AccountCardPayment(paymentDescr);
+                    case ClientCardType.AccountCard: return new AccountCardPayment(paymentDescr,_accountCardfactory);
                     case ClientCardType.DiscountCard: return new DiscountCardPayment(paymentDescr);
-                    case ClientCardType.BonusCard: return new BonusCardPayment(paymentDescr,_factory);
+                    case ClientCardType.BonusCard: return new BonusCardPayment(paymentDescr,_bonusCardfactory);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(clientCardType), clientCardType, null);
             }

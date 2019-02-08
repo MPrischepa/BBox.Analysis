@@ -8,9 +8,8 @@ namespace BBox.Analysis.Domain
 {
     public enum FuelSaleState
     {
-       
-        Active,
-        Canceled,
-        Approved
+        Active = 0,
+        Canceled = 1,
+        Approved = 2
     }
 }

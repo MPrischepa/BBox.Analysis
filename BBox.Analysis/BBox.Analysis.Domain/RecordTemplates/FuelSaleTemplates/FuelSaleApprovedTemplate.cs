@@ -25,12 +25,8 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelSaleTemplates
 
         public override ProcessingResult Process(FuelSale entity, Record record)
         {
-            if (entity.SaleState != FuelSaleState.Canceled)
-            {
-                entity.SaleState = FuelSaleState.Approved;
-                entity.Date = record.TimeRecord;
-                var __order = entity.GetCurrentOrder();
-            }
+            if (entity.SaleState == FuelSaleState.Canceled) return ProcessingResult.SelfProcessing;
+            entity.SaleApproved(record.TimeRecord);
             return ProcessingResult.SelfProcessing;
         }
 

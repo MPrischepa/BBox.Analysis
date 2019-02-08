@@ -7,17 +7,19 @@ using BBox.Analysis.Domain;
 
 namespace BBox.Analysis.Interface
 {
-    public interface IRegistrar: IBonusCardFactory
+    public interface IRegistrar: IBonusCardFactory,IAccountCardFactory
     {
-        Task RegisterShift(Shift shift);
+        //Task RegisterShift(Shift shift);
 
         FuelStation GetFuelStation(String stationName);
 
-        void RegisterSummaryReport();
+        void AfterProcessDataFinished();
 
-        void RegisterBonusReport();
+        //void RegisterSummaryReport();
 
-        void RegisterSummaryBonusReport();
+        //void RegisterBonusReport();
+
+        //void RegisterSummaryBonusReport();
 
         bool IsProcessedRecord(FuelStation station, Record record);
 
@@ -25,14 +27,14 @@ namespace BBox.Analysis.Interface
 
         void SetInvalidInfo(String fileName, Int64 position, String reason);
 
-        void RegisterInvalidRecordReport();
+        //void RegisterInvalidRecordReport();
 
-        void RegisterGapCounterReport();
+        //void RegisterGapCounterReport();
 
-        void RegisterOneSCompareReport();
+        //void RegisterOneSCompareReport();
 
-        void RegisterStatementReport();
+        //void RegisterStatementReport();
 
-        void RegisterAccountCardReport();
+        //void RegisterAccountCardReport();
     }
 }

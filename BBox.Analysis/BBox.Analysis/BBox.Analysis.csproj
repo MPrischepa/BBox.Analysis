@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BBox.Analysis</RootNamespace>
     <AssemblyName>BBox.Analysis</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -99,6 +99,10 @@
     <ProjectReference Include="..\BBox.Analysis.Processing\BBox.Analysis.Processing.csproj">
       <Project>{3f6aecc8-a350-4b43-b6b2-178300a24607}</Project>
       <Name>BBox.Analysis.Processing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BBox.Analysis.WebApi.Client\BBox.Analysis.WebApi.Client.csproj">
+      <Project>{B8C091D6-3BD4-4F21-BB30-2B6161380253}</Project>
+      <Name>BBox.Analysis.WebApi.Client</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

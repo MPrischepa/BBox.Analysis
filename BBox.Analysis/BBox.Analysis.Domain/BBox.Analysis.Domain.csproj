@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BBox.Analysis.Domain</RootNamespace>
     <AssemblyName>BBox.Analysis.Domain</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccountCard.cs" />
     <Compile Include="BlackBoxObject.cs" />
     <Compile Include="BonusCard.cs" />
     <Compile Include="FuelColumn.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="RecordTemplates\FuelColumnTemplates\TransactionFinishedTemplate.cs" />
     <Compile Include="RecordTemplates\FuelSaleTemplates\FuelOrderCalculatedTemplate.cs" />
     <Compile Include="RecordTemplates\FuelSaleTemplates\FuelOrderMoveTemplate.cs" />
+    <Compile Include="RecordTemplates\FuelSaleTemplates\FuelOrderPaymentTemplate.cs" />
     <Compile Include="RecordTemplates\FuelSaleTemplates\FuelOrderTemplate.cs" />
     <Compile Include="RecordTemplates\FuelSaleTemplates\FuelSaleApprovedTemplate.cs" />
     <Compile Include="RecordTemplates\FuelSaleTemplates\FuelSaleCanceledTemplate.cs" />

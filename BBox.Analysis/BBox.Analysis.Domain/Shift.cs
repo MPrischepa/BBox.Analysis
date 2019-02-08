@@ -51,7 +51,7 @@ namespace BBox.Analysis.Domain
         {
             FuelStation = station;
             _fuelSales = new Dictionary<long, FuelSale>();
-            _startShiftHoses = station.FuelColumns.SelectMany(x => x.FuelHouses.Select(y => new ShiftHose
+            _startShiftHoses = station.FuelColumns.SelectMany(x => x.FuelHoses.Select(y => new ShiftHose
             {
                 FuelColumn = x.ID,
                 FuelHose = y.Name,
@@ -65,7 +65,7 @@ namespace BBox.Analysis.Domain
         public void StartShift(DateTime beginDate)
         {
             BeginDate = beginDate;
-            _startShiftHoses = FuelStation.FuelColumns.SelectMany(x => x.FuelHouses.Select(y => new ShiftHose
+            _startShiftHoses = FuelStation.FuelColumns.SelectMany(x => x.FuelHoses.Select(y => new ShiftHose
             {
                 FuelColumn = x.ID,
                 FuelHose = y.Name,
@@ -76,7 +76,7 @@ namespace BBox.Analysis.Domain
 
         public void FinishedShift(DateTime endDate)
         {
-            _finishedShiftHoses = FuelStation.FuelColumns.SelectMany(x => x.FuelHouses.Select(y => new ShiftHose
+            _finishedShiftHoses = FuelStation.FuelColumns.SelectMany(x => x.FuelHoses.Select(y => new ShiftHose
             {
                 FuelColumn = x.ID,
                 FuelHose = y.Name,

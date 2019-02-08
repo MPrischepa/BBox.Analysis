@@ -11,19 +11,19 @@ namespace BBox.Analysis.Domain
         /// <summary>
         /// Новый заказ
         /// </summary>
-        NewOrder,
+        NewOrder = 0,
         /// <summary>
         /// Заказ расчитан
         /// </summary>
-        PreOrder,
+        PreOrder = 1,
         /// <summary>
         /// Налив начался
         /// </summary>
-        PourStart,
+        PourStart = 2,
         /// <summary>
         /// Налив закончился
         /// </summary>
-        PourFinished,
+        PourFinished = 3,
         ///// <summary>
         ///// Заказ отменен
         ///// </summary>
@@ -31,6 +31,6 @@ namespace BBox.Analysis.Domain
         /// <summary>
         /// Заказа зафиксирован
         /// </summary>
-        OrderFinished
+        OrderFinished = 4
     }
 }

@@ -5,18 +5,18 @@
         /// <summary>
         /// юрлицо
         /// </summary>
-         LegalEntity,
-         /// <summary>
-         /// Физлицо
-         /// </summary>
-         PhysicalPerson,
-         /// <summary>
-         /// служебный
-         /// </summary>
-         Service,
-         /// <summary>
-         /// Прочие
-         /// </summary>
-         Other
+        LegalEntity = 0,
+        /// <summary>
+        /// Физлицо
+        /// </summary>
+        PhysicalPerson = 1,
+        /// <summary>
+        /// служебный
+        /// </summary>
+        Service = 2,
+        /// <summary>
+        /// Прочие
+        /// </summary>
+        Other = 3
     }
 }

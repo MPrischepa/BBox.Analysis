@@ -6,7 +6,7 @@ namespace BBox.Analysis.Core
     {
         private static ProcessingSettings _settings;
 
-        public static ProcessingSettings Instatnce => _settings ?? (_settings = new ProcessingSettings());
+        public static ProcessingSettings Instance => _settings ?? (_settings = new ProcessingSettings());
 
         private ProcessingSettings()
         {
