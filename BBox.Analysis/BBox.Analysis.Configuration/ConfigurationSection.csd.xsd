@@ -7,18 +7,84 @@
     the code is regenerated.
 </auto-generated>
 -->
-<xs:schema xmlns:tns="" elementFormDefault="qualified" targetNamespace="" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<xs:element name="fileDirectoryConfiguration" type="tns:BBox.Analysis.Configuration.FileDirectoryConfigurationCT" />
-	<xs:complexType name="BBox.Analysis.Configuration.FileDirectoryConfigurationCT">
-		<xs:attribute name="inFileDirectory" use="optional" type="xs:string">
+<xs:schema xmlns:tns="bBox" elementFormDefault="qualified" targetNamespace="bBox" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="bBoxAnalysisConfiguration" type="tns:BBox.Analysis.Configuration.BBoxAnalysisConfigurationCT" />
+	<xs:complexType name="BBox.Analysis.Configuration.BBoxAnalysisConfigurationCT">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element minOccurs="0" name="payments" type="tns:BBox.Analysis.Configuration.PaymentsCT">
+				<xs:annotation>
+					<xs:documentation>The Payments.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="inFileDirectory" type="tns:BBox.Analysis.Configuration.StringElementCT">
+				<xs:annotation>
+					<xs:documentation>The InFileDirectory.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="outFileDirectory" type="tns:BBox.Analysis.Configuration.StringElementCT">
+				<xs:annotation>
+					<xs:documentation>The OutFileDirectory.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="fileSearchPattern" type="tns:BBox.Analysis.Configuration.StringElementCT">
+				<xs:annotation>
+					<xs:documentation>The FileSearchPattern.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="apiBaseAddress" type="tns:BBox.Analysis.Configuration.StringElementCT">
+				<xs:annotation>
+					<xs:documentation>The ApiBaseAddress.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="BBox.Analysis.Configuration.PaymentsCT">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="payment" type="tns:BBox.Analysis.Configuration.PaymentElementCT">
+				<xs:annotation>
+					<xs:documentation>The PaymentElement Configuration Element.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="BBox.Analysis.Configuration.PaymentElementCT">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element minOccurs="0" name="clientCardType" type="tns:BBox.Analysis.Configuration.StringElementCT">
+				<xs:annotation>
+					<xs:documentation>The ClientCardType.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="1" name="name" type="tns:BBox.Analysis.Configuration.StringElementCT">
+				<xs:annotation>
+					<xs:documentation>The Name.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="paymentTypes" type="tns:BBox.Analysis.Configuration.PaymentTypesCT">
+				<xs:annotation>
+					<xs:documentation>The PaymentTypes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="clientType" type="tns:BBox.Analysis.Configuration.StringElementCT">
+				<xs:annotation>
+					<xs:documentation>The ClientType.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="BBox.Analysis.Configuration.StringElementCT">
+		<xs:attribute name="value" use="required" type="xs:string">
 			<xs:annotation>
-				<xs:documentation>The InFileDirectory.</xs:documentation>
+				<xs:documentation>The value.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="outFileDirectory" use="optional" type="xs:string">
-			<xs:annotation>
-				<xs:documentation>The OutFileDirectory.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="BBox.Analysis.Configuration.PaymentTypesCT">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="paymentType" type="tns:BBox.Analysis.Configuration.StringElementCT">
+				<xs:annotation>
+					<xs:documentation>The StringElement Configuration Element.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
 	</xs:complexType>
 </xs:schema>

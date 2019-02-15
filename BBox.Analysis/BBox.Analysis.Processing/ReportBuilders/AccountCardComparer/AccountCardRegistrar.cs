@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using BBox.Analysis.Domain;
 using BBox.Analysis.Domain.PaymentTypes;
+using BBox.Analysis.Interface;
 using NPOI.OpenXmlFormats.Dml;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;

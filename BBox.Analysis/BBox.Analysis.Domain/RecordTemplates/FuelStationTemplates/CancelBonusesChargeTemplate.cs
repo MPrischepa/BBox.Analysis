@@ -38,8 +38,9 @@ namespace BBox.Analysis.Domain.RecordTemplates.FuelStationTemplates
 
             __pattern = "Отмена начисления экстрабонусов: \\d+,\\d{2}";
             __str = new Regex(__pattern).Match(record.Entry[1]).Value;
-            var __ekstra = Decimal.Parse(new Regex("\\d+,\\d{2}").Match(__str).Value,__numberFormatInfo);
+            if (string.IsNullOrWhiteSpace(__str)) return ProcessingResult.SelfProcessing;
 
+            var __ekstra = Decimal.Parse(new Regex("\\d+,\\d{2}").Match(__str).Value,__numberFormatInfo);
             __payment.RemoveChargeBonuses(__sale,__bonuses + __ekstra);
             return ProcessingResult.SelfProcessing;
         }

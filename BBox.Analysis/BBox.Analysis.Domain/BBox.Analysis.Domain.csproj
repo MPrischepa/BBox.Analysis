@@ -53,8 +53,9 @@
     <Compile Include="FuelStation.cs" />
     <Compile Include="IBonusCardFactory.cs" />
     <Compile Include="Order.cs" />
-    <Compile Include="PaymentTypes\PaymentTypeDescription.cs" />
     <Compile Include="PaymentTypes\ClientCardType.cs" />
+    <Compile Include="PaymentTypes\PaymentConfig.cs" />
+    <Compile Include="PaymentTypes\PaymentTypeDescription.cs" />
     <Compile Include="PaymentTypes\Payment.cs" />
     <Compile Include="PaymentTypes\PaymentFactory.cs" />
     <Compile Include="PaymentTypes\Refactoring\AccountCardPayment.cs" />

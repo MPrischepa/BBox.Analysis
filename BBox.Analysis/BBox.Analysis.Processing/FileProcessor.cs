@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Text.RegularExpressions;
 using BBox.Analysis.Core;
@@ -121,6 +122,7 @@ namespace BBox.Analysis.Processing
                         WriteLog($"Не обработана строка: { __processedLine}.");
                         WriteLog("Данные отчета не корректны.");
                         WriteLog($"{__ex}");
+                        File.Copy(fileName,Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Errors",__fileName+".TXT"),true);
                         break;
                     }
                 }

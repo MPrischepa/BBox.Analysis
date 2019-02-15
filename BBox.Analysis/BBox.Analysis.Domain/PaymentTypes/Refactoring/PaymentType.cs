@@ -5,6 +5,7 @@ namespace BBox.Analysis.Domain.PaymentTypes
     [Flags]
     public enum PaymentType
     {
+        None = 0,
         /// <summary>
         /// Наличный расчет
         /// </summary>

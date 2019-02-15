@@ -6,6 +6,7 @@ using System.Threading;
 using BBox.Analysis.Core.Logger;
 using BBox.Analysis.Domain;
 using BBox.Analysis.Domain.PaymentTypes;
+using BBox.Analysis.Interface;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;

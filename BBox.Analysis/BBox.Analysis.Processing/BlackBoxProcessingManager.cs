@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using BBox.Analysis.Domain.PaymentTypes;
 using BBox.Analysis.Interface;
@@ -39,6 +40,12 @@ namespace BBox.Analysis.Processing
         {
             _registrar = registrar;
             PaymentFactory.CreateInstance(_registrar,_registrar);
+            return this;
+        }
+
+        public BlackBoxProcessingManager WithPayments(IList<PaymentConfig> payments)
+        {
+            PaymentFactory.Instance.Configure(payments);
             return this;
         }
 

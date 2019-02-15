@@ -13,33 +13,33 @@ namespace BBox.Analysis.Configuration
     
     
     /// <summary>
-    /// The FileDirectoryConfiguration Configuration Section.
+    /// The BBoxAnalysisConfiguration Configuration Section.
     /// </summary>
-    public partial class FileDirectoryConfiguration : global::System.Configuration.ConfigurationSection
+    public partial class BBoxAnalysisConfiguration : global::System.Configuration.ConfigurationSection
     {
         
         #region Singleton Instance
         /// <summary>
-        /// The XML name of the FileDirectoryConfiguration Configuration Section.
+        /// The XML name of the BBoxAnalysisConfiguration Configuration Section.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
-        internal const string FileDirectoryConfigurationSectionName = "fileDirectoryConfiguration";
+        internal const string BBoxAnalysisConfigurationSectionName = "bBoxAnalysisConfiguration";
         
         /// <summary>
-        /// The XML path of the FileDirectoryConfiguration Configuration Section.
+        /// The XML path of the BBoxAnalysisConfiguration Configuration Section.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
-        internal const string FileDirectoryConfigurationSectionPath = "fileDirectoryConfiguration";
+        internal const string BBoxAnalysisConfigurationSectionPath = "bBoxAnalysisConfiguration";
         
         /// <summary>
-        /// Gets the FileDirectoryConfiguration instance.
+        /// Gets the BBoxAnalysisConfiguration instance.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
-        public static global::BBox.Analysis.Configuration.FileDirectoryConfiguration Instance
+        public static global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration Instance
         {
             get
             {
-                return ((global::BBox.Analysis.Configuration.FileDirectoryConfiguration)(global::System.Configuration.ConfigurationManager.GetSection(global::BBox.Analysis.Configuration.FileDirectoryConfiguration.FileDirectoryConfigurationSectionPath)));
+                return ((global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration)(global::System.Configuration.ConfigurationManager.GetSection(global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.BBoxAnalysisConfigurationSectionPath)));
             }
         }
         #endregion
@@ -59,12 +59,12 @@ namespace BBox.Analysis.Configuration
         /// the parser doesn't throw an exception because it encounters the unknown "xmlns" attribute.
         /// </remarks>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.FileDirectoryConfiguration.XmlnsPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.XmlnsPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
         public string Xmlns
         {
             get
             {
-                return ((string)(base[global::BBox.Analysis.Configuration.FileDirectoryConfiguration.XmlnsPropertyName]));
+                return ((string)(base[global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.XmlnsPropertyName]));
             }
         }
         #endregion
@@ -80,6 +80,32 @@ namespace BBox.Analysis.Configuration
         }
         #endregion
         
+        #region Payments Property
+        /// <summary>
+        /// The XML name of the <see cref="Payments"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string PaymentsPropertyName = "payments";
+        
+        /// <summary>
+        /// Gets or sets the Payments.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        [global::System.ComponentModel.DescriptionAttribute("The Payments.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.PaymentsPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::BBox.Analysis.Configuration.Payments Payments
+        {
+            get
+            {
+                return ((global::BBox.Analysis.Configuration.Payments)(base[global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.PaymentsPropertyName]));
+            }
+            set
+            {
+                base[global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.PaymentsPropertyName] = value;
+            }
+        }
+        #endregion
+        
         #region InFileDirectory Property
         /// <summary>
         /// The XML name of the <see cref="InFileDirectory"/> property.
@@ -92,16 +118,16 @@ namespace BBox.Analysis.Configuration
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
         [global::System.ComponentModel.DescriptionAttribute("The InFileDirectory.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.FileDirectoryConfiguration.InFileDirectoryPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
-        public virtual string InFileDirectory
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.InFileDirectoryPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::BBox.Analysis.Configuration.StringElement InFileDirectory
         {
             get
             {
-                return ((string)(base[global::BBox.Analysis.Configuration.FileDirectoryConfiguration.InFileDirectoryPropertyName]));
+                return ((global::BBox.Analysis.Configuration.StringElement)(base[global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.InFileDirectoryPropertyName]));
             }
             set
             {
-                base[global::BBox.Analysis.Configuration.FileDirectoryConfiguration.InFileDirectoryPropertyName] = value;
+                base[global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.InFileDirectoryPropertyName] = value;
             }
         }
         #endregion
@@ -118,17 +144,584 @@ namespace BBox.Analysis.Configuration
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
         [global::System.ComponentModel.DescriptionAttribute("The OutFileDirectory.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.FileDirectoryConfiguration.OutFileDirectoryPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
-        public virtual string OutFileDirectory
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.OutFileDirectoryPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::BBox.Analysis.Configuration.StringElement OutFileDirectory
         {
             get
             {
-                return ((string)(base[global::BBox.Analysis.Configuration.FileDirectoryConfiguration.OutFileDirectoryPropertyName]));
+                return ((global::BBox.Analysis.Configuration.StringElement)(base[global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.OutFileDirectoryPropertyName]));
             }
             set
             {
-                base[global::BBox.Analysis.Configuration.FileDirectoryConfiguration.OutFileDirectoryPropertyName] = value;
+                base[global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.OutFileDirectoryPropertyName] = value;
             }
+        }
+        #endregion
+        
+        #region FileSearchPattern Property
+        /// <summary>
+        /// The XML name of the <see cref="FileSearchPattern"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string FileSearchPatternPropertyName = "fileSearchPattern";
+        
+        /// <summary>
+        /// Gets or sets the FileSearchPattern.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        [global::System.ComponentModel.DescriptionAttribute("The FileSearchPattern.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.FileSearchPatternPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::BBox.Analysis.Configuration.StringElement FileSearchPattern
+        {
+            get
+            {
+                return ((global::BBox.Analysis.Configuration.StringElement)(base[global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.FileSearchPatternPropertyName]));
+            }
+            set
+            {
+                base[global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.FileSearchPatternPropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region ApiBaseAddress Property
+        /// <summary>
+        /// The XML name of the <see cref="ApiBaseAddress"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string ApiBaseAddressPropertyName = "apiBaseAddress";
+        
+        /// <summary>
+        /// Gets or sets the ApiBaseAddress.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        [global::System.ComponentModel.DescriptionAttribute("The ApiBaseAddress.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.ApiBaseAddressPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::BBox.Analysis.Configuration.StringElement ApiBaseAddress
+        {
+            get
+            {
+                return ((global::BBox.Analysis.Configuration.StringElement)(base[global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.ApiBaseAddressPropertyName]));
+            }
+            set
+            {
+                base[global::BBox.Analysis.Configuration.BBoxAnalysisConfiguration.ApiBaseAddressPropertyName] = value;
+            }
+        }
+        #endregion
+    }
+}
+namespace BBox.Analysis.Configuration
+{
+    
+    
+    /// <summary>
+    /// A collection of PaymentElement instances.
+    /// </summary>
+    [global::System.Configuration.ConfigurationCollectionAttribute(typeof(global::BBox.Analysis.Configuration.PaymentElement), CollectionType=global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate, AddItemName=global::BBox.Analysis.Configuration.Payments.PaymentElementPropertyName)]
+    public partial class Payments : global::System.Configuration.ConfigurationElementCollection
+    {
+        
+        #region Constants
+        /// <summary>
+        /// The XML name of the individual <see cref="global::BBox.Analysis.Configuration.PaymentElement"/> instances in this collection.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string PaymentElementPropertyName = "payment";
+        #endregion
+        
+        #region Overrides
+        /// <summary>
+        /// Gets the type of the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <returns>The <see cref="global::System.Configuration.ConfigurationElementCollectionType"/> of this collection.</returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public override global::System.Configuration.ConfigurationElementCollectionType CollectionType
+        {
+            get
+            {
+                return global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate;
+            }
+        }
+        
+        /// <summary>
+        /// Gets the name used to identify this collection of elements
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override string ElementName
+        {
+            get
+            {
+                return global::BBox.Analysis.Configuration.Payments.PaymentElementPropertyName;
+            }
+        }
+        
+        /// <summary>
+        /// Indicates whether the specified <see cref="global::System.Configuration.ConfigurationElement"/> exists in the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="elementName">The name of the element to verify.</param>
+        /// <returns>
+        /// <see langword="true"/> if the element exists in the collection; otherwise, <see langword="false"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override bool IsElementName(string elementName)
+        {
+            return (elementName == global::BBox.Analysis.Configuration.Payments.PaymentElementPropertyName);
+        }
+        
+        /// <summary>
+        /// Gets the element key for the specified configuration element.
+        /// </summary>
+        /// <param name="element">The <see cref="global::System.Configuration.ConfigurationElement"/> to return the key for.</param>
+        /// <returns>
+        /// An <see cref="object"/> that acts as the key for the specified <see cref="global::System.Configuration.ConfigurationElement"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override object GetElementKey(global::System.Configuration.ConfigurationElement element)
+        {
+            return ((global::BBox.Analysis.Configuration.PaymentElement)(element)).Name;
+        }
+        
+        /// <summary>
+        /// Creates a new <see cref="global::BBox.Analysis.Configuration.PaymentElement"/>.
+        /// </summary>
+        /// <returns>
+        /// A new <see cref="global::BBox.Analysis.Configuration.PaymentElement"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override global::System.Configuration.ConfigurationElement CreateNewElement()
+        {
+            return new global::BBox.Analysis.Configuration.PaymentElement();
+        }
+        #endregion
+        
+        #region Indexer
+        /// <summary>
+        /// Gets the <see cref="global::BBox.Analysis.Configuration.PaymentElement"/> at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="global::BBox.Analysis.Configuration.PaymentElement"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public global::BBox.Analysis.Configuration.PaymentElement this[int index]
+        {
+            get
+            {
+                return ((global::BBox.Analysis.Configuration.PaymentElement)(base.BaseGet(index)));
+            }
+        }
+        
+        /// <summary>
+        /// Gets the <see cref="global::BBox.Analysis.Configuration.PaymentElement"/> with the specified key.
+        /// </summary>
+        /// <param name="name">The key of the <see cref="global::BBox.Analysis.Configuration.PaymentElement"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public global::BBox.Analysis.Configuration.PaymentElement this[object name]
+        {
+            get
+            {
+                return ((global::BBox.Analysis.Configuration.PaymentElement)(base.BaseGet(name)));
+            }
+        }
+        #endregion
+        
+        #region Add
+        /// <summary>
+        /// Adds the specified <see cref="global::BBox.Analysis.Configuration.PaymentElement"/> to the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="payment">The <see cref="global::BBox.Analysis.Configuration.PaymentElement"/> to add.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public void Add(global::BBox.Analysis.Configuration.PaymentElement payment)
+        {
+            base.BaseAdd(payment);
+        }
+        #endregion
+        
+        #region Remove
+        /// <summary>
+        /// Removes the specified <see cref="global::BBox.Analysis.Configuration.PaymentElement"/> from the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="payment">The <see cref="global::BBox.Analysis.Configuration.PaymentElement"/> to remove.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public void Remove(global::BBox.Analysis.Configuration.PaymentElement payment)
+        {
+            base.BaseRemove(this.GetElementKey(payment));
+        }
+        #endregion
+        
+        #region GetItem
+        /// <summary>
+        /// Gets the <see cref="global::BBox.Analysis.Configuration.PaymentElement"/> at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="global::BBox.Analysis.Configuration.PaymentElement"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public global::BBox.Analysis.Configuration.PaymentElement GetItemAt(int index)
+        {
+            return ((global::BBox.Analysis.Configuration.PaymentElement)(base.BaseGet(index)));
+        }
+        
+        /// <summary>
+        /// Gets the <see cref="global::BBox.Analysis.Configuration.PaymentElement"/> with the specified key.
+        /// </summary>
+        /// <param name="name">The key of the <see cref="global::BBox.Analysis.Configuration.PaymentElement"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public global::BBox.Analysis.Configuration.PaymentElement GetItemByKey(global::BBox.Analysis.Configuration.StringElement name)
+        {
+            return ((global::BBox.Analysis.Configuration.PaymentElement)(base.BaseGet(((object)(name)))));
+        }
+        #endregion
+        
+        #region IsReadOnly override
+        /// <summary>
+        /// Gets a value indicating whether the element is read-only.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
+        #endregion
+    }
+}
+namespace BBox.Analysis.Configuration
+{
+    
+    
+    /// <summary>
+    /// The PaymentElement Configuration Element.
+    /// </summary>
+    [global::System.ComponentModel.DisplayNameAttribute("payment")]
+    public partial class PaymentElement : global::System.Configuration.ConfigurationElement
+    {
+        
+        #region IsReadOnly override
+        /// <summary>
+        /// Gets a value indicating whether the element is read-only.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
+        #endregion
+        
+        #region ClientCardType Property
+        /// <summary>
+        /// The XML name of the <see cref="ClientCardType"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string ClientCardTypePropertyName = "clientCardType";
+        
+        /// <summary>
+        /// Gets or sets the ClientCardType.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        [global::System.ComponentModel.DescriptionAttribute("The ClientCardType.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.PaymentElement.ClientCardTypePropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::BBox.Analysis.Configuration.StringElement ClientCardType
+        {
+            get
+            {
+                return ((global::BBox.Analysis.Configuration.StringElement)(base[global::BBox.Analysis.Configuration.PaymentElement.ClientCardTypePropertyName]));
+            }
+            set
+            {
+                base[global::BBox.Analysis.Configuration.PaymentElement.ClientCardTypePropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region Name Property
+        /// <summary>
+        /// The XML name of the <see cref="Name"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string NamePropertyName = "name";
+        
+        /// <summary>
+        /// Gets or sets the Name.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        [global::System.ComponentModel.DescriptionAttribute("The Name.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.PaymentElement.NamePropertyName, IsRequired=true, IsKey=true, IsDefaultCollection=false)]
+        public virtual global::BBox.Analysis.Configuration.StringElement Name
+        {
+            get
+            {
+                return ((global::BBox.Analysis.Configuration.StringElement)(base[global::BBox.Analysis.Configuration.PaymentElement.NamePropertyName]));
+            }
+            set
+            {
+                base[global::BBox.Analysis.Configuration.PaymentElement.NamePropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region PaymentTypes Property
+        /// <summary>
+        /// The XML name of the <see cref="PaymentTypes"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string PaymentTypesPropertyName = "paymentTypes";
+        
+        /// <summary>
+        /// Gets or sets the PaymentTypes.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        [global::System.ComponentModel.DescriptionAttribute("The PaymentTypes.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.PaymentElement.PaymentTypesPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::BBox.Analysis.Configuration.PaymentTypes PaymentTypes
+        {
+            get
+            {
+                return ((global::BBox.Analysis.Configuration.PaymentTypes)(base[global::BBox.Analysis.Configuration.PaymentElement.PaymentTypesPropertyName]));
+            }
+            set
+            {
+                base[global::BBox.Analysis.Configuration.PaymentElement.PaymentTypesPropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region ClientType Property
+        /// <summary>
+        /// The XML name of the <see cref="ClientType"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string ClientTypePropertyName = "clientType";
+        
+        /// <summary>
+        /// Gets or sets the ClientType.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        [global::System.ComponentModel.DescriptionAttribute("The ClientType.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.PaymentElement.ClientTypePropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::BBox.Analysis.Configuration.StringElement ClientType
+        {
+            get
+            {
+                return ((global::BBox.Analysis.Configuration.StringElement)(base[global::BBox.Analysis.Configuration.PaymentElement.ClientTypePropertyName]));
+            }
+            set
+            {
+                base[global::BBox.Analysis.Configuration.PaymentElement.ClientTypePropertyName] = value;
+            }
+        }
+        #endregion
+    }
+}
+namespace BBox.Analysis.Configuration
+{
+    
+    
+    /// <summary>
+    /// The StringElement Configuration Element.
+    /// </summary>
+    public partial class StringElement : global::System.Configuration.ConfigurationElement
+    {
+        
+        #region IsReadOnly override
+        /// <summary>
+        /// Gets a value indicating whether the element is read-only.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
+        #endregion
+        
+        #region value Property
+        /// <summary>
+        /// The XML name of the <see cref="value"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string valuePropertyName = "value";
+        
+        /// <summary>
+        /// Gets or sets the value.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        [global::System.ComponentModel.DescriptionAttribute("The value.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::BBox.Analysis.Configuration.StringElement.valuePropertyName, IsRequired=true, IsKey=true, IsDefaultCollection=false)]
+        public virtual string value
+        {
+            get
+            {
+                return ((string)(base[global::BBox.Analysis.Configuration.StringElement.valuePropertyName]));
+            }
+            set
+            {
+                base[global::BBox.Analysis.Configuration.StringElement.valuePropertyName] = value;
+            }
+        }
+        #endregion
+    }
+}
+namespace BBox.Analysis.Configuration
+{
+    
+    
+    /// <summary>
+    /// A collection of StringElement instances.
+    /// </summary>
+    [global::System.Configuration.ConfigurationCollectionAttribute(typeof(global::BBox.Analysis.Configuration.StringElement), CollectionType=global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate, AddItemName=global::BBox.Analysis.Configuration.PaymentTypes.StringElementPropertyName)]
+    public partial class PaymentTypes : global::System.Configuration.ConfigurationElementCollection
+    {
+        
+        #region Constants
+        /// <summary>
+        /// The XML name of the individual <see cref="global::BBox.Analysis.Configuration.StringElement"/> instances in this collection.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        internal const string StringElementPropertyName = "paymentType";
+        #endregion
+        
+        #region Overrides
+        /// <summary>
+        /// Gets the type of the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <returns>The <see cref="global::System.Configuration.ConfigurationElementCollectionType"/> of this collection.</returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public override global::System.Configuration.ConfigurationElementCollectionType CollectionType
+        {
+            get
+            {
+                return global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate;
+            }
+        }
+        
+        /// <summary>
+        /// Gets the name used to identify this collection of elements
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override string ElementName
+        {
+            get
+            {
+                return global::BBox.Analysis.Configuration.PaymentTypes.StringElementPropertyName;
+            }
+        }
+        
+        /// <summary>
+        /// Indicates whether the specified <see cref="global::System.Configuration.ConfigurationElement"/> exists in the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="elementName">The name of the element to verify.</param>
+        /// <returns>
+        /// <see langword="true"/> if the element exists in the collection; otherwise, <see langword="false"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override bool IsElementName(string elementName)
+        {
+            return (elementName == global::BBox.Analysis.Configuration.PaymentTypes.StringElementPropertyName);
+        }
+        
+        /// <summary>
+        /// Gets the element key for the specified configuration element.
+        /// </summary>
+        /// <param name="element">The <see cref="global::System.Configuration.ConfigurationElement"/> to return the key for.</param>
+        /// <returns>
+        /// An <see cref="object"/> that acts as the key for the specified <see cref="global::System.Configuration.ConfigurationElement"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override object GetElementKey(global::System.Configuration.ConfigurationElement element)
+        {
+            return ((global::BBox.Analysis.Configuration.StringElement)(element)).value;
+        }
+        
+        /// <summary>
+        /// Creates a new <see cref="global::BBox.Analysis.Configuration.StringElement"/>.
+        /// </summary>
+        /// <returns>
+        /// A new <see cref="global::BBox.Analysis.Configuration.StringElement"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        protected override global::System.Configuration.ConfigurationElement CreateNewElement()
+        {
+            return new global::BBox.Analysis.Configuration.StringElement();
+        }
+        #endregion
+        
+        #region Indexer
+        /// <summary>
+        /// Gets the <see cref="global::BBox.Analysis.Configuration.StringElement"/> at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="global::BBox.Analysis.Configuration.StringElement"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public global::BBox.Analysis.Configuration.StringElement this[int index]
+        {
+            get
+            {
+                return ((global::BBox.Analysis.Configuration.StringElement)(base.BaseGet(index)));
+            }
+        }
+        
+        /// <summary>
+        /// Gets the <see cref="global::BBox.Analysis.Configuration.StringElement"/> with the specified key.
+        /// </summary>
+        /// <param name="value">The key of the <see cref="global::BBox.Analysis.Configuration.StringElement"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public global::BBox.Analysis.Configuration.StringElement this[object value]
+        {
+            get
+            {
+                return ((global::BBox.Analysis.Configuration.StringElement)(base.BaseGet(value)));
+            }
+        }
+        #endregion
+        
+        #region Add
+        /// <summary>
+        /// Adds the specified <see cref="global::BBox.Analysis.Configuration.StringElement"/> to the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="paymentType">The <see cref="global::BBox.Analysis.Configuration.StringElement"/> to add.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public void Add(global::BBox.Analysis.Configuration.StringElement paymentType)
+        {
+            base.BaseAdd(paymentType);
+        }
+        #endregion
+        
+        #region Remove
+        /// <summary>
+        /// Removes the specified <see cref="global::BBox.Analysis.Configuration.StringElement"/> from the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="paymentType">The <see cref="global::BBox.Analysis.Configuration.StringElement"/> to remove.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public void Remove(global::BBox.Analysis.Configuration.StringElement paymentType)
+        {
+            base.BaseRemove(this.GetElementKey(paymentType));
+        }
+        #endregion
+        
+        #region GetItem
+        /// <summary>
+        /// Gets the <see cref="global::BBox.Analysis.Configuration.StringElement"/> at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="global::BBox.Analysis.Configuration.StringElement"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public global::BBox.Analysis.Configuration.StringElement GetItemAt(int index)
+        {
+            return ((global::BBox.Analysis.Configuration.StringElement)(base.BaseGet(index)));
+        }
+        
+        /// <summary>
+        /// Gets the <see cref="global::BBox.Analysis.Configuration.StringElement"/> with the specified key.
+        /// </summary>
+        /// <param name="value">The key of the <see cref="global::BBox.Analysis.Configuration.StringElement"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public global::BBox.Analysis.Configuration.StringElement GetItemByKey(string value)
+        {
+            return ((global::BBox.Analysis.Configuration.StringElement)(base.BaseGet(((object)(value)))));
+        }
+        #endregion
+        
+        #region IsReadOnly override
+        /// <summary>
+        /// Gets a value indicating whether the element is read-only.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.801")]
+        public override bool IsReadOnly()
+        {
+            return false;
         }
         #endregion
     }

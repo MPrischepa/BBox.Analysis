@@ -84,6 +84,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BBox.Analysis.Configuration\BBox.Analysis.Configuration.csproj">
+      <Project>{58a100ce-cc7e-43bf-a054-d28648f092ac}</Project>
+      <Name>BBox.Analysis.Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BBox.Analysis.Core\BBox.Analysis.Core.csproj">
       <Project>{4dbd7d03-7593-463a-a131-3e59e78f3df0}</Project>
       <Name>BBox.Analysis.Core</Name>
