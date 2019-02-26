@@ -63,22 +63,49 @@ namespace BBox.Analysis.Processing
                 //DateTime.ParseExact(date.Trim(), "yyyy_MM_dd HH_mm_ss", new CultureInfo("ru-RU"));
         }
 
+        private DateTime TranslateDateMega(String date)
+        {
+            var __day = Int16.Parse(date.Substring(1, 2));
+            var __month = Int16.Parse(date.Substring(4, 2));
+            var __year = Int16.Parse(date.Substring(7, 4));
+            var __index = date.Substring(12).IndexOf('_');
+            var __hour = Int16.Parse(date.Substring(12, __index));
+            var __min = Int16.Parse(date.Substring(13 + __index, 2));
+            var __sec = Int16.Parse(date.Substring(16+__index, 2));
+
+            return new DateTime(__year, __month, __day, __hour, __min, __sec);
+            //DateTime.ParseExact(date.Trim(), "yyyy_MM_dd HH_mm_ss", new CultureInfo("ru-RU"));
+        }
+
         public void ProcessFile(String fileName)
         {
             var __filePattern =
                 "BBOX_\\d+\\s\\d{4}\\D\\d{2}\\D\\d{2}\\s\\d{2}\\D\\d{2}\\D\\d{2}\\s\\D\\s\\d{4}\\D\\d{2}\\D\\d{2}\\s\\d{2}\\D\\d{2}\\D\\d{2}";
+            var __shiftDatePattern = "\\s\\d{4}\\D\\d{2}\\D\\d{2}\\s\\d{2}\\D\\d{2}\\D\\d{2}";
+            Func<String, DateTime> __translateDate = TranslateDate;
+            var __linePattern = ".+;\\d{4}-\\d{2}-\\d{2}.+;";
             var __isMatch = new Regex(__filePattern).IsMatch(fileName);
             if (!__isMatch)
             {
-                WriteLog($"Файл {fileName} не обработан. Причина: не верный формат заголовка");
+                __filePattern =
+                    "BBOX_\\d+\\s\\d{2}\\D\\d{2}\\D\\d{4}\\s\\d+\\D\\d{2}\\D\\d{2}\\s\\D\\s\\d{2}\\D\\d{2}\\D\\d{4}\\s\\d+\\D\\d{2}\\D\\d{2}";
+                __shiftDatePattern = "\\s\\d{2}\\D\\d{2}\\D\\d{4}\\s\\d+\\D\\d{2}\\D\\d{2}";
+                __linePattern = ".+;\\d{2}.\\d{2}.\\d{4}.+;";
+                __translateDate = TranslateDateMega;
+                __isMatch = new Regex(__filePattern).IsMatch(fileName);
+                if (!__isMatch)
+                {
+                    WriteLog($"Файл {fileName} не обработан. Причина: не верный формат заголовка");
+                }
+               
             }
             var __fileName = new Regex(__filePattern).Match(fileName).Value;
             var __fuelStationReg = new Regex("BBOX_\\d+\\s");
             var __fuelStationName = Int16.Parse(__fuelStationReg.Match(fileName).Value.Substring(5));
-            var __shiftDatePattern = "\\s\\d{4}\\D\\d{2}\\D\\d{2}\\s\\d{2}\\D\\d{2}\\D\\d{2}";
+            
             var __shiftPeriodMatches = new Regex(__shiftDatePattern).Matches(__fileName);
             //var __startDate = TranslateDate(__shiftPeriodMatches[0].Value);
-            var __endDate = TranslateDate(__shiftPeriodMatches[1].Value);
+            var __endDate = __translateDate(__shiftPeriodMatches[1].Value);
             var __fuelStation = GetFuelStation($"АЗС № {__fuelStationName}");
             using (var __reader = new StreamReader(fileName, Encoding.GetEncoding(1251)))
             {
@@ -92,7 +119,7 @@ namespace BBox.Analysis.Processing
                 while ((__line = __reader.ReadLine()) != null)
                 {
                     var __unProcessed = false;
-                    if (!new Regex(".+;\\d{4}-\\d{2}-\\d{2}.+;").IsMatch(__line))
+                    if (!new Regex(__linePattern).IsMatch(__line))
                     {
                         __processedLine = $"{__processedLine}{__line}";
                         __unProcessed = true;

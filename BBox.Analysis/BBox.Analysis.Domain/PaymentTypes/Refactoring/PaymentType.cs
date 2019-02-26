@@ -30,5 +30,9 @@ namespace BBox.Analysis.Domain.PaymentTypes
         /// Ведамость
         /// </summary>
         Statement = 32,
+        /// <summary>
+        /// Бензубер
+        /// </summary>
+        Benzuber = 64,
     }
 }
